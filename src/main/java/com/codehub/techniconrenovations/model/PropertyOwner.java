@@ -30,9 +30,11 @@ public class PropertyOwner {
     private String username;
     @Column(nullable = false)
     private String password;
+    @Column(nullable = false)    
+    private String typeOfUser;
     private boolean isDeleted = false;
 
-    public PropertyOwner(int vatNumber, String name, String surname, String address, String phoneNumber, String email, String username, String password) {
+    public PropertyOwner(int vatNumber, String name, String surname, String address, String phoneNumber, String email, String username, String password, String typeOfUser) {
         this.vatNumber = vatNumber;
         this.name = name;
         this.surname = surname;
@@ -41,6 +43,7 @@ public class PropertyOwner {
         this.email = email;
         this.username = username;
         this.password = password;
+        this.typeOfUser = typeOfUser;
     }
 
     public PropertyOwner(int vatNumber) {
@@ -120,5 +123,13 @@ public class PropertyOwner {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getTypeOfUser() {
+        return typeOfUser;
+    }
+
+    public void setTypeOfUser(String typeOfUser) {
+        this.typeOfUser = typeOfUser;
     }
 }
