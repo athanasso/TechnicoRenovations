@@ -1,8 +1,6 @@
 package com.codehub.techniconrenovations.resources;
 
 import com.codehub.techniconrenovations.dto.RestApiResult;
-import com.codehub.techniconrenovations.model.Property;
-import com.codehub.techniconrenovations.model.PropertyRepair;
 import com.codehub.techniconrenovations.services.PropertyOwnerServices;
 import com.codehub.techniconrenovations.util.InputHandler;
 import jakarta.inject.Inject;
@@ -14,7 +12,6 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.Response;
-import java.util.List;
 
 @Path("user")
 public class UserResource {
