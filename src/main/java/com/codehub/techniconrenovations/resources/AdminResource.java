@@ -77,7 +77,7 @@ public class AdminResource {
     @Produces("application/json")
     public RestApiResult getAllRepairs() {
         try {
-            return new RestApiResult<>(adminServices.getAllRepairs(), 401, "Successful!");
+            return new RestApiResult<>(adminServices.getAllRepairs(), 200, "Successful!");
         } catch (Exception e) {
             return new RestApiResult<>(e, 401, "Something went wrong!");
         }
@@ -88,7 +88,7 @@ public class AdminResource {
     @Produces("application/json")
     public RestApiResult getProperties() {
         try {
-            return new RestApiResult<>(adminServices.getProperties(), 401, "Successful!");
+            return new RestApiResult<>(adminServices.getProperties(), 200, "Successful!");
         } catch (Exception e) {
             return new RestApiResult<>(e, 401, "Something went wrong!");
         }
@@ -99,7 +99,7 @@ public class AdminResource {
     @Produces("application/json")
     public RestApiResult getOwners() {
         try {
-            return new RestApiResult<>(adminServices.getOwners(), 401, "Successful!");
+            return new RestApiResult<>(adminServices.getOwners(), 200, "Successful!");
         } catch (Exception e) {
             return new RestApiResult<>(e, 401, "Something went wrong!");
         }
