@@ -1,6 +1,5 @@
 package com.codehub.techniconrenovations.services;
 
-import com.codehub.techniconrenovations.dto.RestApiResult;
 import com.codehub.techniconrenovations.enums.PropertyType;
 import com.codehub.techniconrenovations.enums.RepairType;
 import com.codehub.techniconrenovations.model.Property;
@@ -15,7 +14,7 @@ public interface PropertyOwnerServices {
      * @param vatNumber
      * @return List<Property>
      */
-    RestApiResult<List<Property>> getProperties(int vatNumber);
+    List<Property> getProperties(int vatNumber);
 
     /**
      * Returns the status of a repair.
@@ -23,7 +22,7 @@ public interface PropertyOwnerServices {
      * @param vatNumber
      * @return List<PropertyRepair>
      */
-    RestApiResult<List<PropertyRepair>> getRepairStatus(int vatNumber);
+    List<PropertyRepair> getRepairStatus(int vatNumber);
 
     /**
      * Registers a new PropertyOwner to the database.

@@ -1,7 +1,11 @@
 package com.codehub.techniconrenovations.resources;
 
 import com.codehub.techniconrenovations.dto.RestApiResult;
+import com.codehub.techniconrenovations.repository.PropertyOwnerRepository;
+import com.codehub.techniconrenovations.repository.PropertyRepairRepository;
+import com.codehub.techniconrenovations.repository.PropertyRepository;
 import com.codehub.techniconrenovations.services.AdminServices;
+import com.codehub.techniconrenovations.services.impl.AdminServicesImpl;
 import com.codehub.techniconrenovations.util.UtilFunctions;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
@@ -15,8 +19,12 @@ import jakarta.ws.rs.core.Response;
 @Path("admin")
 public class AdminResource {
 
+    PropertyRepository propertyRepository;
+    PropertyOwnerRepository propertyOwnerRepository;
+    PropertyRepairRepository propertyRepairRepository;
+    
     @Inject
-    AdminServices adminServices;
+    AdminServices adminServices = new AdminServicesImpl(propertyRepository, propertyOwnerRepository, propertyRepairRepository);
 
     @GET
     @Path("ping")

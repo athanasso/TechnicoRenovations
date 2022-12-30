@@ -1,7 +1,11 @@
 package com.codehub.techniconrenovations.resources;
 
 import com.codehub.techniconrenovations.dto.RestApiResult;
+import com.codehub.techniconrenovations.repository.PropertyOwnerRepository;
+import com.codehub.techniconrenovations.repository.PropertyRepairRepository;
+import com.codehub.techniconrenovations.repository.PropertyRepository;
 import com.codehub.techniconrenovations.services.PropertyOwnerServices;
+import com.codehub.techniconrenovations.services.impl.PropertyOwnerServicesImpl;
 import com.codehub.techniconrenovations.util.InputHandler;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
@@ -19,8 +23,12 @@ public class UserResource {
     @Inject
     InputHandler inputHandler = new InputHandler();
 
+    PropertyRepository propertyRepository;
+    PropertyOwnerRepository propertyOwnerRepository;
+    PropertyRepairRepository propertyRepairRepository;
+    
     @Inject
-    PropertyOwnerServices propertyOwnerServices;
+    PropertyOwnerServices propertyOwnerServices = new PropertyOwnerServicesImpl(propertyRepository, propertyOwnerRepository, propertyRepairRepository);
 
     @GET
     @Path("ping")
@@ -129,7 +137,8 @@ public class UserResource {
     @Produces("application/json")
     public RestApiResult getProperties(@PathParam("vatNumber") int vatNumber) {
         try {
-            return propertyOwnerServices.getProperties(vatNumber);
+            return new RestApiResult<>(propertyOwnerServices.getProperties(vatNumber),200, "Successful");
+        
         } catch (Exception e) {
             return new RestApiResult<>(e, 401, "Something went wrong!");
         }
@@ -158,7 +167,7 @@ public class UserResource {
     @Produces("application/json")
     public RestApiResult getRepairStatus(@PathParam("vatNumber") int vatNumber) {
         try {
-            return propertyOwnerServices.getRepairStatus(vatNumber);
+            return new RestApiResult<>(propertyOwnerServices.getRepairStatus(vatNumber), 200, "Succesful");
         } catch (Exception e) {
             return new RestApiResult<>(e, 401, "Something went wrong!");
         }

@@ -1,7 +1,11 @@
 package com.codehub.techniconrenovations.resources;
 
 import com.codehub.techniconrenovations.dto.RestApiResult;
+import com.codehub.techniconrenovations.repository.PropertyOwnerRepository;
+import com.codehub.techniconrenovations.repository.PropertyRepairRepository;
+import com.codehub.techniconrenovations.repository.PropertyRepository;
 import com.codehub.techniconrenovations.services.PropertyOwnerServices;
+import com.codehub.techniconrenovations.services.impl.PropertyOwnerServicesImpl;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.FormParam;
 import jakarta.ws.rs.POST;
@@ -11,8 +15,12 @@ import jakarta.ws.rs.core.Response;
 @Path("auth")
 public class AuthResource {
 
+    PropertyRepository propertyRepository;
+    PropertyOwnerRepository propertyOwnerRepository;
+    PropertyRepairRepository propertyRepairRepository;
+    
     @Inject
-    PropertyOwnerServices propertyOwnerServices;
+    PropertyOwnerServices propertyOwnerServices = new PropertyOwnerServicesImpl(propertyRepository, propertyOwnerRepository, propertyRepairRepository);
     
     @POST
     @Path("login")

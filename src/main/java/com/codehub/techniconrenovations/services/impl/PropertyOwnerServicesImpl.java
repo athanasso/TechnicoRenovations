@@ -1,6 +1,5 @@
 package com.codehub.techniconrenovations.services.impl;
 
-import com.codehub.techniconrenovations.dto.RestApiResult;
 import com.codehub.techniconrenovations.enums.PropertyType;
 import com.codehub.techniconrenovations.enums.RepairType;
 import com.codehub.techniconrenovations.enums.Status;
@@ -34,7 +33,7 @@ public class PropertyOwnerServicesImpl implements PropertyOwnerServices {
     }
 
     @Override
-    public RestApiResult<List<Property>> getProperties(int vatNumber) {
+    public List<Property> getProperties(int vatNumber) {
         try {
             List<Property> pr = propertyRepository.searchVat(vatNumber);
             List<Property> properties = new ArrayList<>();
@@ -44,19 +43,19 @@ public class PropertyOwnerServicesImpl implements PropertyOwnerServices {
                 }
             });
             if (properties.isEmpty()) {
-                logger.error("properties are empty");
-                return new RestApiResult<>(null, 401, "Something went wrong!");
+                logger.error("properties are empty error 401");
+                return null;
             }
             logger.debug("return properties was succesfull");
-            return new RestApiResult<>(properties, 200, "Successful!");
+            return properties;
         } catch (Exception e) {
-            logger.error("An error occurred while getting properties: ", e);
-            return new RestApiResult<>(null, 500, "An error occurred while getting properties");
+            logger.error("An error occurred while getting properties error 500: ", e);
+            return null;
         }
     }
 
     @Override
-    public RestApiResult<List<PropertyRepair>> getRepairStatus(int vatNumber) {
+    public List<PropertyRepair> getRepairStatus(int vatNumber) {
         try {
             List<Property> properties = propertyRepository.searchVat(vatNumber);
             List<PropertyRepair> repairs = new ArrayList<>();
@@ -69,14 +68,14 @@ public class PropertyOwnerServicesImpl implements PropertyOwnerServices {
                 });
             }
             if (repairs.isEmpty()) {
-                logger.error("properties are empty");
-                return new RestApiResult<>(null, 401, "Something went wrong!");
+                logger.error("properties are empty error 401");
+                return null;
             }
             logger.debug("return repair statuses was succesfull");
-            return new RestApiResult<>(repairs, 200, "Successful!");
+            return repairs;
         } catch (Exception e) {
-            logger.error("An error occurred while getting properties: ", e);
-            return new RestApiResult<>(null, 500, "An error occurred while getting repair statuses");
+            logger.error("An error occurred while getting properties error 500: ", e);
+            return null;
         }
     }
 
