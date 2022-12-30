@@ -115,7 +115,7 @@ public class AdminResource {
                     .build();
         } catch (Exception e) {
             return Response.status(401)
-                    .entity(new RestApiResult<>(null, 401, "Something went wrong!"))
+                    .entity(new RestApiResult<>(e, 401, "Something went wrong!"))
                     .build();
         }
     }
@@ -130,7 +130,7 @@ public class AdminResource {
                     .build();
         } catch (Exception e) {
             return Response.status(401)
-                    .entity(new RestApiResult<>(null, 401, "Something went wrong!"))
+                    .entity(new RestApiResult<>(e, 401, "Something went wrong!"))
                     .build();
         }
     }
@@ -145,7 +145,7 @@ public class AdminResource {
                     .build();
         } catch (Exception e) {
             return Response.status(401)
-                    .entity(new RestApiResult<>(null, 401, "Something went wrong!"))
+                    .entity(new RestApiResult<>(e, 401, "Something went wrong!"))
                     .build();
         }
     }

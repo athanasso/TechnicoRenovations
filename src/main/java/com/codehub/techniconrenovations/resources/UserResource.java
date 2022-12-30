@@ -45,7 +45,7 @@ public class UserResource {
                     .build();
         } catch (Exception e) {
             return Response.status(401)
-                    .entity(new RestApiResult<>(null, 401, "Something went wrong!"))
+                    .entity(new RestApiResult<>(e, 401, "Something went wrong!"))
                     .build();
         }
     }
@@ -63,7 +63,7 @@ public class UserResource {
                     .build();
         } catch (Exception e) {
             return Response.status(401)
-                    .entity(new RestApiResult<>(null, 401, "Something went wrong!"))
+                    .entity(new RestApiResult<>(e, 401, "Something went wrong!"))
                     .build();
         }
     }
@@ -81,7 +81,7 @@ public class UserResource {
                     .build();
         } catch (Exception e) {
             return Response.status(401)
-                    .entity(new RestApiResult<>(null, 401, "Something went wrong!"))
+                    .entity(new RestApiResult<>(e, 401, "Something went wrong!"))
                     .build();
         }
     }
@@ -99,7 +99,7 @@ public class UserResource {
                     .build();
         } catch (Exception e) {
             return Response.status(401)
-                    .entity(new RestApiResult<>(null, 401, "Something went wrong!"))
+                    .entity(new RestApiResult<>(e, 401, "Something went wrong!"))
                     .build();
         }
     }
@@ -119,7 +119,7 @@ public class UserResource {
                     .build();
         } catch (Exception e) {
             return Response.status(401)
-                    .entity(new RestApiResult<>(null, 401, "Something went wrong!"))
+                    .entity(new RestApiResult<>(e, 401, "Something went wrong!"))
                     .build();
         }
     }
@@ -131,7 +131,7 @@ public class UserResource {
         try {
             return propertyOwnerServices.getProperties(vatNumber);
         } catch (Exception e) {
-            return new RestApiResult<>(null, 401, "Something went wrong!");
+            return new RestApiResult<>(e, 401, "Something went wrong!");
         }
     }
 
@@ -148,7 +148,7 @@ public class UserResource {
                     .build();
         } catch (Exception e) {
             return Response.status(401)
-                    .entity(new RestApiResult<>(null, 401, "Something went wrong!"))
+                    .entity(new RestApiResult<>(e, 401, "Something went wrong!"))
                     .build();
         }
     }
@@ -160,7 +160,7 @@ public class UserResource {
         try {
             return propertyOwnerServices.getRepairStatus(vatNumber);
         } catch (Exception e) {
-            return new RestApiResult<>(null, 401, "Something went wrong!");
+            return new RestApiResult<>(e, 401, "Something went wrong!");
         }
     }
 
@@ -176,7 +176,7 @@ public class UserResource {
                     .build();
         } catch (Exception e) {
             return Response.status(401)
-                    .entity(new RestApiResult<>(null, 401, "Something went wrong!"))
+                    .entity(new RestApiResult<>(e, 401, "Something went wrong!"))
                     .build();
         }
     }
@@ -193,7 +193,7 @@ public class UserResource {
                     .build();
         } catch (Exception e) {
             return Response.status(401)
-                    .entity(new RestApiResult<>(null, 401, "Something went wrong!"))
+                    .entity(new RestApiResult<>(e, 401, "Something went wrong!"))
                     .build();
         }
     }
@@ -210,7 +210,7 @@ public class UserResource {
                     .build();
         } catch (Exception e) {
             return Response.status(401)
-                    .entity(new RestApiResult<>(null, 401, "Something went wrong!"))
+                    .entity(new RestApiResult<>(e, 401, "Something went wrong!"))
                     .build();
         }
     }
@@ -227,7 +227,7 @@ public class UserResource {
                     .build();
         } catch (Exception e) {
             return Response.status(401)
-                    .entity(new RestApiResult<>(null, 401, "Something went wrong!"))
+                    .entity(new RestApiResult<>(e, 401, "Something went wrong!"))
                     .build();
         }
     }
@@ -244,7 +244,7 @@ public class UserResource {
                     .build();
         } catch (Exception e) {
             return Response.status(401)
-                    .entity(new RestApiResult<>(null, 401, "Something went wrong!"))
+                    .entity(new RestApiResult<>(e, 401, "Something went wrong!"))
                     .build();
         }
     }
@@ -260,7 +260,7 @@ public class UserResource {
                     .build();
         } catch (Exception e) {
             return Response.status(401)
-                    .entity(new RestApiResult<>(null, 401, "Something went wrong!"))
+                    .entity(new RestApiResult<>(e, 401, "Something went wrong!"))
                     .build();
         }
     }
