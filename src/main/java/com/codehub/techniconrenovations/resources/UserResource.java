@@ -130,7 +130,7 @@ public class UserResource {
     @GET
     @Path("get_properties/{vatNumber}")
     @Produces("application/json")
-    public RestApiResult<List<Property>> getProperties(@PathParam("vatNumber") int vatNumber) {
+    public RestApiResult getProperties(@PathParam("vatNumber") int vatNumber) {
         try {
             return propertyOwnerServices.getProperties(vatNumber);
         } catch (Exception e) {
@@ -159,7 +159,7 @@ public class UserResource {
     @GET
     @Path("get_repair_status/{vatNumber}")
     @Produces("application/json")
-    public RestApiResult<List<PropertyRepair>> getRepairStatus(@PathParam("vatNumber") int vatNumber) {
+    public RestApiResult getRepairStatus(@PathParam("vatNumber") int vatNumber) {
         try {
             return propertyOwnerServices.getRepairStatus(vatNumber);
         } catch (Exception e) {
