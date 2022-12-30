@@ -57,22 +57,26 @@ public interface AdminServices {
 
     /**
      * Removes deleted properties from the database.
+     * @return 
      */
-    void permanentlyDeleteProperties();
+    boolean permanentlyDeleteProperties();
 
     /**
      * Removes deleted owners from the database.
+     * @return 
      */
-    void permanentlyDeletePropertyOwner();
+    boolean permanentlyDeletePropertyOwner();
 
     /**
      * Removes deleted repairs from the database.
+     * @return 
      */
-    void permanentlyDeletePropertyRepairs();
+    boolean permanentlyDeletePropertyRepairs();
     
     /**
      * Removes deleted repairs from the database.
+     * @return 
      */
-    void permanentlyDeleteRepairs();
+    boolean permanentlyDeleteRepairs();
 
 }

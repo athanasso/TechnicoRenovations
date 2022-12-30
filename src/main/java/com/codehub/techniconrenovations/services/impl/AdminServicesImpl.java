@@ -14,14 +14,18 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 import java.util.Date;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class AdminServicesImpl implements AdminServices {
 
+    private static final Logger logger = LoggerFactory.getLogger(AdminServicesImpl.class);
+
     @PersistenceContext(unitName = "Persistence")
     private EntityManager entityManager;
-    private PropertyRepository propertyRepository;
-    private PropertyOwnerRepository propertyOwnerRepository;
-    private PropertyRepairRepository propertyRepairRepository;
+    private final PropertyRepository propertyRepository;
+    private final PropertyOwnerRepository propertyOwnerRepository;
+    private final PropertyRepairRepository propertyRepairRepository;
 
     @Inject
     public AdminServicesImpl(PropertyRepository propertyRepository, PropertyOwnerRepository propertyOwnerRepository, PropertyRepairRepository propertyRepairRepository) {
@@ -32,58 +36,99 @@ public class AdminServicesImpl implements AdminServices {
 
     @Override
     public List<PropertyRepair> getPendingRepairs() {
-        return entityManager.createQuery("SELECT r FROM PropertyRepair r WHERE r.status = :status")
-                .setParameter("status", Status.PENDING)
-                .getResultList();
+        try {
+            return entityManager.createQuery("SELECT r FROM PropertyRepair r WHERE r.status = :status")
+                    .setParameter("status", Status.PENDING)
+                    .getResultList();
+        } catch (Exception e) {
+            logger.error("Error while retrieving pending repairs: " + e.getMessage(), e);
+            return null;
+        }
     }
 
     @Override
     public List<PropertyRepair> getAllRepairs() {
-        return entityManager.createQuery("SELECT r FROM PropertyRepair r")
-                .getResultList();
+        try {
+            return entityManager.createQuery("SELECT r FROM PropertyRepair r")
+                    .getResultList();
+        } catch (Exception e) {
+            logger.error("Error while retrieving all repairs: " + e.getMessage(), e);
+            return null;
+        }
     }
 
     @Override
     public List<Property> getProperties() {
-        return entityManager.createQuery("SELECT p FROM Property p")
-                .getResultList();
+        try {
+            return entityManager.createQuery("SELECT p FROM Property p")
+                    .getResultList();
+        } catch (Exception e) {
+            logger.error("Error while retrieving properties: " + e.getMessage(), e);
+            return null;
+        }
     }
 
     @Override
     public List<PropertyOwner> getOwners() {
-        return entityManager.createQuery("SELECT o FROM PropertyOwner o")
-                .getResultList();
+        try {
+            return entityManager.createQuery("SELECT o FROM PropertyOwner o")
+                    .getResultList();
+        } catch (Exception e) {
+            logger.error("Error while retrieving owners: " + e.getMessage(), e);
+            return null;
+        }
     }
 
     @Override
     public boolean proposeCost(double cost, int repairId) {
-        PropertyRepair p = propertyRepairRepository.searchById(repairId);
-        if (p == null) {
+        try {
+            PropertyRepair p = propertyRepairRepository.searchById(repairId);
+            if (p == null) {
+                logger.error("Error repair is null: ");
+                return false;
+            }
+            propertyRepairRepository.updateProposedCost(cost, repairId);
+            logger.debug("proposeCost was updated succefully");
+            return true;
+        } catch (Exception e) {
+            logger.error("Error while proposing cost for repair: " + e.getMessage(), e);
             return false;
         }
-        propertyRepairRepository.updateProposedCost(cost, repairId);
-        return true;
     }
 
     @Override
     public boolean proposeStartEndDates(Date startDate, Date endDate, int repairId) {
-        PropertyRepair p = propertyRepairRepository.searchById(repairId);
-        if (p == null) {
+        try {
+            PropertyRepair p = propertyRepairRepository.searchById(repairId);
+            if (p == null) {
+                logger.error("Error repair is null: ");
+                return false;
+            }
+            propertyRepairRepository.updateProposedStartDate(startDate, repairId);
+            propertyRepairRepository.updateProposedEndDate(endDate, repairId);
+            logger.debug("proposeStartEndDates was updated succefully");
+            return true;
+        } catch (Exception e) {
+            logger.error("Error while proposing start and end dates for repair: " + e.getMessage(), e);
             return false;
         }
-        propertyRepairRepository.updateProposedStartDate(startDate, repairId);
-        propertyRepairRepository.updateProposedEndDate(endDate, repairId);
-        return true;
     }
 
     @Override
-    public void permanentlyDeleteProperties() {
-        permanentlyDeletePropertyRepairs();
-        entityManager.getTransaction().begin();
-        Query query = entityManager.createQuery("DELETE Property WHERE isDeleted = :isDeleted")
-                .setParameter("isDeleted", true);
-        query.executeUpdate();
-        entityManager.getTransaction().commit();
+    public boolean permanentlyDeleteProperties() {
+        try {
+            permanentlyDeletePropertyRepairs();
+            entityManager.getTransaction().begin();
+            Query query = entityManager.createQuery("DELETE Property WHERE isDeleted = :isDeleted")
+                    .setParameter("isDeleted", true);
+            query.executeUpdate();
+            entityManager.getTransaction().commit();
+            logger.debug("permanentlyDeleteProperties was succefully");
+            return true;
+        } catch (Exception e) {
+            logger.error("Error while deleting properties: " + e.getMessage(), e);
+            return false;
+        }
     }
 
     /**
@@ -92,19 +137,31 @@ public class AdminServicesImpl implements AdminServices {
      * @param vatNumber
      */
     private void permanentlyDeleteRepairsList(String propertyId) {
-        Property property = new Property(propertyId);
-        entityManager.getTransaction().begin();
-        Query query = entityManager.createQuery("DELETE PropertyRepair WHERE property = :property")
-                .setParameter("property", property);
-        query.executeUpdate();
-        entityManager.getTransaction().commit();
+        try {
+            Property property = new Property(propertyId);
+            entityManager.getTransaction().begin();
+            Query query = entityManager.createQuery("DELETE PropertyRepair WHERE property = :property")
+                    .setParameter("property", property);
+            query.executeUpdate();
+            entityManager.getTransaction().commit();
+            logger.debug("permanentlyDeleteRepairsList was succefully");
+        } catch (Exception e) {
+            logger.error("Error while deleting repairs list for property: " + e.getMessage(), e);
+        }
     }
 
     @Override
-    public void permanentlyDeletePropertyRepairs() {
-        List<Property> properties = entityManager.createQuery("SELECT o FROM Property o WHERE isDeleted = :isDeleted")
-                .setParameter("isDeleted", true).getResultList();
-        properties.forEach(p -> permanentlyDeleteRepairsList(p.getPropertyId()));
+    public boolean permanentlyDeletePropertyRepairs() {
+        try {
+            List<Property> properties = entityManager.createQuery("SELECT o FROM Property o WHERE isDeleted = :isDeleted")
+                    .setParameter("isDeleted", true).getResultList();
+            properties.forEach(p -> permanentlyDeleteRepairsList(p.getPropertyId()));
+            logger.debug("permanentlyDeletePropertyRepairs was succefully");
+            return true;
+        } catch (Exception e) {
+            logger.error("Error while deleting property repairs: " + e.getMessage(), e);
+            return false;
+        }
     }
 
     /**
@@ -113,12 +170,17 @@ public class AdminServicesImpl implements AdminServices {
      * @param vatNumber
      */
     public void permanentlyDeleteRepairs(int vatNumber) {
-        PropertyOwner propertyOwner = new PropertyOwner(vatNumber);
-        entityManager.getTransaction().begin();
-        Query query = entityManager.createQuery("DELETE PropertyRepair WHERE propertyOwner = :propertyOwner")
-                .setParameter("propertyOwner", propertyOwner);
-        query.executeUpdate();
-        entityManager.getTransaction().commit();
+        try {
+            PropertyOwner propertyOwner = new PropertyOwner(vatNumber);
+            entityManager.getTransaction().begin();
+            Query query = entityManager.createQuery("DELETE PropertyRepair WHERE propertyOwner = :propertyOwner")
+                    .setParameter("propertyOwner", propertyOwner);
+            query.executeUpdate();
+            entityManager.getTransaction().commit();
+            logger.debug("permanentlyDeleteRepairs was succefully");
+        } catch (Exception e) {
+            logger.error("Error while deleting repairs for owner: " + e.getMessage(), e);
+        }
     }
 
     /**
@@ -127,32 +189,53 @@ public class AdminServicesImpl implements AdminServices {
      * @param vatNumber
      */
     public void permanentlyDeleteProperties(int vatNumber) {
-        PropertyOwner propertyOwner = new PropertyOwner(vatNumber);
-        entityManager.getTransaction().begin();
-        Query query = entityManager.createQuery("DELETE Property WHERE propertyOwner = :propertyOwner")
-                .setParameter("propertyOwner", propertyOwner);
-        query.executeUpdate();
-        entityManager.getTransaction().commit();
+        try {
+            PropertyOwner propertyOwner = new PropertyOwner(vatNumber);
+            entityManager.getTransaction().begin();
+            Query query = entityManager.createQuery("DELETE Property WHERE propertyOwner = :propertyOwner")
+                    .setParameter("propertyOwner", propertyOwner);
+            query.executeUpdate();
+            entityManager.getTransaction().commit();
+            logger.debug("permanentlyDeleteProperties was succefully");            
+        } catch (Exception e) {
+            logger.error("Error while deleting properties for owner: " + e.getMessage(), e);
+        }
     }
 
     @Override
-    public void permanentlyDeletePropertyOwner() {
-        List<PropertyOwner> propertyOwner = entityManager.createQuery("SELECT o FROM PropertyOwner o WHERE isDeleted = :isDeleted")
-                .setParameter("isDeleted", true)
-                .getResultList();
-        propertyOwner.forEach(po -> {
-            permanentlyDeleteRepairs(po.getVatNumber());
-            permanentlyDeleteProperties(po.getVatNumber());
-            propertyOwnerRepository.permanentlyDelete(po.getVatNumber());
-        });
+    public boolean permanentlyDeletePropertyOwner() {
+        try {
+            List<PropertyOwner> propertyOwner = entityManager.createQuery("SELECT o FROM PropertyOwner o WHERE isDeleted = :isDeleted")
+                    .setParameter("isDeleted", true).getResultList();
+            propertyOwner.forEach(o -> {
+                permanentlyDeleteProperties(o.getVatNumber());
+                permanentlyDeleteRepairs(o.getVatNumber());
+            });
+            entityManager.getTransaction().begin();
+            Query query = entityManager.createQuery("DELETE PropertyOwner WHERE isDeleted = :isDeleted").setParameter("isDeleted", true);
+            query.executeUpdate();
+            entityManager.getTransaction().commit();
+            logger.debug("permanentlyDeletePropertyOwner was succefully"); 
+            return true;
+        } catch (Exception e) {
+            logger.error("Error while deleting property owner: " + e.getMessage(), e);
+            return false;
+        }
     }
 
     @Override
-    public void permanentlyDeleteRepairs() {
-        entityManager.getTransaction().begin();
-        Query query = entityManager.createQuery("DELETE PropertyRepair WHERE isDeleted = :isDeleted")
-                .setParameter("isDeleted", true);
-        query.executeUpdate();
-        entityManager.getTransaction().commit();
+    public boolean permanentlyDeleteRepairs() {
+        try {
+            entityManager.getTransaction().begin();
+            Query query = entityManager.createQuery("DELETE PropertyRepair WHERE isDeleted = :isDeleted")
+                    .setParameter("isDeleted", true);
+            query.executeUpdate();
+            entityManager.getTransaction().commit();
+            logger.debug("permanentlyDeleteRepairs was succefully"); 
+            return true;
+        } catch (Exception e) {
+            logger.error("Error while deleting property repairs: " + e.getMessage(), e);
+            return false;
+        }
     }
 }

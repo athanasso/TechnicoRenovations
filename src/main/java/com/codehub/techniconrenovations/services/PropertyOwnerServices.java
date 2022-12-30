@@ -46,8 +46,9 @@ public interface PropertyOwnerServices {
      * @param address
      * @param constructionYear
      * @param propertyType
+     * @return 
      */
-    void registerProperty(int vatNumber, String e9, String address, int constructionYear, PropertyType propertyType);
+    boolean registerProperty(int vatNumber, String e9, String address, int constructionYear, PropertyType propertyType);
 
     /**
      * Registers a new PropertyRepair to the database.
@@ -56,8 +57,9 @@ public interface PropertyOwnerServices {
      * @param description
      * @param shortDescription
      * @param repairType
+     * @return 
      */
-    void registerPropertyRepair(int vatNumber, String e9, String description, String shortDescription, RepairType repairType);
+    boolean registerPropertyRepair(int vatNumber, String e9, String description, String shortDescription, RepairType repairType);
 
     /**
      * Updates whether the owner accepts the Repair or not.
@@ -65,8 +67,9 @@ public interface PropertyOwnerServices {
      * @param vatNumber
      * @param repairId
      * @param acceptStatus
+     * @return 
      */
-    void acceptOrDeclineRepair(int vatNumber, int repairId, boolean acceptStatus);
+    boolean acceptOrDeclineRepair(int vatNumber, int repairId, boolean acceptStatus);
 
     /**
      * Returns true if the credentials are correct.
@@ -82,45 +85,51 @@ public interface PropertyOwnerServices {
      * @param vatNumber
      * @param propertyId
      * @param address
+     * @return 
      */
-    void correctPropertyAddress(int vatNumber, String propertyId, String address);
+    boolean correctPropertyAddress(int vatNumber, String propertyId, String address);
     
     /**
      *
      * @param vatNumber
      * @param propertyId
      * @param constructionYear
+     * @return 
      */
-    void correctPropertyconstructionYear(int vatNumber, String propertyId, int constructionYear);
+    boolean correctPropertyconstructionYear(int vatNumber, String propertyId, int constructionYear);
     
     /**
      *
      * @param vatNumber
      * @param propertyId
      * @param propertyType
+     * @return 
      */
-    void correctPropertyType(int vatNumber, String propertyId, PropertyType propertyType);
+    boolean correctPropertyType(int vatNumber, String propertyId, PropertyType propertyType);
 
     /**
      * Updates a property owner's credentials.
      * @param vatNumber
      * @param username
+     * @return 
      */
-    void correctOwnerUsername(int vatNumber, String username);
+    boolean correctOwnerUsername(int vatNumber, String username);
     
     /**
      *
      * @param vatNumber
      * @param email
+     * @return 
      */
-    void correctOwnerEmail(int vatNumber, String email);
+    boolean correctOwnerEmail(int vatNumber, String email);
     
     /**
      *
      * @param vatNumber
      * @param password
+     * @return 
      */
-    void correctOwnerPassword(int vatNumber, String password);
+    boolean correctOwnerPassword(int vatNumber, String password);
     
     /**
      * Returns the vat Number of a user.

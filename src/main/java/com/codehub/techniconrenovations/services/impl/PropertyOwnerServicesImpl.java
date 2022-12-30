@@ -15,8 +15,12 @@ import jakarta.inject.Inject;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class PropertyOwnerServicesImpl implements PropertyOwnerServices {
+
+    private static final Logger logger = LoggerFactory.getLogger(PropertyOwnerServicesImpl.class);
 
     private final PropertyRepository propertyRepository;
     private final PropertyOwnerRepository propertyOwnerRepository;
@@ -31,213 +35,335 @@ public class PropertyOwnerServicesImpl implements PropertyOwnerServices {
 
     @Override
     public RestApiResult<List<Property>> getProperties(int vatNumber) {
-        List<Property> pr = propertyRepository.searchVat(vatNumber);
-        List<Property> properties = new ArrayList<>();
-        pr.forEach(p -> {
-            if (!p.isIsDeleted()) {
-                properties.add(p);
+        try {
+            List<Property> pr = propertyRepository.searchVat(vatNumber);
+            List<Property> properties = new ArrayList<>();
+            pr.forEach(p -> {
+                if (!p.isIsDeleted()) {
+                    properties.add(p);
+                }
+            });
+            if (properties.isEmpty()) {
+                logger.error("properties are empty");
+                return new RestApiResult<>(null, 401, "Something went wrong!");
             }
-        });
-        if (properties.isEmpty()){
-            return new RestApiResult<>(null, 401, "Something went wrong!");
+            logger.debug("return properties was succesfull");
+            return new RestApiResult<>(properties, 200, "Successful!");
+        } catch (Exception e) {
+            logger.error("An error occurred while getting properties: ", e);
+            return new RestApiResult<>(null, 500, "An error occurred while getting properties");
         }
-       return new RestApiResult<>(properties, 200, "Successful!");
     }
 
     @Override
     public RestApiResult<List<PropertyRepair>> getRepairStatus(int vatNumber) {
-        List<Property> properties = propertyRepository.searchVat(vatNumber);
-        List<PropertyRepair> repairs = new ArrayList<>();
-        for (Property p : properties) {
-            List<PropertyRepair> r = propertyRepairRepository.searchByPropertyId(p.getPropertyId());
-            r.forEach(pr -> {
-                if (!pr.isIsDeleted()) {
-                    repairs.add(pr);
-                }
-            });
+        try {
+            List<Property> properties = propertyRepository.searchVat(vatNumber);
+            List<PropertyRepair> repairs = new ArrayList<>();
+            for (Property p : properties) {
+                List<PropertyRepair> r = propertyRepairRepository.searchByPropertyId(p.getPropertyId());
+                r.forEach(pr -> {
+                    if (!pr.isIsDeleted()) {
+                        repairs.add(pr);
+                    }
+                });
+            }
+            if (repairs.isEmpty()) {
+                logger.error("properties are empty");
+                return new RestApiResult<>(null, 401, "Something went wrong!");
+            }
+            logger.debug("return repair statuses was succesfull");
+            return new RestApiResult<>(repairs, 200, "Successful!");
+        } catch (Exception e) {
+            logger.error("An error occurred while getting properties: ", e);
+            return new RestApiResult<>(null, 500, "An error occurred while getting repair statuses");
         }
-        if (repairs.isEmpty()){
-            return new RestApiResult<>(null, 401, "Something went wrong!");
-        }
-        return new RestApiResult<>(repairs, 200, "Successful!");
     }
 
     @Override
     public boolean register(int vatNumber, String name, String surname, String address, String phoneNumber, String email, String username, String password) {
-        PropertyOwner propertyOwner = new PropertyOwner();
-        propertyOwner.setVatNumber(vatNumber);
-        propertyOwner.setName(name);
-        propertyOwner.setSurname(surname);
-        propertyOwner.setAddress(address);
-        propertyOwner.setPhoneNumber(phoneNumber);
-        propertyOwner.setEmail(email);
-        propertyOwner.setUsername(username);
-        propertyOwner.setPassword(password);
         try {
-            return propertyOwnerRepository.createPropertyOwner(propertyOwner); 
+            PropertyOwner propertyOwner = new PropertyOwner();
+            propertyOwner.setVatNumber(vatNumber);
+            propertyOwner.setName(name);
+            propertyOwner.setSurname(surname);
+            propertyOwner.setAddress(address);
+            propertyOwner.setPhoneNumber(phoneNumber);
+            propertyOwner.setEmail(email);
+            propertyOwner.setUsername(username);
+            propertyOwner.setPassword(password);
+            logger.debug("owner register was succesfull");
+            return propertyOwnerRepository.createPropertyOwner(propertyOwner);
         } catch (jakarta.persistence.RollbackException ex) {
+            logger.error("An error occurred while registering a property owner: ", ex);
+            return false;
+        } catch (Exception e) {
+            logger.error("An error occurred while registering a property owner: ", e);
             return false;
         }
     }
 
     @Override
-    public void registerProperty(int vatNumber, String e9, String address, int constructionYear, PropertyType propertyType) {
-        Property property = new Property();
-        String propertyId = e9;
-        if (propertyRepository.searchPropertyId(propertyId)!=null) {
-            //This property is already registered
-            return;
-        }
-        property.setPropertyId(propertyId);
-        property.setPropertyAddress(address);
-        property.setYearOfConstruction(constructionYear);
-        property.setPropertyOwner(new PropertyOwner(vatNumber));
-        property.setPropertyType(propertyType);
-        if (propertyRepository.createProperty(property)) {
-            //Your property was registered succefully!
-        } else {
-            //There was a problem registering your repair because it is already registered.
-        }
-    }
-
-    @Override
-    public void registerPropertyRepair(int vatNumber, String e9, String description, String shortDescription, RepairType repairType) {
-        PropertyRepair propertyRepair = new PropertyRepair();
-        propertyRepair.setPropertyOwner(new PropertyOwner(vatNumber));
-        propertyRepair.setProperty(new Property(e9));
-        propertyRepair.setDate(new Date());
-        propertyRepair.setDesciption(description);
-        propertyRepair.setShortDescription(shortDescription);
-        propertyRepair.setRepairType(repairType);
-        propertyRepair.setStatus(Status.PENDING);
-        if (propertyRepairRepository.createPropertyRepair(propertyRepair)) {
-            //Your repair was registered succefully
+    public boolean registerProperty(int vatNumber, String e9, String address, int constructionYear, PropertyType propertyType) {
+        try {
+            Property property = new Property();
+            String propertyId = e9;
+            if (propertyRepository.searchPropertyId(propertyId) != null) {
+                logger.error("property is already registered");
+                return false;
+            }
+            property.setPropertyId(propertyId);
+            property.setPropertyAddress(address);
+            property.setYearOfConstruction(constructionYear);
+            property.setPropertyOwner(new PropertyOwner(vatNumber));
+            property.setPropertyType(propertyType);
+            propertyRepository.createProperty(property);
+            logger.debug("property was registered succefully!");
+            return true;
+        } catch (Exception e) {
+            logger.error("Error registering property: " + e.getMessage());
+            return false;
         }
     }
 
     @Override
-    public void acceptOrDeclineRepair(int vatNumber, int repairId, boolean acceptStatus) {
-        if (!checkRepair(repairId, vatNumber)) {
-            return;
+    public boolean registerPropertyRepair(int vatNumber, String e9, String description, String shortDescription, RepairType repairType) {
+        try {
+            PropertyRepair propertyRepair = new PropertyRepair();
+            propertyRepair.setPropertyOwner(new PropertyOwner(vatNumber));
+            propertyRepair.setProperty(new Property(e9));
+            propertyRepair.setDate(new Date());
+            propertyRepair.setDesciption(description);
+            propertyRepair.setShortDescription(shortDescription);
+            propertyRepair.setRepairType(repairType);
+            propertyRepair.setStatus(Status.PENDING);
+            propertyRepairRepository.createPropertyRepair(propertyRepair);
+            logger.debug("repair was registered succefully");
+            return true;
+        } catch (Exception e) {
+            logger.error("Error registering property repair: " + e.getMessage());
+            return false;
         }
-        PropertyRepair propertyRepair = propertyRepairRepository.searchById(repairId);
-        if (propertyRepair.getProposedStartDate()==null){
-            //You can't accept this repair yet, we haven't proposed dates and cost
-            return;
+    }
+
+    @Override
+    public boolean acceptOrDeclineRepair(int vatNumber, int repairId, boolean acceptStatus) {
+        try {
+            if (!checkRepair(repairId, vatNumber)) {
+                logger.error("not found");
+                return false;
+            }
+            PropertyRepair propertyRepair = propertyRepairRepository.searchById(repairId);
+            if (propertyRepair.getProposedStartDate() == null) {
+                logger.error("can't accept this repair yet, we haven't proposed dates and cost");
+                return false;
+            }
+
+            propertyRepairRepository.updateAccepted(acceptStatus, repairId);
+            if (!acceptStatus) {
+                propertyRepairRepository.updateStatus(Status.DECLINED, repairId);
+            } else {
+                propertyRepairRepository.updateStatus(Status.IN_PROGRESS, repairId);
+                propertyRepairRepository.updateActualStartDate(repairId);
+                propertyRepairRepository.updateActualEndDate(repairId);
+            }
+        } catch (Exception e) {
+            logger.error("Error accepting or declining repair: " + e.getMessage());
+            return false;
         }
-       
-        propertyRepairRepository.updateAccepted(acceptStatus, repairId);
-        if (!acceptStatus) {
-            propertyRepairRepository.updateStatus(Status.DECLINED, repairId);
-        } else {
-            propertyRepairRepository.updateStatus(Status.IN_PROGRESS, repairId);
-            propertyRepairRepository.updateActualStartDate(repairId);
-            propertyRepairRepository.updateActualEndDate(repairId);
-        }
+        logger.debug("acceptOrDeclineRepair was succeful!");
+        return true;
     }
 
     @Override
     public boolean logIn(String username, String password) {
-        return propertyOwnerRepository.searchByUsernameAndPassword(username, password) != null;
-    }
-
-    @Override
-    public void correctPropertyAddress(int vatNumber, String propertyId, String address) {
-        if (!checkProperty(propertyId, vatNumber)) {
-            return;
+        try {
+            logger.debug("user login was succeful");
+            return propertyOwnerRepository.searchByUsernameAndPassword(username, password) != null;
+        } catch (Exception e) {
+            logger.error("Error logging in: " + e.getMessage());
+            return false;
         }
-        propertyRepository.updatePropertyAddress(address, propertyId);
-    }
-    
-    
-    @Override
-    public void correctPropertyconstructionYear(int vatNumber, String propertyId, int constructionYear) {
-        if (!checkProperty(propertyId, vatNumber)) {
-            return;
-        }    
-        propertyRepository.updateYearOfConstruction(constructionYear, propertyId);
     }
 
     @Override
-    public void correctPropertyType(int vatNumber, String propertyId, PropertyType propertyType) {
-        if (!checkProperty(propertyId, vatNumber)) {
-            return;
-        }  
-        propertyRepository.updatePropertyType(propertyType, propertyId);
-    }
-    
-    @Override
-    public void correctOwnerUsername(int vatNumber, String username) {
-        propertyOwnerRepository.updateUsername(username, vatNumber);
-    }
-
-    @Override
-    public void correctOwnerEmail(int vatNumber, String email) {
-        propertyOwnerRepository.updateEmail(email, vatNumber);
+    public boolean correctPropertyAddress(int vatNumber, String propertyId, String address) {
+        try {
+            if (!checkProperty(propertyId, vatNumber)) {
+                logger.error("not found");
+                return false;
+            }
+            propertyRepository.updatePropertyAddress(address, propertyId);
+        } catch (Exception e) {
+            logger.error("Error correcting property address: " + e.getMessage());
+            return false;
+        }
+        logger.debug("correctPropertyAddress was succeful");
+        return true;
     }
 
     @Override
-    public void correctOwnerPassword(int vatNumber, String password) {
-        propertyOwnerRepository.updatePassword(password, vatNumber);
+    public boolean correctPropertyconstructionYear(int vatNumber, String propertyId, int constructionYear) {
+        try {
+            if (!checkProperty(propertyId, vatNumber)) {
+                logger.error("not found");
+                return false;
+            }
+            propertyRepository.updateYearOfConstruction(constructionYear, propertyId);
+        } catch (Exception e) {
+            logger.error("Error correcting property construction year: " + e.getMessage());
+            return false;
+        }
+        logger.debug("correctPropertyconstructionYear was succeful");
+        return true;
+    }
+
+    @Override
+    public boolean correctPropertyType(int vatNumber, String propertyId, PropertyType propertyType) {
+        try {
+            if (!checkProperty(propertyId, vatNumber)) {
+                logger.error("not found");
+                return false;
+            }
+            propertyRepository.updatePropertyType(propertyType, propertyId);
+        } catch (Exception e) {
+            logger.error("Error correcting property type: " + e.getMessage());
+            return false;
+        }
+        logger.debug("correctPropertyType was succeful");
+        return true;
+    }
+
+    @Override
+    public boolean correctOwnerUsername(int vatNumber, String username) {
+        try {
+            propertyOwnerRepository.updateUsername(username, vatNumber);
+        } catch (Exception e) {
+            logger.error("Error correcting owner username: " + e.getMessage());
+            return false;
+        }
+        logger.debug("correctOwnerUsername was succeful");
+        return true;
+    }
+
+    @Override
+    public boolean correctOwnerEmail(int vatNumber, String email) {
+        try {
+            propertyOwnerRepository.updateEmail(email, vatNumber);
+        } catch (Exception e) {
+            logger.error("Error correcting owner email: " + e.getMessage());
+            return false;
+        }
+        logger.debug("correctOwnerEmail was succeful");
+        return true;
+    }
+
+    @Override
+    public boolean correctOwnerPassword(int vatNumber, String password) {
+        try {
+            propertyOwnerRepository.updatePassword(password, vatNumber);
+        } catch (Exception e) {
+            logger.error("Error correcting owner password: " + e.getMessage());
+            return false;
+        }
+        logger.debug("correctOwnerPassword was succeful");
+        return true;
     }
 
     @Override
     public int getUserVat(String username, String password) {
-        PropertyOwner propertyOwner = propertyOwnerRepository.searchByUsernameAndPassword(username, password);
-        return propertyOwner.getVatNumber();
+        try {
+            PropertyOwner propertyOwner = propertyOwnerRepository.searchByUsernameAndPassword(username, password);
+            logger.debug("getUserVat was succeful");
+            return propertyOwner.getVatNumber();
+        } catch (Exception e) {
+            logger.error("Error getting user VAT number", e);
+            return -1;
+        }
     }
 
     private boolean checkProperty(String propertyId, int vatNumber) {
-        Property property = propertyRepository.searchPropertyId(propertyId);
-        if (property == null) {
-            System.err.println("This property does not exist in our data base!");
+        try {
+            Property property = propertyRepository.searchPropertyId(propertyId);
+            if (property == null) {
+                logger.error("Property does not exist in database");
+                return false;
+            }
+            if (property.getPropertyOwner().getVatNumber() != vatNumber) {
+                logger.error("Property is not owned by user with VAT number " + vatNumber);
+                return false;
+            }
+            logger.debug("checkProperty was succeful");
+            return true;
+        } catch (Exception e) {
+            logger.error("Error checking property", e);
             return false;
         }
-        if (property.getPropertyOwner().getVatNumber() != vatNumber) {
-            System.err.println("This property is not yours!");
-            return false;
-        }
-        return true;
     }
 
     private boolean checkRepair(int repairId, int vatNumber) {
-        PropertyRepair propertyRepair = propertyRepairRepository.searchById(repairId);
-        if (propertyRepair == null) {
-            System.err.println("This repair does not exist in our data base!");
+        try {
+            PropertyRepair propertyRepair = propertyRepairRepository.searchById(repairId);
+            if (propertyRepair == null) {
+                logger.error("Repair does not exist in database");
+                return false;
+            }
+            if (propertyRepair.getPropertyOwner().getVatNumber() != vatNumber) {
+                logger.error("Repair is not owned by user with VAT number " + vatNumber);
+                return false;
+            }
+            logger.debug("checkRepair was succeful");
+            return true;
+        } catch (Exception e) {
+            logger.error("Error checking repair", e);
             return false;
         }
-        if (propertyRepair.getPropertyOwner().getVatNumber() != vatNumber) {
-            System.err.println("This repair is not yours!");
-            return false;
-        }
-        return true;
     }
 
     @Override
     public boolean safelyDeleteProperty(int vatNumber, String e9) {
-        if (checkProperty(e9, vatNumber)) {
-            return propertyRepository.safelyDelete(e9);
-        } else {
+        try {
+            if (checkProperty(e9, vatNumber)) {
+                logger.debug("safelyDeleteProperty was succeful");
+                return propertyRepository.safelyDelete(e9);
+            } else {
+                logger.debug("property does not exist");
+                return false;
+            }
+        } catch (Exception e) {
+            logger.error("Error safely deleting property", e);
             return false;
         }
     }
 
     @Override
     public boolean safelyDeletePropertyRepair(int vatNumber, int repairId) {
-        if (checkRepair(repairId, vatNumber)) {
-            return propertyRepairRepository.safelyDelete(repairId);
-        } else {
+        try {
+            if (checkRepair(repairId, vatNumber)) {
+                logger.debug("safelyDeleteProperty was succeful");
+                return propertyRepairRepository.safelyDelete(repairId);
+            } else {
+                logger.error("property repair does not exist");
+                return false;
+            }
+        } catch (Exception e) {
+            logger.error("Error safely deleting property repair", e);
             return false;
         }
     }
 
     @Override
     public boolean safelyDeletePropertyOwner(int vatNumber) {
-        if (propertyOwnerRepository.safelyDelete(vatNumber)) {
-            System.out.println("User with VAT: " + vatNumber + " succesfully deleted");
-            return true;
+        try {
+            if (propertyOwnerRepository.safelyDelete(vatNumber)) {
+                logger.debug("User with VAT: " + vatNumber + " succesfully deleted");
+                return true;
+            }
+            logger.error("User delete failed");
+            return false;
+        } catch (Exception e) {
+            logger.error("Error safely deleting property owner", e);
+            return false;
         }
-        System.err.println("User delete failed");
-        return false;
     }
 }
