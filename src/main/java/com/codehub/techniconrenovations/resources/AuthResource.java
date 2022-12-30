@@ -19,12 +19,12 @@ public class AuthResource {
     public Response login(@FormParam("username") String username,
             @FormParam("password") String password) {
         if (propertyOwnerServices.logIn(username, password)) {
-            return Response.status(0)
-                    .entity(new RestApiResult<>(username, 0, "Successful"))
+            return Response.status(200)
+                    .entity(new RestApiResult<>(username, 200, "Successful"))
                     .build();
         } else {
-            return Response.status(300)
-                    .entity(new RestApiResult<>(null, 300, "Invalid Credentials"))
+            return Response.status(401)
+                    .entity(new RestApiResult<>(null, 401, "Invalid Credentials"))
                     .build();
         }
     }
@@ -40,12 +40,12 @@ public class AuthResource {
             @FormParam("phoneNumber") String phoneNumber,
             @FormParam("vatNumber") int vatNumber) {
         if (propertyOwnerServices.register(vatNumber, name, surname, address, phoneNumber, email, username, password)) {
-            return Response.status(0)
-                    .entity(new RestApiResult<>(vatNumber, 0, "Successful"))
+            return Response.status(200)
+                    .entity(new RestApiResult<>(vatNumber, 200, "Successful"))
                     .build();
         } else {
-            return Response.status(400)
-                    .entity(new RestApiResult<>(null, 400, "There was a problem with your registration. Username or email already taken"))
+            return Response.status(401)
+                    .entity(new RestApiResult<>(null, 401, "There was a problem with your registration. Username or email already taken"))
                     .build();
         }
     }

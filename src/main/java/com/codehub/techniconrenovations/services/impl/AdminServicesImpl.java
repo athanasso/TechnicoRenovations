@@ -19,11 +19,8 @@ public class AdminServicesImpl implements AdminServices {
 
     @PersistenceContext(unitName = "Persistence")
     private EntityManager entityManager;
-    @Inject
     private PropertyRepository propertyRepository;
-    @Inject
     private PropertyOwnerRepository propertyOwnerRepository;
-    @Inject
     private PropertyRepairRepository propertyRepairRepository;
 
     @Inject

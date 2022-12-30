@@ -1,5 +1,6 @@
 package com.codehub.techniconrenovations.services.impl;
 
+import com.codehub.techniconrenovations.dto.RestApiResult;
 import com.codehub.techniconrenovations.enums.PropertyType;
 import com.codehub.techniconrenovations.enums.RepairType;
 import com.codehub.techniconrenovations.enums.Status;
@@ -17,12 +18,9 @@ import java.util.List;
 
 public class PropertyOwnerServicesImpl implements PropertyOwnerServices {
 
-    @Inject
-    private PropertyRepository propertyRepository;
-    @Inject
-    private PropertyOwnerRepository propertyOwnerRepository;
-    @Inject
-    private PropertyRepairRepository propertyRepairRepository;
+    private final PropertyRepository propertyRepository;
+    private final PropertyOwnerRepository propertyOwnerRepository;
+    private final PropertyRepairRepository propertyRepairRepository;
 
     @Inject
     public PropertyOwnerServicesImpl(PropertyRepository propertyRepository, PropertyOwnerRepository propertyOwnerRepository, PropertyRepairRepository propertyRepairRepository) {
@@ -32,7 +30,7 @@ public class PropertyOwnerServicesImpl implements PropertyOwnerServices {
     }
 
     @Override
-    public List<Property> getProperties(int vatNumber) {
+    public RestApiResult<List<Property>> getProperties(int vatNumber) {
         List<Property> pr = propertyRepository.searchVat(vatNumber);
         List<Property> properties = new ArrayList<>();
         pr.forEach(p -> {
@@ -40,11 +38,14 @@ public class PropertyOwnerServicesImpl implements PropertyOwnerServices {
                 properties.add(p);
             }
         });
-        return properties;
+        if (properties.isEmpty()){
+            return new RestApiResult<>(null, 401, "Something went wrong!");
+        }
+       return new RestApiResult<>(properties, 200, "Successful!");
     }
 
     @Override
-    public List<PropertyRepair> getRepairStatus(int vatNumber) {
+    public RestApiResult<List<PropertyRepair>> getRepairStatus(int vatNumber) {
         List<Property> properties = propertyRepository.searchVat(vatNumber);
         List<PropertyRepair> repairs = new ArrayList<>();
         for (Property p : properties) {
@@ -55,7 +56,10 @@ public class PropertyOwnerServicesImpl implements PropertyOwnerServices {
                 }
             });
         }
-        return repairs;
+        if (repairs.isEmpty()){
+            return new RestApiResult<>(null, 401, "Something went wrong!");
+        }
+        return new RestApiResult<>(repairs, 200, "Successful!");
     }
 
     @Override

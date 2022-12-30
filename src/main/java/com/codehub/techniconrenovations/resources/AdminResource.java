@@ -1,8 +1,6 @@
 package com.codehub.techniconrenovations.resources;
 
-import com.codehub.techniconrenovations.model.Property;
-import com.codehub.techniconrenovations.model.PropertyOwner;
-import com.codehub.techniconrenovations.model.PropertyRepair;
+import com.codehub.techniconrenovations.dto.RestApiResult;
 import com.codehub.techniconrenovations.services.AdminServices;
 import com.codehub.techniconrenovations.util.UtilFunctions;
 import jakarta.inject.Inject;
@@ -13,14 +11,13 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.Response;
-import java.util.List;
 
 @Path("admin")
 public class AdminResource {
-    
+
     @Inject
     AdminServices adminServices;
-    
+
     @GET
     @Path("ping")
     public Response ping() {
@@ -28,67 +25,128 @@ public class AdminResource {
                 .ok("pang")
                 .build();
     }
-    
+
     @GET
     @Path("get_pending_repairs")
     @Produces("application/json")
-    public List<PropertyRepair> getPendingRepairs() {
-        return adminServices.getPendingRepairs();
+    public RestApiResult getPendingRepairs() {
+        try {
+            return new RestApiResult<>(adminServices.getPendingRepairs(), 200, "Succesful!");
+        } catch (Exception e) {
+            return new RestApiResult<>(e, 401, "Something went wrong!");
+        }
     }
-    
+
     @POST
     @Path("propose_cost")
     @Consumes("application/json")
-    public void proposeCost(@PathParam("cost") double cost,
+    public Response proposeCost(@PathParam("cost") double cost,
             @PathParam("repairId") int repairId) {
-        adminServices.proposeCost(cost, repairId);
+        try {
+            adminServices.proposeCost(cost, repairId);
+            return Response.status(200)
+                    .entity(new RestApiResult<>(repairId, 200, "Successful!"))
+                    .build();
+        } catch (Exception e) {
+            return Response.status(401)
+                    .entity(new RestApiResult<>(e, 401, "Something went wrong!"))
+                    .build();
+        }
     }
-    
+
     @POST
     @Path("propose_dates")
     @Consumes("application/json")
-    public void proposeStartEndDates(@PathParam("startDate") String startDate,
+    public Response proposeStartEndDates(@PathParam("startDate") String startDate,
             @PathParam("endDate") String endDate,
             @PathParam("repairId") int repairId) {
-        adminServices.proposeStartEndDates(UtilFunctions.convertToDate(startDate), UtilFunctions.convertToDate(endDate), repairId);
+        try {
+            adminServices.proposeStartEndDates(UtilFunctions.convertToDate(startDate), UtilFunctions.convertToDate(endDate), repairId);
+            return Response.status(200)
+                    .entity(new RestApiResult<>(repairId, 200, "Successful!"))
+                    .build();
+        } catch (Exception e) {
+            return Response.status(401)
+                    .entity(new RestApiResult<>(e, 401, "Something went wrong!"))
+                    .build();
+        }
     }
-    
+
     @GET
     @Path("get_property_repairs")
     @Produces("application/json")
-    public List<PropertyRepair> getAllRepairs() {
-        return adminServices.getAllRepairs();
+    public RestApiResult getAllRepairs() {
+        try {
+            return new RestApiResult<>(adminServices.getAllRepairs(), 401, "Successful!");
+        } catch (Exception e) {
+            return new RestApiResult<>(e, 401, "Something went wrong!");
+        }
     }
-    
+
     @GET
     @Path("get_properties")
     @Produces("application/json")
-    public List<Property> getProperties() {
-        return adminServices.getProperties();
+    public RestApiResult getProperties() {
+        try {
+            return new RestApiResult<>(adminServices.getProperties(), 401, "Successful!");
+        } catch (Exception e) {
+            return new RestApiResult<>(e, 401, "Something went wrong!");
+        }
     }
-    
+
     @GET
     @Path("get_owners")
     @Produces("application/json")
-    public List<PropertyOwner> getOwners() {
-        return adminServices.getOwners();
+    public RestApiResult getOwners() {
+        try {
+            return new RestApiResult<>(adminServices.getOwners(), 401, "Successful!");
+        } catch (Exception e) {
+            return new RestApiResult<>(e, 401, "Something went wrong!");
+        }
     }
-    
+
     @POST
     @Path("delete_properties")
-    public void permanentlyDeleteProperties() {
-        adminServices.permanentlyDeleteProperties();
+    public Response permanentlyDeleteProperties() {
+        try {
+            adminServices.permanentlyDeleteProperties();
+            return Response.status(200)
+                    .entity(new RestApiResult<>(null, 200, "Successful"))
+                    .build();
+        } catch (Exception e) {
+            return Response.status(401)
+                    .entity(new RestApiResult<>(null, 401, "Something went wrong!"))
+                    .build();
+        }
     }
-    
+
     @POST
     @Path("delete_owners")
-    public void permanentlyDeletePropertyOwner() {
-        adminServices.permanentlyDeletePropertyOwner();
+    public Response permanentlyDeletePropertyOwner() {
+        try {
+            adminServices.permanentlyDeletePropertyOwner();
+            return Response.status(200)
+                    .entity(new RestApiResult<>(null, 200, "Successful"))
+                    .build();
+        } catch (Exception e) {
+            return Response.status(401)
+                    .entity(new RestApiResult<>(null, 401, "Something went wrong!"))
+                    .build();
+        }
     }
-    
+
     @POST
     @Path("delete_repairs")
-    public void permanentlyDeleteRepairs() {
-        adminServices.permanentlyDeleteRepairs();
+    public Response permanentlyDeleteRepairs() {
+        try {
+            adminServices.permanentlyDeleteRepairs();
+            return Response.status(200)
+                    .entity(new RestApiResult<>(null, 200, "Successful"))
+                    .build();
+        } catch (Exception e) {
+            return Response.status(401)
+                    .entity(new RestApiResult<>(null, 401, "Something went wrong!"))
+                    .build();
+        }
     }
 }
