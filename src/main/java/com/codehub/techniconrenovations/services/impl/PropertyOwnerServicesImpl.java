@@ -166,12 +166,12 @@ public class PropertyOwnerServicesImpl implements PropertyOwnerServices {
                 propertyRepairRepository.updateActualStartDate(repairId);
                 propertyRepairRepository.updateActualEndDate(repairId);
             }
+            logger.debug("acceptOrDeclineRepair was succeful!");
+            return true;
         } catch (Exception e) {
             logger.error("Error accepting or declining repair: " + e.getMessage());
             return false;
         }
-        logger.debug("acceptOrDeclineRepair was succeful!");
-        return true;
     }
 
     @Override
@@ -193,12 +193,12 @@ public class PropertyOwnerServicesImpl implements PropertyOwnerServices {
                 return false;
             }
             propertyRepository.updatePropertyAddress(address, propertyId);
+            logger.debug("correctPropertyAddress was succeful");
+            return true;
         } catch (Exception e) {
             logger.error("Error correcting property address: " + e.getMessage());
             return false;
         }
-        logger.debug("correctPropertyAddress was succeful");
-        return true;
     }
 
     @Override
@@ -209,12 +209,12 @@ public class PropertyOwnerServicesImpl implements PropertyOwnerServices {
                 return false;
             }
             propertyRepository.updateYearOfConstruction(constructionYear, propertyId);
+            logger.debug("correctPropertyconstructionYear was succeful");
+            return true;
         } catch (Exception e) {
             logger.error("Error correcting property construction year: " + e.getMessage());
             return false;
         }
-        logger.debug("correctPropertyconstructionYear was succeful");
-        return true;
     }
 
     @Override
@@ -225,48 +225,48 @@ public class PropertyOwnerServicesImpl implements PropertyOwnerServices {
                 return false;
             }
             propertyRepository.updatePropertyType(propertyType, propertyId);
+            logger.debug("correctPropertyType was succeful");
+            return true;
         } catch (Exception e) {
             logger.error("Error correcting property type: " + e.getMessage());
             return false;
-        }
-        logger.debug("correctPropertyType was succeful");
-        return true;
+        } 
     }
 
     @Override
     public boolean correctOwnerUsername(int vatNumber, String username) {
         try {
             propertyOwnerRepository.updateUsername(username, vatNumber);
+            logger.debug("correctOwnerUsername was succeful");
+            return true;
         } catch (Exception e) {
             logger.error("Error correcting owner username: " + e.getMessage());
             return false;
         }
-        logger.debug("correctOwnerUsername was succeful");
-        return true;
     }
 
     @Override
     public boolean correctOwnerEmail(int vatNumber, String email) {
         try {
             propertyOwnerRepository.updateEmail(email, vatNumber);
+            logger.debug("correctOwnerEmail was succeful");
+            return true;
         } catch (Exception e) {
             logger.error("Error correcting owner email: " + e.getMessage());
             return false;
         }
-        logger.debug("correctOwnerEmail was succeful");
-        return true;
     }
 
     @Override
     public boolean correctOwnerPassword(int vatNumber, String password) {
         try {
             propertyOwnerRepository.updatePassword(password, vatNumber);
+            logger.debug("correctOwnerPassword was succeful");
+            return true;
         } catch (Exception e) {
             logger.error("Error correcting owner password: " + e.getMessage());
             return false;
         }
-        logger.debug("correctOwnerPassword was succeful");
-        return true;
     }
 
     @Override

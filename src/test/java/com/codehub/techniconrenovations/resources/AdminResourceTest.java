@@ -4,7 +4,6 @@ import com.codehub.techniconrenovations.dto.RestApiResult;
 import jakarta.ws.rs.core.Response;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 public class AdminResourceTest {
 
