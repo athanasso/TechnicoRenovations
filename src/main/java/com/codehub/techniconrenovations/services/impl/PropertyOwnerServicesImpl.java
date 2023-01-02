@@ -9,8 +9,10 @@ import com.codehub.techniconrenovations.model.PropertyRepair;
 import com.codehub.techniconrenovations.repository.PropertyOwnerRepository;
 import com.codehub.techniconrenovations.repository.PropertyRepairRepository;
 import com.codehub.techniconrenovations.repository.PropertyRepository;
+import com.codehub.techniconrenovations.repository.impl.PropertyOwnerRepositoryImpl;
+import com.codehub.techniconrenovations.repository.impl.PropertyRepairRepositoryImpl;
+import com.codehub.techniconrenovations.repository.impl.PropertyRepositoryImpl;
 import com.codehub.techniconrenovations.services.PropertyOwnerServices;
-import jakarta.inject.Inject;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -21,12 +23,9 @@ public class PropertyOwnerServicesImpl implements PropertyOwnerServices {
 
     private static final Logger logger = LoggerFactory.getLogger(PropertyOwnerServicesImpl.class);
     
-    @Inject
-    private PropertyRepository propertyRepository;
-    @Inject
-    private PropertyOwnerRepository propertyOwnerRepository;
-    @Inject
-    private PropertyRepairRepository propertyRepairRepository;
+    private PropertyRepository propertyRepository = new PropertyRepositoryImpl();
+    private PropertyOwnerRepository propertyOwnerRepository = new PropertyOwnerRepositoryImpl();
+    private PropertyRepairRepository propertyRepairRepository = new PropertyRepairRepositoryImpl();
 
     public PropertyOwnerServicesImpl(PropertyRepository propertyRepository, PropertyOwnerRepository propertyOwnerRepository, PropertyRepairRepository propertyRepairRepository) {
         this.propertyRepository = propertyRepository;

@@ -6,7 +6,6 @@ import com.codehub.techniconrenovations.repository.PropertyRepairRepository;
 import com.codehub.techniconrenovations.repository.PropertyRepository;
 import com.codehub.techniconrenovations.services.PropertyOwnerServices;
 import com.codehub.techniconrenovations.services.impl.PropertyOwnerServicesImpl;
-import jakarta.inject.Inject;
 import jakarta.ws.rs.FormParam;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
@@ -19,7 +18,6 @@ public class AuthResource {
     PropertyOwnerRepository propertyOwnerRepository;
     PropertyRepairRepository propertyRepairRepository;
     
-    @Inject
     PropertyOwnerServices propertyOwnerServices = new PropertyOwnerServicesImpl(propertyRepository, propertyOwnerRepository, propertyRepairRepository);
     
     @POST

@@ -16,7 +16,7 @@ public class PropertyRepositoryImpl implements PropertyRepository {
 
     @PersistenceContext(unitName = "Persistence")
     private EntityManager entityManager;
-
+    
     @Override
     @Transactional
     public boolean createProperty(Property property) {

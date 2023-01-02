@@ -7,8 +7,10 @@ import com.codehub.techniconrenovations.model.PropertyRepair;
 import com.codehub.techniconrenovations.repository.PropertyOwnerRepository;
 import com.codehub.techniconrenovations.repository.PropertyRepairRepository;
 import com.codehub.techniconrenovations.repository.PropertyRepository;
+import com.codehub.techniconrenovations.repository.impl.PropertyOwnerRepositoryImpl;
+import com.codehub.techniconrenovations.repository.impl.PropertyRepairRepositoryImpl;
+import com.codehub.techniconrenovations.repository.impl.PropertyRepositoryImpl;
 import com.codehub.techniconrenovations.services.AdminServices;
-import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
@@ -23,11 +25,11 @@ public class AdminServicesImpl implements AdminServices {
 
     @PersistenceContext(unitName = "Persistence")
     private EntityManager entityManager;
-    private final PropertyRepository propertyRepository;
-    private final PropertyOwnerRepository propertyOwnerRepository;
-    private final PropertyRepairRepository propertyRepairRepository;
+    
+    private PropertyRepository propertyRepository = new PropertyRepositoryImpl();
+    private PropertyOwnerRepository propertyOwnerRepository = new PropertyOwnerRepositoryImpl();
+    private PropertyRepairRepository propertyRepairRepository = new PropertyRepairRepositoryImpl();
 
-    @Inject
     public AdminServicesImpl(PropertyRepository propertyRepository, PropertyOwnerRepository propertyOwnerRepository, PropertyRepairRepository propertyRepairRepository) {
         this.propertyRepository = propertyRepository;
         this.propertyOwnerRepository = propertyOwnerRepository;

@@ -7,7 +7,6 @@ import com.codehub.techniconrenovations.repository.PropertyRepository;
 import com.codehub.techniconrenovations.services.AdminServices;
 import com.codehub.techniconrenovations.services.impl.AdminServicesImpl;
 import com.codehub.techniconrenovations.util.UtilFunctions;
-import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
@@ -19,12 +18,11 @@ import jakarta.ws.rs.core.Response;
 @Path("admin")
 public class AdminResource {
 
-    PropertyRepository propertyRepository;
-    PropertyOwnerRepository propertyOwnerRepository;
-    PropertyRepairRepository propertyRepairRepository;
-    
-    @Inject
-    AdminServices adminServices = new AdminServicesImpl(propertyRepository, propertyOwnerRepository, propertyRepairRepository);
+    private PropertyRepository propertyRepository;
+    private PropertyOwnerRepository propertyOwnerRepository;
+    private PropertyRepairRepository propertyRepairRepository;
+
+    private final AdminServices adminServices = new AdminServicesImpl(propertyRepository, propertyOwnerRepository, propertyRepairRepository);
 
     @GET
     @Path("ping")

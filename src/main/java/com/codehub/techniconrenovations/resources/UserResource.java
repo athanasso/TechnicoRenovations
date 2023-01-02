@@ -10,7 +10,6 @@ import com.codehub.techniconrenovations.repository.impl.PropertyRepositoryImpl;
 import com.codehub.techniconrenovations.services.PropertyOwnerServices;
 import com.codehub.techniconrenovations.services.impl.PropertyOwnerServicesImpl;
 import com.codehub.techniconrenovations.util.InputHandler;
-import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.FormParam;
 import jakarta.ws.rs.GET;
@@ -28,8 +27,6 @@ public class UserResource {
     PropertyRepository propertyRepository = new PropertyRepositoryImpl();
     PropertyOwnerRepository propertyOwnerRepository = new PropertyOwnerRepositoryImpl();
     PropertyRepairRepository propertyRepairRepository = new PropertyRepairRepositoryImpl();
-
-    @Inject
     PropertyOwnerServices propertyOwnerServices = new PropertyOwnerServicesImpl(propertyRepository, propertyOwnerRepository, propertyRepairRepository);
 
     @GET
