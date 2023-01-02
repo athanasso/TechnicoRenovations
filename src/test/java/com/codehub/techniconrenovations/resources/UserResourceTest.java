@@ -28,7 +28,7 @@ public class UserResourceTest {
     @Test
     public void testRegisterProperty() {
         // Call the registerProperty method with some sample input data
-        Response response = userResource.registerProperty(1123123, "E9-12345", "123 Main St", 2010, "House");
+        Response response = userResource.registerProperty(1123123, "E10095", "123 Main St", 2010, "DETACHED_HOUSE");
 
         // Verify that the method returned the expected HTTP status code
         assertEquals(200, response.getStatus());
@@ -53,7 +53,7 @@ public class UserResourceTest {
     @Test
     public void testCorrectPropertyType() {
         // Call the correctPropertyType method with some sample input data
-        Response response = userResource.correctPropertyType(1123123, "PROP-12345", "APARTMENT_BUILDING");
+        Response response = userResource.correctPropertyType(1123123, "E1001", "APARTMENT_BUILDING");
 
         // Verify that the method returned the expected HTTP status code
         assertEquals(200, response.getStatus());
@@ -65,7 +65,7 @@ public class UserResourceTest {
     @Test
     public void testCorrectPropertyConstructionYear() {
         // Call the correctPropertyconstructionYear method with some sample input data
-        Response response = userResource.correctPropertyconstructionYear(1123123, "PROP-12345", 2015);
+        Response response = userResource.correctPropertyconstructionYear(1123123, "E1001", 2015);
 
         // Verify that the method returned the expected HTTP status code
         assertEquals(200, response.getStatus());
@@ -77,7 +77,7 @@ public class UserResourceTest {
     @Test
     public void testRegisterPropertyRepair() {
         // Call the registerPropertyRepair method with some sample input data
-        Response response = userResource.registerPropertyRepair(1123123, "E9-12345", "Broken window", "Broken window in bedroom", "FRAMES");
+        Response response = userResource.registerPropertyRepair(1123123, "E10095", "Insulate the house's windows", "Insulate windows", "INSULATION");
 
         // Verify that the method returned the expected HTTP status code
         assertEquals(200, response.getStatus());
@@ -146,7 +146,7 @@ public class UserResourceTest {
      */
     @Test
     public void testSafelyDeleteProperty() {
-        Response response = userResource.safelyDeleteProperty(1123123, "e9_code");
+        Response response = userResource.safelyDeleteProperty(1123123, "E1001");
         assertEquals(200, response.getStatus());
         assertNotNull(response.getEntity());
     }
