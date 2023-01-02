@@ -1,12 +1,14 @@
 package com.codehub.techniconrenovations.resources;
 
 import com.codehub.techniconrenovations.dto.RestApiResult;
+import jakarta.inject.Inject;
 import jakarta.ws.rs.core.Response;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class AdminResourceTest {
 
+    @Inject
     private static final AdminResource adminResource = new AdminResource();
 
     /**

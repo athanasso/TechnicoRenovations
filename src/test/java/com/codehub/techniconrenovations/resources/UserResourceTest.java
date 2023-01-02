@@ -1,6 +1,7 @@
 package com.codehub.techniconrenovations.resources;
 
 import com.codehub.techniconrenovations.dto.RestApiResult;
+import jakarta.inject.Inject;
 import jakarta.ws.rs.core.Response;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
@@ -8,7 +9,8 @@ import static org.junit.Assert.assertNotNull;
 
 public class UserResourceTest {
     
-    private static final UserResource userResource = new UserResource();
+    @Inject
+    private final UserResource userResource = new UserResource();
 
     /**
      * Test of ping method, of class UserResource.
@@ -39,7 +41,7 @@ public class UserResourceTest {
     @Test
     public void testCorrectPropertyAddress() {
         // Call the correctPropertyAddress method with some sample input data
-        Response response = userResource.correctPropertyAddress(1123123, "PROP-12345", "456 Main St");
+        Response response = userResource.correctPropertyAddress(1123123, "E1001", "456 Main St");
 
         // Verify that the method returned the expected HTTP status code
         assertEquals(200, response.getStatus());

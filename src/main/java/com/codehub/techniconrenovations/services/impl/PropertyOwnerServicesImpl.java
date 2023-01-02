@@ -20,12 +20,14 @@ import org.slf4j.LoggerFactory;
 public class PropertyOwnerServicesImpl implements PropertyOwnerServices {
 
     private static final Logger logger = LoggerFactory.getLogger(PropertyOwnerServicesImpl.class);
-
-    private final PropertyRepository propertyRepository;
-    private final PropertyOwnerRepository propertyOwnerRepository;
-    private final PropertyRepairRepository propertyRepairRepository;
-
+    
     @Inject
+    private PropertyRepository propertyRepository;
+    @Inject
+    private PropertyOwnerRepository propertyOwnerRepository;
+    @Inject
+    private PropertyRepairRepository propertyRepairRepository;
+
     public PropertyOwnerServicesImpl(PropertyRepository propertyRepository, PropertyOwnerRepository propertyOwnerRepository, PropertyRepairRepository propertyRepairRepository) {
         this.propertyRepository = propertyRepository;
         this.propertyOwnerRepository = propertyOwnerRepository;

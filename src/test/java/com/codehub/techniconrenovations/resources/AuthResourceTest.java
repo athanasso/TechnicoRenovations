@@ -1,11 +1,13 @@
 package com.codehub.techniconrenovations.resources;
 
+import jakarta.inject.Inject;
 import jakarta.ws.rs.core.Response;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class AuthResourceTest {
     
+    @Inject
     private static final AuthResource authResource = new AuthResource();
 
     /**

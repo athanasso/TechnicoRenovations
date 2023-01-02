@@ -15,7 +15,7 @@
         <junit.version>5.9.1</junit.version>
     </properties>
     <dependencies>
-        <dependency>
+       <dependency>
             <groupId>jakarta.platform</groupId>
             <artifactId>jakarta.jakartaee-web-api</artifactId>
             <version>10.0.0</version>
@@ -50,9 +50,9 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-	<groupId>org.glassfish.jersey.core</groupId>
-	<artifactId>jersey-common</artifactId>
-        <version>3.0.0</version>
+            <groupId>org.glassfish.jersey.core</groupId>
+            <artifactId>jersey-common</artifactId>
+            <version>3.0.0</version>
         </dependency>
     </dependencies>
     <build>
