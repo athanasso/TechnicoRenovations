@@ -7,10 +7,8 @@ import com.codehub.techniconrenovations.model.PropertyRepair;
 import com.codehub.techniconrenovations.repository.PropertyOwnerRepository;
 import com.codehub.techniconrenovations.repository.PropertyRepairRepository;
 import com.codehub.techniconrenovations.repository.PropertyRepository;
-import com.codehub.techniconrenovations.repository.impl.PropertyOwnerRepositoryImpl;
-import com.codehub.techniconrenovations.repository.impl.PropertyRepairRepositoryImpl;
-import com.codehub.techniconrenovations.repository.impl.PropertyRepositoryImpl;
 import com.codehub.techniconrenovations.services.AdminServices;
+import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
@@ -25,16 +23,12 @@ public class AdminServicesImpl implements AdminServices {
 
     @PersistenceContext(unitName = "Persistence")
     private EntityManager entityManager;
-    
-    private PropertyRepository propertyRepository = new PropertyRepositoryImpl();
-    private PropertyOwnerRepository propertyOwnerRepository = new PropertyOwnerRepositoryImpl();
-    private PropertyRepairRepository propertyRepairRepository = new PropertyRepairRepositoryImpl();
-
-    public AdminServicesImpl(PropertyRepository propertyRepository, PropertyOwnerRepository propertyOwnerRepository, PropertyRepairRepository propertyRepairRepository) {
-        this.propertyRepository = propertyRepository;
-        this.propertyOwnerRepository = propertyOwnerRepository;
-        this.propertyRepairRepository = propertyRepairRepository;
-    }
+    @Inject
+    private PropertyRepository propertyRepository;
+    @Inject
+    private PropertyOwnerRepository propertyOwnerRepository;
+    @Inject
+    private PropertyRepairRepository propertyRepairRepository;
 
     @Override
     public List<PropertyRepair> getPendingRepairs() {
@@ -198,7 +192,7 @@ public class AdminServicesImpl implements AdminServices {
                     .setParameter("propertyOwner", propertyOwner);
             query.executeUpdate();
             entityManager.getTransaction().commit();
-            logger.debug("permanentlyDeleteProperties was succefully");            
+            logger.debug("permanentlyDeleteProperties was succefully");
         } catch (Exception e) {
             logger.error("Error while deleting properties for owner: " + e.getMessage(), e);
         }
@@ -217,7 +211,7 @@ public class AdminServicesImpl implements AdminServices {
             Query query = entityManager.createQuery("DELETE PropertyOwner WHERE isDeleted = :isDeleted").setParameter("isDeleted", true);
             query.executeUpdate();
             entityManager.getTransaction().commit();
-            logger.debug("permanentlyDeletePropertyOwner was succefully"); 
+            logger.debug("permanentlyDeletePropertyOwner was succefully");
             return true;
         } catch (Exception e) {
             logger.error("Error while deleting property owner: " + e.getMessage(), e);
@@ -233,7 +227,7 @@ public class AdminServicesImpl implements AdminServices {
                     .setParameter("isDeleted", true);
             query.executeUpdate();
             entityManager.getTransaction().commit();
-            logger.debug("permanentlyDeleteRepairs was succefully"); 
+            logger.debug("permanentlyDeleteRepairs was succefully");
             return true;
         } catch (Exception e) {
             logger.error("Error while deleting property repairs: " + e.getMessage(), e);

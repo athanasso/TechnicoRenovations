@@ -9,10 +9,9 @@ import com.codehub.techniconrenovations.model.PropertyRepair;
 import com.codehub.techniconrenovations.repository.PropertyOwnerRepository;
 import com.codehub.techniconrenovations.repository.PropertyRepairRepository;
 import com.codehub.techniconrenovations.repository.PropertyRepository;
-import com.codehub.techniconrenovations.repository.impl.PropertyOwnerRepositoryImpl;
-import com.codehub.techniconrenovations.repository.impl.PropertyRepairRepositoryImpl;
-import com.codehub.techniconrenovations.repository.impl.PropertyRepositoryImpl;
 import com.codehub.techniconrenovations.services.PropertyOwnerServices;
+import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,15 +22,12 @@ public class PropertyOwnerServicesImpl implements PropertyOwnerServices {
 
     private static final Logger logger = LoggerFactory.getLogger(PropertyOwnerServicesImpl.class);
     
-    private PropertyRepository propertyRepository = new PropertyRepositoryImpl();
-    private PropertyOwnerRepository propertyOwnerRepository = new PropertyOwnerRepositoryImpl();
-    private PropertyRepairRepository propertyRepairRepository = new PropertyRepairRepositoryImpl();
-
-    public PropertyOwnerServicesImpl(PropertyRepository propertyRepository, PropertyOwnerRepository propertyOwnerRepository, PropertyRepairRepository propertyRepairRepository) {
-        this.propertyRepository = propertyRepository;
-        this.propertyOwnerRepository = propertyOwnerRepository;
-        this.propertyRepairRepository = propertyRepairRepository;
-    }
+    @Inject
+    private PropertyRepository propertyRepository;
+    @Inject
+    private PropertyOwnerRepository propertyOwnerRepository ;
+    @Inject
+    private PropertyRepairRepository propertyRepairRepository;
 
     @Override
     public List<Property> getProperties(int vatNumber) {
@@ -81,7 +77,7 @@ public class PropertyOwnerServicesImpl implements PropertyOwnerServices {
     }
 
     @Override
-    public boolean register(int vatNumber, String name, String surname, String address, String phoneNumber, String email, String username, String password) {
+    public boolean register(int vatNumber, String name, String surname, String address, String phoneNumber, String email, String username, String password, String typeOfUser) {
         try {
             PropertyOwner propertyOwner = new PropertyOwner();
             propertyOwner.setVatNumber(vatNumber);
@@ -92,6 +88,7 @@ public class PropertyOwnerServicesImpl implements PropertyOwnerServices {
             propertyOwner.setEmail(email);
             propertyOwner.setUsername(username);
             propertyOwner.setPassword(password);
+            propertyOwner.setTypeOfUser(typeOfUser);
             logger.debug("owner register was succesfull");
             return propertyOwnerRepository.createPropertyOwner(propertyOwner);
         } catch (jakarta.persistence.RollbackException ex) {

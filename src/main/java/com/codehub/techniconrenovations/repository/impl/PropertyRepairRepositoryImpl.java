@@ -25,9 +25,7 @@ public class PropertyRepairRepositoryImpl implements PropertyRepairRepository {
     @Transactional
     public boolean createPropertyRepair(PropertyRepair propertyRepair) {
         try {
-            entityManager.getTransaction().begin();
             entityManager.persist(propertyRepair);
-            entityManager.getTransaction().commit();
             logger.debug("createPropertyRepair was succesful");
             return true;
         } catch (Exception e) {
@@ -66,11 +64,9 @@ public class PropertyRepairRepositoryImpl implements PropertyRepairRepository {
     @Transactional
     public void updateRepairType(RepairType repairType, int repairId) {
         try {
-            entityManager.getTransaction().begin();
             String updateQuery = "UPDATE PropertyRepair set repairType = :repairType WHERE repairId =: id";
             entityManager.createQuery(updateQuery).setParameter("repairType", repairType)
                     .setParameter("id", repairId).executeUpdate();
-            entityManager.getTransaction().commit();
             logger.debug("updateRepairType was succesful");
         } catch (Exception e) {
             logger.error("Error occurred while updating repair type: {}", e.getMessage(), e);
@@ -81,11 +77,9 @@ public class PropertyRepairRepositoryImpl implements PropertyRepairRepository {
     @Transactional
     public void updateShortDescription(String shortDescription, int repairId) {
         try {
-            entityManager.getTransaction().begin();
             String updateQuery = "UPDATE PropertyRepair set shortDescription = : shortDescription WHERE repairId =: id";
             entityManager.createQuery(updateQuery).setParameter("shortDescription", shortDescription)
                     .setParameter("id", repairId).executeUpdate();
-            entityManager.getTransaction().commit();
             logger.debug("updateShortDescription was succesful");
         } catch (Exception e) {
             logger.error("Error occurred while updating short description: {}", e.getMessage(), e);
@@ -96,11 +90,9 @@ public class PropertyRepairRepositoryImpl implements PropertyRepairRepository {
     @Transactional
     public void updateDescription(String desciption, int repairId) {
         try {
-            entityManager.getTransaction().begin();
             String updateQuery = "UPDATE PropertyRepair set description = : desciption WHERE repairId =: id";
             entityManager.createQuery(updateQuery).setParameter("desciption", desciption)
                     .setParameter("id", repairId).executeUpdate();
-            entityManager.getTransaction().commit();
             logger.debug("updateDescription was succesful");
         } catch (Exception e) {
             logger.error("Error occurred while updating description: {}", e.getMessage(), e);
@@ -111,11 +103,9 @@ public class PropertyRepairRepositoryImpl implements PropertyRepairRepository {
     @Transactional
     public void updateProposedStartDate(Date proposedStartDate, int repairId) {
         try {
-            entityManager.getTransaction().begin();
             String updateQuery = "UPDATE PropertyRepair set proposedStartDate= :proposedStartDate WHERE repairId =: id";
             entityManager.createQuery(updateQuery).setParameter("proposedStartDate", proposedStartDate)
                     .setParameter("id", repairId).executeUpdate();
-            entityManager.getTransaction().commit();
             logger.debug("updateProposedStartDate was succesful");
         } catch (Exception e) {
             logger.error("Error occurred while updating proposed start date: {}", e.getMessage(), e);
@@ -126,11 +116,9 @@ public class PropertyRepairRepositoryImpl implements PropertyRepairRepository {
     @Transactional
     public void updateProposedEndDate(Date proposedEndDate, int repairId) {
         try {
-            entityManager.getTransaction().begin();
             String updateQuery = "UPDATE PropertyRepair set proposedEndDate= :proposedEndDate WHERE repairId =: id";
             entityManager.createQuery(updateQuery).setParameter("proposedEndDate", proposedEndDate)
                     .setParameter("id", repairId).executeUpdate();
-            entityManager.getTransaction().commit();
             logger.debug("updateProposedEndDate was succesful");
         } catch (Exception e) {
             logger.error("Error occurred while updating proposed end date: {}", e.getMessage(), e);
@@ -141,11 +129,9 @@ public class PropertyRepairRepositoryImpl implements PropertyRepairRepository {
     @Transactional
     public void updateProposedCost(Double proposedCost, int repairId) {
         try {
-            entityManager.getTransaction().begin();
             String updateQuery = "UPDATE PropertyRepair set proposedCost = : proposedCost WHERE repairId =: id";
             entityManager.createQuery(updateQuery).setParameter("proposedCost", proposedCost)
                     .setParameter("id", repairId).executeUpdate();
-            entityManager.getTransaction().commit();
             logger.debug("updateProposedCost was succesful");
         } catch (Exception e) {
             logger.error("Error occurred while updating proposed cost: {}", e.getMessage(), e);
@@ -156,11 +142,9 @@ public class PropertyRepairRepositoryImpl implements PropertyRepairRepository {
     @Transactional
     public void updateAccepted(boolean accepted, int repairId) {
         try {
-            entityManager.getTransaction().begin();
             String updateQuery = "UPDATE PropertyRepair set accepted = : accepted WHERE repairId =: id";
             entityManager.createQuery(updateQuery).setParameter("accepted", accepted)
                     .setParameter("id", repairId).executeUpdate();
-            entityManager.getTransaction().commit();
             logger.debug("updateAccepted was succesful");
         } catch (Exception e) {
             logger.error("Error occurred while updating the accepted: {}", e.getMessage(), e);
@@ -171,11 +155,9 @@ public class PropertyRepairRepositoryImpl implements PropertyRepairRepository {
     @Transactional
     public void updateStatus(Status status, int repairId) {
         try {
-            entityManager.getTransaction().begin();
             String updateQuery = "UPDATE PropertyRepair set status = : status WHERE repairId =: id";
             entityManager.createQuery(updateQuery).setParameter("status", status)
                     .setParameter("id", repairId).executeUpdate();
-            entityManager.getTransaction().commit();
             logger.debug("updateStatus was succesful");
         } catch (Exception e) {
             logger.error("Error occurred while updating status: {}", e.getMessage(), e);
@@ -186,10 +168,8 @@ public class PropertyRepairRepositoryImpl implements PropertyRepairRepository {
     @Transactional
     public void updateActualStartDate(int repairId) {
         try {
-            entityManager.getTransaction().begin();
             String updateQuery = "UPDATE PropertyRepair set actualStartDate =  proposedStartDate WHERE repairId =: id";
             entityManager.createQuery(updateQuery).setParameter("id", repairId).executeUpdate();
-            entityManager.getTransaction().commit();
             logger.debug("updateActualStartDate was succesful");
         } catch (Exception e) {
             logger.error("Error occurred while updating actual start date: {}", e.getMessage(), e);
@@ -200,10 +180,8 @@ public class PropertyRepairRepositoryImpl implements PropertyRepairRepository {
     @Transactional
     public void updateActualEndDate(int repairId) {
         try {
-            entityManager.getTransaction().begin();
             String updateQuery = "UPDATE PropertyRepair set actualEndDate =  proposedEndDate WHERE repairId =: id";
             entityManager.createQuery(updateQuery).setParameter("id", repairId).executeUpdate();
-            entityManager.getTransaction().commit();
             logger.debug("updateActualEndDate was succesful");
         } catch (Exception e) {
             logger.error("Error occurred while updating actual end date: {}", e.getMessage(), e);
@@ -214,11 +192,9 @@ public class PropertyRepairRepositoryImpl implements PropertyRepairRepository {
     @Transactional
     public void updateIsDeleted(boolean isDeleted, int repairId) {
         try {
-            entityManager.getTransaction().begin();
             String updateQuery = "UPDATE PropertyRepair set isDeleted = : isDeleted WHERE repairId =: id";
             entityManager.createQuery(updateQuery).setParameter("isDeleted", isDeleted)
                     .setParameter("id", repairId).executeUpdate();
-            entityManager.getTransaction().commit();
             logger.debug("updateIsDeleted was succesful");
         } catch (Exception e) {
             logger.error("Error occurred while updating isDeleted: {}", e.getMessage(), e);
@@ -303,10 +279,8 @@ public class PropertyRepairRepositoryImpl implements PropertyRepairRepository {
     @Transactional
     public boolean permanentlyDelete(int repairId) {
         try {
-            entityManager.getTransaction().begin();
             entityManager.createQuery("DELETE PropertyRepair WHERE repairId = :repairId")
                     .setParameter("repairId", repairId).executeUpdate();
-            entityManager.getTransaction().commit();
             logger.debug("permanentlyDelete was succesful");
             return true;
         } catch (Exception e) {

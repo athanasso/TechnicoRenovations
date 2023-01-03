@@ -1,15 +1,11 @@
 package com.codehub.techniconrenovations.resources;
 
 import com.codehub.techniconrenovations.dto.RestApiResult;
-import com.codehub.techniconrenovations.repository.PropertyOwnerRepository;
-import com.codehub.techniconrenovations.repository.PropertyRepairRepository;
-import com.codehub.techniconrenovations.repository.PropertyRepository;
-import com.codehub.techniconrenovations.repository.impl.PropertyOwnerRepositoryImpl;
-import com.codehub.techniconrenovations.repository.impl.PropertyRepairRepositoryImpl;
-import com.codehub.techniconrenovations.repository.impl.PropertyRepositoryImpl;
+import com.codehub.techniconrenovations.model.Property;
+import com.codehub.techniconrenovations.model.PropertyRepair;
 import com.codehub.techniconrenovations.services.PropertyOwnerServices;
-import com.codehub.techniconrenovations.services.impl.PropertyOwnerServicesImpl;
 import com.codehub.techniconrenovations.util.InputHandler;
+import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.FormParam;
 import jakarta.ws.rs.GET;
@@ -17,17 +13,21 @@ import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Path("user")
 public class UserResource {
 
+    private static final Logger logger = LoggerFactory.getLogger(UserResource.class);
+    
     InputHandler inputHandler = new InputHandler();
 
-    PropertyRepository propertyRepository = new PropertyRepositoryImpl();
-    PropertyOwnerRepository propertyOwnerRepository = new PropertyOwnerRepositoryImpl();
-    PropertyRepairRepository propertyRepairRepository = new PropertyRepairRepositoryImpl();
-    PropertyOwnerServices propertyOwnerServices = new PropertyOwnerServicesImpl(propertyRepository, propertyOwnerRepository, propertyRepairRepository);
+    @Inject
+    PropertyOwnerServices propertyOwnerServices;
 
     @GET
     @Path("ping")
@@ -39,7 +39,7 @@ public class UserResource {
 
     @POST
     @Path("property/create_property")
-    @Consumes("application/json")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response registerProperty(@FormParam("vatNumber") int vatNumber,
             @FormParam("e9") String e9,
             @FormParam("address") String address,
@@ -47,89 +47,101 @@ public class UserResource {
             @FormParam("propertyType") String propertyType) {
         try {
             if (!propertyOwnerServices.registerProperty(vatNumber, inputHandler.e9(e9), inputHandler.address(address), inputHandler.constructionYear(constructionYear), inputHandler.selectPropertyType(propertyType))) {
+                logger.error("user with" + vatNumber + "has wrong data");
                 return Response.status(404)
-                        .entity(new RestApiResult<>(null, 404, "Doesn't exist"))
+                        .entity("Doesn't exist")
                         .build();
             }
+            logger.debug("user with" + vatNumber + "succesful query");
             return Response.status(200)
-                    .entity(new RestApiResult<>(vatNumber, 200, "Successful"))
+                    .entity("Successful")
                     .build();
         } catch (Exception e) {
+            logger.error(""+ e);
             return Response.status(401)
-                    .entity(new RestApiResult<>(e, 401, "Something went wrong!"))
+                    .entity("Something went wrong!")
                     .build();
         }
     }
 
     @POST
     @Path("property/correct_property_address")
-    @Consumes("application/json")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response correctPropertyAddress(@FormParam("vatNumber") int vatNumber,
             @FormParam("propertyId") String propertyId,
             @FormParam("address") String address) {
         try {
             if (!propertyOwnerServices.correctPropertyAddress(vatNumber, propertyId, inputHandler.address(address))) {
+                logger.error("user with" + vatNumber + "has wrong data");
                 return Response.status(404)
-                        .entity(new RestApiResult<>(null, 404, "Doesn't exist"))
+                        .entity("Doesn't exist")
                         .build();
             }
+            logger.debug("user with" + vatNumber + "succesful query");
             return Response.status(200)
-                    .entity(new RestApiResult<>(vatNumber, 200, "Successful"))
+                    .entity("Successful")
                     .build();
         } catch (Exception e) {
+            logger.error(""+ e);
             return Response.status(401)
-                    .entity(new RestApiResult<>(e, 401, "Something went wrong!"))
+                    .entity("Something went wrong!")
                     .build();
         }
     }
 
     @POST
     @Path("property/correct_property_type")
-    @Consumes("application/json")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response correctPropertyType(@FormParam("vatNumber") int vatNumber,
             @FormParam("propertyId") String propertyId,
             @FormParam("propertyType") String propertyType) {
         try {
             if (!propertyOwnerServices.correctPropertyType(vatNumber, propertyId, inputHandler.selectPropertyType(propertyType))) {
+                logger.error("user with" + vatNumber + "has wrong data");
                 return Response.status(404)
-                        .entity(new RestApiResult<>(null, 404, "Doesn't exist"))
+                        .entity("Doesn't exist")
                         .build();
             }
+            logger.debug("user with" + vatNumber + "succesful query");
             return Response.status(200)
-                    .entity(new RestApiResult<>(vatNumber, 200, "Successful"))
+                    .entity("Successful")
                     .build();
         } catch (Exception e) {
+            logger.error(""+ e);
             return Response.status(401)
-                    .entity(new RestApiResult<>(e, 401, "Something went wrong!"))
+                    .entity("Something went wrong!")
                     .build();
         }
     }
 
     @POST
     @Path("property/correct_property_year")
-    @Consumes("application/json")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response correctPropertyconstructionYear(@FormParam("vatNumber") int vatNumber,
             @FormParam("propertyId") String propertyId,
             @FormParam("constructionYear") int year) {
         try {
             if (!propertyOwnerServices.correctPropertyconstructionYear(vatNumber, propertyId, inputHandler.constructionYear(year))) {
+                logger.error("user with" + vatNumber + "has wrong data");
                 return Response.status(404)
-                        .entity(new RestApiResult<>(null, 404, "Doesn't exist"))
+                        .entity("Doesn't exist")
                         .build();
             }
+            logger.debug("user with" + vatNumber + "succesful query");
             return Response.status(200)
-                    .entity(new RestApiResult<>(vatNumber, 200, "Successful"))
+                    .entity("Successful")
                     .build();
         } catch (Exception e) {
+            logger.error(""+ e);
             return Response.status(401)
-                    .entity(new RestApiResult<>(e, 401, "Something went wrong!"))
+                    .entity("Something went wrong!")
                     .build();
         }
     }
 
     @POST
     @Path("property/create_property_repair")
-    @Consumes("application/json")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response registerPropertyRepair(@FormParam("vatNumber") int vatNumber,
             @FormParam("e9") String e9,
             @FormParam("description") String description,
@@ -137,16 +149,19 @@ public class UserResource {
             @FormParam("propertyType") String repairType) {
         try {
             if (!propertyOwnerServices.registerPropertyRepair(vatNumber, e9, description, shortDescription, inputHandler.selectRepairType(repairType))) {
+                logger.error("user with" + vatNumber + "has wrong data");
                 return Response.status(404)
-                        .entity(new RestApiResult<>(null, 404, "Doesn't exist"))
+                        .entity("Doesn't exist")
                         .build();
             }
+            logger.debug("user with" + vatNumber + "succesful query");
             return Response.status(200)
-                    .entity(new RestApiResult<>(vatNumber, 200, "Successful"))
+                    .entity("Successful")
                     .build();
         } catch (Exception e) {
+            logger.error(""+ e);
             return Response.status(401)
-                    .entity(new RestApiResult<>(e, 401, "Something went wrong!"))
+                    .entity("Something went wrong!")
                     .build();
         }
     }
@@ -156,31 +171,38 @@ public class UserResource {
     @Produces("application/json")
     public RestApiResult getProperties(@PathParam("vatNumber") int vatNumber) {
         try {
-            return new RestApiResult<>(propertyOwnerServices.getProperties(vatNumber),200, "Successful");
-        
+            List<Property> properties = propertyOwnerServices.getProperties(vatNumber);
+            if (properties.isEmpty())
+                return new RestApiResult<>("empty",404, "UnSuccessful");
+            else
+                return new RestApiResult<>(properties,200, "Successful");
         } catch (Exception e) {
+            logger.error(""+ e);
             return new RestApiResult<>(e, 401, "Something went wrong!");
         }
     }
 
     @POST
     @Path("property/repair_status")
-    @Consumes("application/json")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response acceptOrDeclineRepair(@FormParam("vatNumber") int vatNumber,
             @FormParam("repairId") int repairId,
             @FormParam("status") boolean status) {
         try {
             if (!propertyOwnerServices.acceptOrDeclineRepair(vatNumber, repairId, status)) {
+                logger.error("user with" + vatNumber + "has wrong data");
                 return Response.status(404)
-                        .entity(new RestApiResult<>(null, 404, "Doesn't exist"))
+                        .entity("Doesn't exist")
                         .build();
             }
+            logger.debug("user with" + vatNumber + "succesful query");
             return Response.status(200)
-                    .entity(new RestApiResult<>(vatNumber, 200, "Successful"))
+                    .entity("Successful")
                     .build();
         } catch (Exception e) {
+            logger.error(""+ e);
             return Response.status(401)
-                    .entity(new RestApiResult<>(e, 401, "Something went wrong!"))
+                    .entity("Something went wrong!")
                     .build();
         }
     }
@@ -190,133 +212,156 @@ public class UserResource {
     @Produces("application/json")
     public RestApiResult getRepairStatus(@PathParam("vatNumber") int vatNumber) {
         try {
-            return new RestApiResult<>(propertyOwnerServices.getRepairStatus(vatNumber), 200, "Succesful");
+            List<PropertyRepair> repairs = propertyOwnerServices.getRepairStatus(vatNumber);
+             if (repairs.isEmpty())
+                return new RestApiResult<>("empty",404, "UnSuccessful");
+            else
+                return new RestApiResult<>(repairs,200, "Successful");
         } catch (Exception e) {
+            logger.error(""+ e);
             return new RestApiResult<>(e, 401, "Something went wrong!");
         }
     }
 
     @POST
     @Path("property/correct_owner_username")
-    @Consumes("application/json")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response correctOwnerUsername(@FormParam("vatNumber") int vatNumber,
             @FormParam("username") String username) {
         try {
             if (!propertyOwnerServices.correctOwnerUsername(vatNumber, inputHandler.names(username))) {
+                logger.error("user with" + vatNumber + "has wrong data");
                 return Response.status(404)
-                        .entity(new RestApiResult<>(null, 404, "Doesn't exist"))
+                        .entity("Doesn't exist")
                         .build();
             }
+            logger.debug("user with" + vatNumber + "succesful query");
             return Response.status(200)
-                    .entity(new RestApiResult<>(vatNumber, 200, "Successful"))
+                    .entity("Successful")
                     .build();
         } catch (Exception e) {
+            logger.error(""+ e);
             return Response.status(401)
-                    .entity(new RestApiResult<>(e, 401, "Something went wrong!"))
+                    .entity("Something went wrong!")
                     .build();
         }
     }
 
     @POST
     @Path("property/correct_owner_email")
-    @Consumes("application/json")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response correctOwnerEmail(@FormParam("vatNumber") int vatNumber,
             @FormParam("email") String email) {
         try {
             if (!propertyOwnerServices.correctOwnerEmail(vatNumber, inputHandler.email(email))) {
+                logger.error("user with" + vatNumber + "has wrong data");
                 return Response.status(404)
-                        .entity(new RestApiResult<>(null, 404, "Doesn't exist"))
+                        .entity("Doesn't exist")
                         .build();
             }
+            logger.debug("user with" + vatNumber + "succesful query");
             return Response.status(200)
-                    .entity(new RestApiResult<>(vatNumber, 200, "Successful"))
+                    .entity("Successful")
                     .build();
         } catch (Exception e) {
+            logger.error(""+ e);
             return Response.status(401)
-                    .entity(new RestApiResult<>(e, 401, "Something went wrong!"))
+                    .entity("Something went wrong!")
                     .build();
         }
     }
 
     @POST
     @Path("property/correct_owner_password")
-    @Consumes("application/json")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response correctOwnerPassword(@FormParam("vatNumber") int vatNumber,
             @FormParam("password") String password) {
         try {
             if (!propertyOwnerServices.correctOwnerPassword(vatNumber, inputHandler.password(password))) {
+                logger.error("user with" + vatNumber + "has wrong data");
                 return Response.status(404)
-                        .entity(new RestApiResult<>(null, 404, "Doesn't exist"))
+                        .entity( "Doesn't exist")
                         .build();
             }
+            logger.debug("user with" + vatNumber + "succesful query");
             return Response.status(200)
-                    .entity(new RestApiResult<>(vatNumber, 200, "Successful"))
+                    .entity( "Successful")
                     .build();
         } catch (Exception e) {
+            logger.error(""+ e);
             return Response.status(401)
-                    .entity(new RestApiResult<>(e, 401, "Something went wrong!"))
+                    .entity("Something went wrong!")
                     .build();
         }
     }
 
     @POST
     @Path("property/delete_property")
-    @Consumes("application/json")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response safelyDeleteProperty(@FormParam("vatNumber") int vatNumber,
             @FormParam("e9") String e9) {
         try {
             if (!propertyOwnerServices.safelyDeleteProperty(vatNumber, inputHandler.e9(e9))) {
+                logger.error("user with" + vatNumber + "has wrong data");
                 return Response.status(404)
-                        .entity(new RestApiResult<>(null, 404, "Doesn't exist"))
+                        .entity("Doesn't exist")
                         .build();
             }
+            logger.debug("user with" + vatNumber + "succesful query");
             return Response.status(200)
-                    .entity(new RestApiResult<>(vatNumber, 200, "Successful"))
+                    .entity("Successful")
                     .build();
         } catch (Exception e) {
+            logger.error(""+ e);
             return Response.status(401)
-                    .entity(new RestApiResult<>(e, 401, "Something went wrong!"))
+                    .entity("Something went wrong!")
                     .build();
         }
     }
 
     @POST
     @Path("property/delete_property_repair")
-    @Consumes("application/json")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response safelyDeletePropertyRepair(@FormParam("vatNumber") int vatNumber,
             @FormParam("repairId") int repairId) {
         try {
             if (!propertyOwnerServices.safelyDeletePropertyRepair(vatNumber, repairId)) {
+                logger.error("user with" + vatNumber + "has wrong data");
                 return Response.status(404)
-                        .entity(new RestApiResult<>(null, 404, "Doesn't exist"))
+                        .entity( "Doesn't exist")
                         .build();
             }
+            logger.debug("user with" + vatNumber + "succesful query");
             return Response.status(200)
-                    .entity(new RestApiResult<>(vatNumber, 200, "Successful"))
+                    .entity("Successful")
                     .build();
         } catch (Exception e) {
+            logger.error(""+ e);
             return Response.status(401)
-                    .entity(new RestApiResult<>(e, 401, "Something went wrong!"))
+                    .entity( "Something went wrong!")
                     .build();
         }
     }
 
     @POST
     @Path("property/delete_owner")
-    @Consumes("application/json")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response safelyDeletePropertyOwner(@FormParam("vatNumber") int vatNumber) {
         try {
             if (!propertyOwnerServices.safelyDeletePropertyOwner(vatNumber)) {
+                logger.error("user with" + vatNumber + "has wrong data");
                 return Response.status(404)
-                        .entity(new RestApiResult<>(null, 404, "Doesn't exist"))
+                        .entity("Doesn't exist")
                         .build();
             }
+            logger.debug("user with" + vatNumber + "succesful query");
             return Response.status(200)
-                    .entity(new RestApiResult<>(vatNumber, 200, "Successful"))
+                    .entity("Successful")
                     .build();
         } catch (Exception e) {
+            logger.error(""+ e);
             return Response.status(401)
-                    .entity(new RestApiResult<>(e, 401, "Something went wrong!"))
+                    .entity("Something went wrong!")
                     .build();
         }
     }

@@ -24,9 +24,7 @@ public class PropertyRepositoryImpl implements PropertyRepository {
             if (searchPropertyId(property.getPropertyId()) != null) {
                 return false;
             }
-            entityManager.getTransaction().begin();
             entityManager.persist(property);
-            entityManager.getTransaction().commit();
             logger.debug("createProperty was succesful");
             return true;
         } catch (Exception e) {
@@ -62,11 +60,9 @@ public class PropertyRepositoryImpl implements PropertyRepository {
     @Transactional
     public boolean updatePropertyId(String newPropertyId, String propertyId) {
         try {
-            entityManager.getTransaction().begin();
             String updateQuery = "UPDATE Property set propertyId= :propertyId WHERE propertyId =: id";
             entityManager.createQuery(updateQuery).setParameter("propertyId", propertyId)
                     .setParameter("id", propertyId).executeUpdate();
-            entityManager.getTransaction().commit();
             logger.debug("updatePropertyId was succesful");
             return true;
         } catch (Exception e) {
@@ -79,11 +75,9 @@ public class PropertyRepositoryImpl implements PropertyRepository {
     @Transactional
     public boolean updatePropertyAddress(String address, String propertyId) {
         try {
-            entityManager.getTransaction().begin();
             String updateQuery = "UPDATE Property set propertyAddress= :address WHERE propertyId =: id";
             entityManager.createQuery(updateQuery).setParameter("address", address)
                     .setParameter("id", propertyId).executeUpdate();
-            entityManager.getTransaction().commit();
             logger.debug("updatePropertyAddress was succesful");
             return true;
         } catch (Exception e) {
@@ -96,11 +90,9 @@ public class PropertyRepositoryImpl implements PropertyRepository {
     @Transactional
     public boolean updateYearOfConstruction(int yearOfConstruction, String propertyId) {
         try {
-            entityManager.getTransaction().begin();
             String updateQuery = "UPDATE Property set yearOfConstruction= :yearOfConstruction WHERE propertyId =: id";
             entityManager.createQuery(updateQuery).setParameter("yearOfConstruction", yearOfConstruction)
                     .setParameter("id", propertyId).executeUpdate();
-            entityManager.getTransaction().commit();
             logger.debug("updateYearOfConstruction was succesful");
             return true;
         } catch (Exception e) {
@@ -113,11 +105,9 @@ public class PropertyRepositoryImpl implements PropertyRepository {
     @Transactional
     public boolean updatePropertyType(PropertyType propertyType, String propertyId) {
         try {
-            entityManager.getTransaction().begin();
             String updateQuery = "UPDATE Property set propertyType= :propertyType WHERE propertyId =: id";
             entityManager.createQuery(updateQuery).setParameter("propertyType", propertyType)
                     .setParameter("id", propertyId).executeUpdate();
-            entityManager.getTransaction().commit();
             logger.debug("updatePropertyType was succesful");
             return true;
         } catch (Exception e) {
@@ -130,11 +120,9 @@ public class PropertyRepositoryImpl implements PropertyRepository {
     @Transactional
     public boolean updateOwnerVat(int ownerVat, String propertyId) {
         try {
-            entityManager.getTransaction().begin();
             String updateQuery = "UPDATE Property set ownerVat= :ownerVat WHERE propertyId =: id";
             entityManager.createQuery(updateQuery).setParameter("ownerVat", ownerVat)
                     .setParameter("id", propertyId).executeUpdate();
-            entityManager.getTransaction().commit();
             logger.debug("updateOwnerVat was succesful");
             return true;
         } catch (Exception e) {
@@ -147,12 +135,10 @@ public class PropertyRepositoryImpl implements PropertyRepository {
     @Transactional
     public boolean safelyDelete(String propertyId) {
         try {
-            entityManager.getTransaction().begin();
             String updateQuery = "UPDATE Property set isDeleted = :isDeleted WHERE propertyId = :propertyId";
             entityManager.createQuery(updateQuery)
                     .setParameter("isDeleted", true)
                     .setParameter("propertyId", propertyId).executeUpdate();
-            entityManager.getTransaction().commit();
             logger.debug("safelyDelete was succesful");
             return true;
         } catch (Exception e) {
@@ -165,9 +151,7 @@ public class PropertyRepositoryImpl implements PropertyRepository {
     @Transactional
     public boolean permanentlyDelete(String propertyId) {
         try {
-            entityManager.getTransaction().begin();
             entityManager.remove(searchPropertyId(propertyId));
-            entityManager.getTransaction().commit();
             logger.debug("permanentlyDelete was succesful");
             return true;
         } catch (Exception e) {

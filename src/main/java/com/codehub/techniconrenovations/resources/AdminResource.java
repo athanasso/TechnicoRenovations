@@ -1,28 +1,31 @@
 package com.codehub.techniconrenovations.resources;
 
 import com.codehub.techniconrenovations.dto.RestApiResult;
-import com.codehub.techniconrenovations.repository.PropertyOwnerRepository;
-import com.codehub.techniconrenovations.repository.PropertyRepairRepository;
-import com.codehub.techniconrenovations.repository.PropertyRepository;
+import com.codehub.techniconrenovations.model.Property;
+import com.codehub.techniconrenovations.model.PropertyOwner;
+import com.codehub.techniconrenovations.model.PropertyRepair;
 import com.codehub.techniconrenovations.services.AdminServices;
-import com.codehub.techniconrenovations.services.impl.AdminServicesImpl;
 import com.codehub.techniconrenovations.util.UtilFunctions;
+import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Path("admin")
 public class AdminResource {
+    
+    private static final Logger logger = LoggerFactory.getLogger(AdminResource.class);
 
-    private PropertyRepository propertyRepository;
-    private PropertyOwnerRepository propertyOwnerRepository;
-    private PropertyRepairRepository propertyRepairRepository;
-
-    private final AdminServices adminServices = new AdminServicesImpl(propertyRepository, propertyOwnerRepository, propertyRepairRepository);
+    @Inject
+    private AdminServices adminServices;
 
     @GET
     @Path("ping")
@@ -37,43 +40,50 @@ public class AdminResource {
     @Produces("application/json")
     public RestApiResult getPendingRepairs() {
         try {
-            return new RestApiResult<>(adminServices.getPendingRepairs(), 200, "Succesful!");
+            List<PropertyRepair> repairs = adminServices.getPendingRepairs();
+            if (repairs.isEmpty())
+                return new RestApiResult<>("empty",404, "UnSuccessful");
+            else
+                return new RestApiResult<>(repairs,200, "Successful");
         } catch (Exception e) {
+            logger.error(""+e);
             return new RestApiResult<>(e, 401, "Something went wrong!");
         }
     }
 
     @POST
     @Path("propose_cost")
-    @Consumes("application/json")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response proposeCost(@PathParam("cost") double cost,
             @PathParam("repairId") int repairId) {
         try {
             adminServices.proposeCost(cost, repairId);
             return Response.status(200)
-                    .entity(new RestApiResult<>(repairId, 200, "Successful!"))
+                    .entity("Successful!")
                     .build();
         } catch (Exception e) {
+            logger.error(""+e);
             return Response.status(401)
-                    .entity(new RestApiResult<>(e, 401, "Something went wrong!"))
+                    .entity("Something went wrong!")
                     .build();
         }
     }
 
     @POST
     @Path("propose_dates")
-    @Consumes("application/json")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response proposeStartEndDates(@PathParam("startDate") String startDate,
             @PathParam("endDate") String endDate,
             @PathParam("repairId") int repairId) {
         try {
             adminServices.proposeStartEndDates(UtilFunctions.convertToDate(startDate), UtilFunctions.convertToDate(endDate), repairId);
             return Response.status(200)
-                    .entity(new RestApiResult<>(repairId, 200, "Successful!"))
+                    .entity("Successful!")
                     .build();
         } catch (Exception e) {
+            logger.error(""+e);
             return Response.status(401)
-                    .entity(new RestApiResult<>(e, 401, "Something went wrong!"))
+                    .entity("Something went wrong!")
                     .build();
         }
     }
@@ -83,8 +93,13 @@ public class AdminResource {
     @Produces("application/json")
     public RestApiResult getAllRepairs() {
         try {
-            return new RestApiResult<>(adminServices.getAllRepairs(), 200, "Successful!");
+            List<PropertyRepair> repairs = adminServices.getAllRepairs();
+            if (repairs.isEmpty())
+                return new RestApiResult<>("empty",404, "UnSuccessful");
+            else
+                return new RestApiResult<>(repairs,200, "Successful");
         } catch (Exception e) {
+            logger.error(""+e);
             return new RestApiResult<>(e, 401, "Something went wrong!");
         }
     }
@@ -94,8 +109,13 @@ public class AdminResource {
     @Produces("application/json")
     public RestApiResult getProperties() {
         try {
-            return new RestApiResult<>(adminServices.getProperties(), 200, "Successful!");
+            List<Property> properties = adminServices.getProperties();
+            if (properties.isEmpty())
+                return new RestApiResult<>("empty",404, "UnSuccessful");
+            else
+                return new RestApiResult<>(properties,200, "Successful");
         } catch (Exception e) {
+            logger.error(""+e);
             return new RestApiResult<>(e, 401, "Something went wrong!");
         }
     }
@@ -105,8 +125,13 @@ public class AdminResource {
     @Produces("application/json")
     public RestApiResult getOwners() {
         try {
-            return new RestApiResult<>(adminServices.getOwners(), 200, "Successful!");
+            List<PropertyOwner> owners = adminServices.getOwners();
+            if (owners.isEmpty())
+                return new RestApiResult<>("empty",404, "UnSuccessful");
+            else
+                return new RestApiResult<>(owners,200, "Successful");
         } catch (Exception e) {
+            logger.error(""+e);
             return new RestApiResult<>(e, 401, "Something went wrong!");
         }
     }
@@ -117,11 +142,12 @@ public class AdminResource {
         try {
             adminServices.permanentlyDeleteProperties();
             return Response.status(200)
-                    .entity(new RestApiResult<>(null, 200, "Successful"))
+                    .entity( "Successful")
                     .build();
         } catch (Exception e) {
+            logger.error(""+e);
             return Response.status(401)
-                    .entity(new RestApiResult<>(e, 401, "Something went wrong!"))
+                    .entity("Something went wrong!")
                     .build();
         }
     }
@@ -132,11 +158,12 @@ public class AdminResource {
         try {
             adminServices.permanentlyDeletePropertyOwner();
             return Response.status(200)
-                    .entity(new RestApiResult<>(null, 200, "Successful"))
+                    .entity("Successful")
                     .build();
         } catch (Exception e) {
+            logger.error(""+e);
             return Response.status(401)
-                    .entity(new RestApiResult<>(e, 401, "Something went wrong!"))
+                    .entity("Something went wrong!")
                     .build();
         }
     }
@@ -147,11 +174,12 @@ public class AdminResource {
         try {
             adminServices.permanentlyDeleteRepairs();
             return Response.status(200)
-                    .entity(new RestApiResult<>(null, 200, "Successful"))
+                    .entity("Successful")
                     .build();
         } catch (Exception e) {
+            logger.error(""+e);
             return Response.status(401)
-                    .entity(new RestApiResult<>(e, 401, "Something went wrong!"))
+                    .entity("Something went wrong!")
                     .build();
         }
     }

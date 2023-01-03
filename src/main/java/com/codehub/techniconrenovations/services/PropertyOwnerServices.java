@@ -34,9 +34,10 @@ public interface PropertyOwnerServices {
      * @param address
      * @param username
      * @param password
+     * @param typeOfUser
      * @return boolean
      */
-    boolean register(int vatNumber, String name, String surname, String address, String phoneNumber, String email, String username, String password);
+    boolean register(int vatNumber, String name, String surname, String address, String phoneNumber, String email, String username, String password, String typeOfUser);
 
     /**
      * Registers a new Property to the database.
