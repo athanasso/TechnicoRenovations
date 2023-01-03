@@ -46,7 +46,7 @@ public class UserResource {
             @FormParam("constructionYear") int constructionYear,
             @FormParam("propertyType") String propertyType) {
         try {
-            if (!propertyOwnerServices.registerProperty(vatNumber, inputHandler.e9(e9), inputHandler.address(address), inputHandler.constructionYear(constructionYear), inputHandler.selectPropertyType(propertyType))) {
+            if (!propertyOwnerServices.registerProperty(vatNumber, e9, address, constructionYear, inputHandler.selectPropertyType(propertyType))) {
                 logger.error("user with" + vatNumber + "has wrong data");
                 return Response.status(404)
                         .entity("Doesn't exist")
@@ -71,7 +71,7 @@ public class UserResource {
             @FormParam("propertyId") String propertyId,
             @FormParam("address") String address) {
         try {
-            if (!propertyOwnerServices.correctPropertyAddress(vatNumber, propertyId, inputHandler.address(address))) {
+            if (!propertyOwnerServices.correctPropertyAddress(vatNumber, propertyId, address)) {
                 logger.error("user with" + vatNumber + "has wrong data");
                 return Response.status(404)
                         .entity("Doesn't exist")
@@ -121,7 +121,7 @@ public class UserResource {
             @FormParam("propertyId") String propertyId,
             @FormParam("constructionYear") int year) {
         try {
-            if (!propertyOwnerServices.correctPropertyconstructionYear(vatNumber, propertyId, inputHandler.constructionYear(year))) {
+            if (!propertyOwnerServices.correctPropertyconstructionYear(vatNumber, propertyId, year)) {
                 logger.error("user with" + vatNumber + "has wrong data");
                 return Response.status(404)
                         .entity("Doesn't exist")
@@ -229,7 +229,7 @@ public class UserResource {
     public Response correctOwnerUsername(@FormParam("vatNumber") int vatNumber,
             @FormParam("username") String username) {
         try {
-            if (!propertyOwnerServices.correctOwnerUsername(vatNumber, inputHandler.names(username))) {
+            if (!propertyOwnerServices.correctOwnerUsername(vatNumber, username)) {
                 logger.error("user with" + vatNumber + "has wrong data");
                 return Response.status(404)
                         .entity("Doesn't exist")
@@ -277,7 +277,7 @@ public class UserResource {
     public Response correctOwnerPassword(@FormParam("vatNumber") int vatNumber,
             @FormParam("password") String password) {
         try {
-            if (!propertyOwnerServices.correctOwnerPassword(vatNumber, inputHandler.password(password))) {
+            if (!propertyOwnerServices.correctOwnerPassword(vatNumber, password)) {
                 logger.error("user with" + vatNumber + "has wrong data");
                 return Response.status(404)
                         .entity( "Doesn't exist")
@@ -301,7 +301,7 @@ public class UserResource {
     public Response safelyDeleteProperty(@FormParam("vatNumber") int vatNumber,
             @FormParam("e9") String e9) {
         try {
-            if (!propertyOwnerServices.safelyDeleteProperty(vatNumber, inputHandler.e9(e9))) {
+            if (!propertyOwnerServices.safelyDeleteProperty(vatNumber, e9)) {
                 logger.error("user with" + vatNumber + "has wrong data");
                 return Response.status(404)
                         .entity("Doesn't exist")

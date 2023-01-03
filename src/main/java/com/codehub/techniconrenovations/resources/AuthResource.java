@@ -29,9 +29,9 @@ public class AuthResource {
             @FormParam("password") String password) {
         try{
             if(propertyOwnerServices.logIn(username, password)){
-            return Response.status(200)
-                    .entity("Successful")
-                    .build();
+                return Response.status(200)
+                        .entity("Successful")
+                        .build();
             }
             else{
                 logger.debug("wrong credentials inputed");

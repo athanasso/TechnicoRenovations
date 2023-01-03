@@ -25,7 +25,7 @@ public class AdminResource {
     private static final Logger logger = LoggerFactory.getLogger(AdminResource.class);
 
     @Inject
-    private AdminServices adminServices;
+    AdminServices adminServices;
 
     @GET
     @Path("ping")
