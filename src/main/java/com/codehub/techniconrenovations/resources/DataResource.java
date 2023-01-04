@@ -1,8 +1,5 @@
 package com.codehub.techniconrenovations.resources;
 
-import com.codehub.techniconrenovations.repository.PropertyOwnerRepository;
-import com.codehub.techniconrenovations.repository.PropertyRepairRepository;
-import com.codehub.techniconrenovations.repository.PropertyRepository;
 import com.codehub.techniconrenovations.util.DataImport;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.POST;
