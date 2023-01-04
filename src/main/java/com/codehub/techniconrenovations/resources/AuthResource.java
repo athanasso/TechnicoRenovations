@@ -1,5 +1,6 @@
 package com.codehub.techniconrenovations.resources;
 
+import com.codehub.techniconrenovations.model.PropertyOwner;
 import com.codehub.techniconrenovations.services.PropertyOwnerServices;
 import com.codehub.techniconrenovations.util.InputHandler;
 import jakarta.inject.Inject;
@@ -28,7 +29,14 @@ public class AuthResource {
     public Response login(@FormParam("username") String username,
             @FormParam("password") String password) {
         try{
-            if(propertyOwnerServices.logIn(username, password)){
+            PropertyOwner p = propertyOwnerServices.logIn(username, password);
+            if(p!=null){
+                if (p.getTypeOfUser()=="user"){
+                    //return page for user
+                }
+                else if (p.getTypeOfUser()=="admin"){
+                    //return page for admin
+                }
                 return Response.status(200)
                         .entity("Successful")
                         .build();

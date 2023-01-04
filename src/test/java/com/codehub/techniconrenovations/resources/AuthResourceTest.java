@@ -1,5 +1,6 @@
 package com.codehub.techniconrenovations.resources;
 
+import com.codehub.techniconrenovations.model.PropertyOwner;
 import com.codehub.techniconrenovations.services.PropertyOwnerServices;
 import jakarta.ws.rs.core.Response;
 import org.junit.Test;
@@ -14,7 +15,8 @@ public class AuthResourceTest {
         AuthResource authResource = new AuthResource();
         PropertyOwnerServices propertyOwnerServices = mock(PropertyOwnerServices.class);
         authResource.propertyOwnerServices = propertyOwnerServices;
-        when(propertyOwnerServices.logIn("username", "password")).thenReturn(true);
+        PropertyOwner expectedResult = new PropertyOwner();
+        when(propertyOwnerServices.logIn("username", "password")).thenReturn(expectedResult);
 
         Response response = authResource.login("username", "password");
         assertEquals(200, response.getStatus());
@@ -26,7 +28,7 @@ public class AuthResourceTest {
         AuthResource authResource = new AuthResource();
         PropertyOwnerServices propertyOwnerServices = mock(PropertyOwnerServices.class);
         authResource.propertyOwnerServices = propertyOwnerServices;
-        when(propertyOwnerServices.logIn("username", "password")).thenReturn(false);
+        when(propertyOwnerServices.logIn("username", "password")).thenReturn(null);
 
         Response response = authResource.login("username", "password");
         assertEquals(404, response.getStatus());

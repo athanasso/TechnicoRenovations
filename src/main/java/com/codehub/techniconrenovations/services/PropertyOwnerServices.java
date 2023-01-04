@@ -3,6 +3,7 @@ package com.codehub.techniconrenovations.services;
 import com.codehub.techniconrenovations.enums.PropertyType;
 import com.codehub.techniconrenovations.enums.RepairType;
 import com.codehub.techniconrenovations.model.Property;
+import com.codehub.techniconrenovations.model.PropertyOwner;
 import com.codehub.techniconrenovations.model.PropertyRepair;
 import java.util.List;
 
@@ -76,9 +77,9 @@ public interface PropertyOwnerServices {
      *
      * @param username
      * @param password
-     * @return boolean
+     * @return PropertyOwner
      */
-    boolean logIn(String username, String password);
+    PropertyOwner logIn(String username, String password);
 
     /**
      * Updates a property's credentials.

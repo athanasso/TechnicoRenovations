@@ -173,13 +173,13 @@ public class PropertyOwnerServicesImpl implements PropertyOwnerServices {
     }
 
     @Override
-    public boolean logIn(String username, String password) {
+    public PropertyOwner logIn(String username, String password) {
         try {
             logger.debug("user login was succeful");
-            return propertyOwnerRepository.searchByUsernameAndPassword(username, password) != null;
+            return propertyOwnerRepository.searchByUsernameAndPassword(username, password);
         } catch (Exception e) {
             logger.error("Error logging in: " + e.getMessage());
-            return false;
+            return null;
         }
     }
 
