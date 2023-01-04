@@ -13,8 +13,10 @@ import com.codehub.techniconrenovations.resources.DataResource;
 import static com.codehub.techniconrenovations.util.UtilFunctions.CheckDate;
 import static com.codehub.techniconrenovations.util.UtilFunctions.convertToDate;
 import jakarta.inject.Inject;
+import jakarta.persistence.RollbackException;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
 import org.slf4j.LoggerFactory;
@@ -46,7 +48,7 @@ public class DataImport {
                 );
                 propertyRepository.createProperty(property);
             }
-        } catch (Exception ex) {
+        } catch (IOException | NumberFormatException ex) {
             logger.error("" + ex);
         }
     }
@@ -71,7 +73,7 @@ public class DataImport {
                 );
                 propertyOwnerRepository.createPropertyOwner(propertyOwner);
             }
-        } catch (Exception ex) {
+        } catch (RollbackException | IOException | NumberFormatException ex) {
             logger.error("" + ex);
         }
     }
@@ -106,7 +108,7 @@ public class DataImport {
                 }
                 propertyRepairRepository.createPropertyRepair(propertyRepair);
             }
-        } catch (Exception ex) {
+        } catch (IOException | NumberFormatException ex) {
             logger.error("" + ex);
         }
     }
