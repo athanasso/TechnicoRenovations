@@ -1,0 +1,11 @@
+1123123,E1001,INSULATION,31/01/2022,Insulate windows,11/02/2022,28/02/2022,212.23,Insulate the house's windows,true,COMPLETE,11/02/2022,28/02/2022,false
+1231233,E1002,FRAMES,3/02/2022,Change frames,28/02/2022,28/03/2022,154.00,Change a window's frames,true,COMPLETE,28/02/2022,28/03/2022,false
+3331323,E1003,PLUMBING,28/02/2022,Change sink,11/03/2022,28/02/2022,90.06,Remove old sink and install a new one,true,IN_PROGRESS,11/03/2022,30/04/2022,false
+4141414,E1004,INSULATION,10/04/2022,Insulate room,13/04/2022,22/04/2022,87.45,Insulate the bedroom walls and windows,false,DECLINED,null,null,false
+4133331,E1005,PLUMBING,11/04/2022,Change sink,16/04/2022,28/04/2022,200.78,Remove old sink and install a new one,true,IN_PROGRESS,16/04/2022,28/04/2022,false
+2332442,E1006,ELECTICAL_WORK,21/04/2022,Control panel,13/04/2022,22/04/2022,56.56,Change the control panel,true,IN_PROGRESS,13/04/2022,22/04/2022,false
+2332442,E1006,ELECTICAL_WORK,11/05/2022,Power supply,19/05/2022,22/06/2022,70.45,Change power supply,false,DECLINED,null,null,false
+4141413,E1007,INSULATION,12/06/2022,Insulate room,19/05/2022,22/06/2022,570.45,Insulate the hall's windows and walls,false,DECLINED,null,null,false
+4141413,E1007,PAINTING,13/06/2022,Paint kitchen,19/06/2022,25/06/2022,850.34,Paint the kitchen walls,true,PENDING,19/06/2022,25/06/2022,false
+4155111,E1008,PAINTING,27/06/2022,Paint bedroom,04/07/2022,25/07/2022,460.99,Paint the bedroom walls,true,PENDING,04/07/2022,25/07/2022,false
+6616344,E1009,PLUMBING,23/07/2022,Change sink,30/07/2022,05/08/2022,98.23,Remove old sink and install a new one,true,PENDING,30/07/2022,05/08/2022,false

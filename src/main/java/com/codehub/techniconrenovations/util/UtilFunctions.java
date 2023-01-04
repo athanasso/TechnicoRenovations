@@ -26,6 +26,15 @@ public class UtilFunctions {
         return new Date(1, 0, 1);//null date flag
     }
     
+    /**
+     * Checks a date if it is equal to null date flag.
+     * @param date
+     * @return boolean
+     */
+    public static boolean CheckDate(Date date){
+        return date.compareTo(new Date(1,0,1)) == 0;
+    }
+    
     public static String get_SHA_512_SecurePassword(String passwordToHash, String salt) {
         String generatedPassword = null;
         try {
