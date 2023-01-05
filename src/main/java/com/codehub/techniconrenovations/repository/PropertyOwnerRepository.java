@@ -9,7 +9,7 @@ public interface PropertyOwnerRepository {
      * @param propertyOwner
      * @return
      */
-    boolean createPropertyOwner(PropertyOwner propertyOwner)throws jakarta.persistence.RollbackException;
+    boolean createPropertyOwner(PropertyOwner propertyOwner) throws jakarta.persistence.RollbackException;
 
     /**
      *
@@ -86,4 +86,13 @@ public interface PropertyOwnerRepository {
      * @return
      */
     boolean permanentlyDelete(int vatNumber);
+
+    /**
+     * checks user role.
+     *
+     * @param username
+     * @param password
+     * @return
+     */
+    String checkRole(String username, String password);
 }

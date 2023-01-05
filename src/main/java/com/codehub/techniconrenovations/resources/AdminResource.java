@@ -1,11 +1,13 @@
 package com.codehub.techniconrenovations.resources;
 
+import com.codehub.techniconrenovations.dto.RepairDto;
 import com.codehub.techniconrenovations.dto.RestApiResult;
 import com.codehub.techniconrenovations.model.Property;
 import com.codehub.techniconrenovations.model.PropertyOwner;
 import com.codehub.techniconrenovations.model.PropertyRepair;
 import com.codehub.techniconrenovations.services.AdminServices;
 import com.codehub.techniconrenovations.util.UtilFunctions;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
@@ -29,6 +31,7 @@ public class AdminResource {
 
     @GET
     @Path("ping")
+    @RolesAllowed({"admin"})
     public Response ping() {
         return Response
                 .ok("pang")
@@ -38,6 +41,7 @@ public class AdminResource {
     @GET
     @Path("get_pending_repairs")
     @Produces("application/json")
+    @RolesAllowed({"admin"})
     public RestApiResult getPendingRepairs() {
         try {
             List<PropertyRepair> repairs = adminServices.getPendingRepairs();
@@ -54,6 +58,7 @@ public class AdminResource {
     @POST
     @Path("propose_cost")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @RolesAllowed({"admin"})
     public Response proposeCost(@PathParam("cost") double cost,
             @PathParam("repairId") int repairId) {
         try {
@@ -72,6 +77,7 @@ public class AdminResource {
     @POST
     @Path("propose_dates")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @RolesAllowed({"admin"})
     public Response proposeStartEndDates(@PathParam("startDate") String startDate,
             @PathParam("endDate") String endDate,
             @PathParam("repairId") int repairId) {
@@ -91,6 +97,7 @@ public class AdminResource {
     @GET
     @Path("get_property_repairs")
     @Produces("application/json")
+    @RolesAllowed({"admin"})
     public RestApiResult getAllRepairs() {
         try {
             List<PropertyRepair> repairs = adminServices.getAllRepairs();
@@ -107,6 +114,7 @@ public class AdminResource {
     @GET
     @Path("get_properties")
     @Produces("application/json")
+    @RolesAllowed({"admin"})
     public RestApiResult getProperties() {
         try {
             List<Property> properties = adminServices.getProperties();
@@ -123,6 +131,7 @@ public class AdminResource {
     @GET
     @Path("get_owners")
     @Produces("application/json")
+    @RolesAllowed({"admin"})
     public RestApiResult getOwners() {
         try {
             List<PropertyOwner> owners = adminServices.getOwners();
@@ -138,6 +147,7 @@ public class AdminResource {
 
     @POST
     @Path("delete_properties")
+    @RolesAllowed({"admin"})
     public Response permanentlyDeleteProperties() {
         try {
             adminServices.permanentlyDeleteProperties();
@@ -154,6 +164,7 @@ public class AdminResource {
 
     @POST
     @Path("delete_owners")
+    @RolesAllowed({"admin"})
     public Response permanentlyDeletePropertyOwner() {
         try {
             adminServices.permanentlyDeletePropertyOwner();
@@ -170,6 +181,7 @@ public class AdminResource {
 
     @POST
     @Path("delete_repairs")
+    @RolesAllowed({"admin"})
     public Response permanentlyDeleteRepairs() {
         try {
             adminServices.permanentlyDeleteRepairs();

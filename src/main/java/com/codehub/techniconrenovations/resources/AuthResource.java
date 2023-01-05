@@ -3,6 +3,7 @@ package com.codehub.techniconrenovations.resources;
 import com.codehub.techniconrenovations.model.PropertyOwner;
 import com.codehub.techniconrenovations.services.PropertyOwnerServices;
 import com.codehub.techniconrenovations.util.InputHandler;
+import jakarta.annotation.security.PermitAll;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.FormParam;
@@ -17,38 +18,37 @@ import org.slf4j.LoggerFactory;
 public class AuthResource {
 
     private static final Logger logger = LoggerFactory.getLogger(AuthResource.class);
-   
+
     InputHandler inputHandler = new InputHandler();
-    
+
     @Inject
     PropertyOwnerServices propertyOwnerServices;
-    
+
     @POST
     @Path("login")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @PermitAll
     public Response login(@FormParam("username") String username,
             @FormParam("password") String password) {
-        try{
+        try {
             PropertyOwner p = propertyOwnerServices.logIn(username, password);
-            if(p!=null){
-                if (p.getTypeOfUser()=="user"){
+            if (p != null) {
+                if (p.getTypeOfUser() == "user") {
                     //return page for user
-                }
-                else if (p.getTypeOfUser()=="admin"){
+                } else if (p.getTypeOfUser() == "admin") {
                     //return page for admin
                 }
                 return Response.status(200)
                         .entity("Successful")
                         .build();
-            }
-            else{
+            } else {
                 logger.debug("wrong credentials inputed");
                 return Response.status(404)
-                    .entity("Invalid Credentials")
-                    .build();
+                        .entity("Invalid Credentials")
+                        .build();
             }
         } catch (Exception e) {
-            logger.error(""+ e);
+            logger.error("" + e);
             return Response.status(401)
                     .entity("Something went wrong!")
                     .build();
@@ -58,6 +58,7 @@ public class AuthResource {
     @POST
     @Path("register")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @PermitAll
     public Response register(@FormParam("username") String username,
             @FormParam("password") String password,
             @FormParam("name") String name,
@@ -65,20 +66,20 @@ public class AuthResource {
             @FormParam("email") String email,
             @FormParam("address") String address,
             @FormParam("phoneNumber") String phoneNumber,
-            @FormParam("vatNumber") int vatNumber){
+            @FormParam("vatNumber") int vatNumber) {
         try {
-            if(propertyOwnerServices.register(vatNumber, name, surname, address, inputHandler.phoneNumber(phoneNumber), email, username, password, "user")) 
-            return Response.status(200)
-                    .entity("Successful")
-                    .build();
-            else {
+            if (propertyOwnerServices.register(vatNumber, name, surname, address, inputHandler.phoneNumber(phoneNumber), email, username, password, "user")) {
+                return Response.status(200)
+                        .entity("Successful")
+                        .build();
+            } else {
                 logger.debug("wrong credentials inputed");
                 return Response.status(404)
-                    .entity("Invalid Credentials")
-                    .build();
-            }  
-        } catch (Exception e){
-            logger.error(""+ e);
+                        .entity("Invalid Credentials")
+                        .build();
+            }
+        } catch (Exception e) {
+            logger.error("" + e);
             return Response.status(401)
                     .entity("There was a problem with your registration. Username or email already taken")
                     .build();

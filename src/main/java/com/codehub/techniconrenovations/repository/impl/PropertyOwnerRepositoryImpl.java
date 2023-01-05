@@ -165,4 +165,19 @@ public class PropertyOwnerRepositoryImpl implements PropertyOwnerRepository {
             return false;
         }
     }
+    
+    @Override
+    public String checkRole(String username, String password) {
+        try {
+            logger.debug("checking user role");
+            return entityManager.createQuery("SELECT o.typeOfUser from PropertyOwner o where username=:username and password=:password")
+                    .setParameter("username", username)
+                    .setParameter("password", password)
+                    .getSingleResult()
+                    .toString();
+        } catch (Exception e) {
+            logger.error("Error checking user's role " + e.getMessage(), e);
+            return "";
+        }
+    }
 }

@@ -40,7 +40,7 @@ public class AuthResourceTest {
         AuthResource authResource = new AuthResource();
         PropertyOwnerServices propertyOwnerServices = mock(PropertyOwnerServices.class);
         authResource.propertyOwnerServices = propertyOwnerServices;
-        when(propertyOwnerServices.register(123, "name", "surname", "address", "1234567890", "email", "username", "password", "typeOfUser")).thenReturn(true);
+        when(propertyOwnerServices.register(123, "name", "surname", "address", "1234567890", "email", "username", "password", "user")).thenReturn(true);
 
         Response response = authResource.register("username", "password", "name", "surname", "email", "address", "1234567890", 123);
         assertEquals(200, response.getStatus());
