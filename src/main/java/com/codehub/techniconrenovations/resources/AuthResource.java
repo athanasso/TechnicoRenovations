@@ -65,10 +65,9 @@ public class AuthResource {
             @FormParam("email") String email,
             @FormParam("address") String address,
             @FormParam("phoneNumber") String phoneNumber,
-            @FormParam("vatNumber") int vatNumber,
-            @FormParam("typeOfUser") String typeOfUser){
+            @FormParam("vatNumber") int vatNumber){
         try {
-            if(propertyOwnerServices.register(vatNumber, name, surname, address, inputHandler.phoneNumber(phoneNumber), email, username, password, typeOfUser)) 
+            if(propertyOwnerServices.register(vatNumber, name, surname, address, inputHandler.phoneNumber(phoneNumber), email, username, password, "user")) 
             return Response.status(200)
                     .entity("Successful")
                     .build();

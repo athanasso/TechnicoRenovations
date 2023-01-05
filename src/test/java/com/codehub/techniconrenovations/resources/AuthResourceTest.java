@@ -42,7 +42,7 @@ public class AuthResourceTest {
         authResource.propertyOwnerServices = propertyOwnerServices;
         when(propertyOwnerServices.register(123, "name", "surname", "address", "1234567890", "email", "username", "password", "typeOfUser")).thenReturn(true);
 
-        Response response = authResource.register("username", "password", "name", "surname", "email", "address", "1234567890", 123, "typeOfUser");
+        Response response = authResource.register("username", "password", "name", "surname", "email", "address", "1234567890", 123);
         assertEquals(200, response.getStatus());
         assertEquals("Successful", response.getEntity());
     }
@@ -54,7 +54,7 @@ public class AuthResourceTest {
         authResource.propertyOwnerServices = propertyOwnerServices;
         when(propertyOwnerServices.register(123, "name", "surname", "address", "12345678", "email", "username", "password", "typeOfUser")).thenReturn(false);
 
-        Response response = authResource.register("username", "password", "name", "surname", "email", "address", "12345678", 123, "typeOfUser");
+        Response response = authResource.register("username", "password", "name", "surname", "email", "address", "12345678", 123);
         assertEquals(404, response.getStatus());
         assertEquals("Invalid Credentials", response.getEntity());
     }
