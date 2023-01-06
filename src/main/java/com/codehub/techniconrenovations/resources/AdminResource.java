@@ -2,12 +2,12 @@ package com.codehub.techniconrenovations.resources;
 
 import com.codehub.techniconrenovations.dto.RepairDto;
 import com.codehub.techniconrenovations.dto.RestApiResult;
+import com.codehub.techniconrenovations.dto.UserDto;
 import com.codehub.techniconrenovations.model.Property;
 import com.codehub.techniconrenovations.model.PropertyOwner;
 import com.codehub.techniconrenovations.model.PropertyRepair;
 import com.codehub.techniconrenovations.services.AdminServices;
 import com.codehub.techniconrenovations.util.UtilFunctions;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
@@ -137,11 +137,11 @@ public class AdminResource {
     @RolesAllowed({"admin"})
     public RestApiResult getOwners() {
         try {
-            List<PropertyOwner> owners = adminServices.getOwners();
-            if (owners.isEmpty())
+            List<UserDto> users = adminServices.getOwners();
+            if (users.isEmpty())
                 return new RestApiResult<>("empty",404, "UnSuccessful");
             else
-                return new RestApiResult<>(owners,200, "Successful");
+                return new RestApiResult<>(users,200, "Successful");
         } catch (Exception e) {
             logger.error(""+e);
             return new RestApiResult<>(e, 401, "Something went wrong!");

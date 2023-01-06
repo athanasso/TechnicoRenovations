@@ -1,6 +1,7 @@
 package com.codehub.techniconrenovations.services.impl;
 
 import com.codehub.techniconrenovations.dto.RepairDto;
+import com.codehub.techniconrenovations.dto.UserDto;
 import com.codehub.techniconrenovations.enums.Status;
 import com.codehub.techniconrenovations.model.Property;
 import com.codehub.techniconrenovations.model.PropertyOwner;
@@ -62,10 +63,11 @@ public class AdminServicesImpl implements AdminServices {
     }
 
     @Override
-    public List<PropertyOwner> getOwners() {
+    public List<UserDto> getOwners() {
         try {
-            return entityManager.createQuery("SELECT o FROM PropertyOwner o")
+            List <UserDto> userList = entityManager.createQuery("SELECT o FROM PropertyOwner o")
                     .getResultList();
+            return userList;
         } catch (Exception e) {
             logger.error("Error while retrieving owners: " + e.getMessage(), e);
             return null;

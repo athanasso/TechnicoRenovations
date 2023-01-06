@@ -11,7 +11,6 @@ import com.codehub.techniconrenovations.repository.PropertyRepairRepository;
 import com.codehub.techniconrenovations.repository.PropertyRepository;
 import com.codehub.techniconrenovations.services.PropertyOwnerServices;
 import jakarta.inject.Inject;
-import jakarta.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

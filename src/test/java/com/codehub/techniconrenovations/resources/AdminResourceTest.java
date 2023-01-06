@@ -2,6 +2,7 @@ package com.codehub.techniconrenovations.resources;
 
 import com.codehub.techniconrenovations.dto.RepairDto;
 import com.codehub.techniconrenovations.dto.RestApiResult;
+import com.codehub.techniconrenovations.dto.UserDto;
 import com.codehub.techniconrenovations.model.Property;
 import com.codehub.techniconrenovations.model.PropertyOwner;
 import com.codehub.techniconrenovations.model.PropertyRepair;
@@ -152,8 +153,8 @@ public class AdminResourceTest {
         AdminResource adminResource = new AdminResource();
         AdminServices adminServices = mock(AdminServices.class);
         adminResource.adminServices = adminServices;
-        List<PropertyOwner> owners = new ArrayList<>();
-        PropertyOwner owner = new PropertyOwner();
+        List<UserDto> owners = new ArrayList<>();
+        UserDto owner = new UserDto(); 
         owner.setVatNumber(1);
         owner.setName("John");
         owner.setSurname("Doe");
@@ -171,7 +172,7 @@ public class AdminResourceTest {
         AdminResource adminResource = new AdminResource();
         AdminServices adminServices = mock(AdminServices.class);
         adminResource.adminServices = adminServices;
-        List<PropertyOwner> owners = new ArrayList<>();
+        List<UserDto> owners = new ArrayList<>();
         when(adminServices.getOwners()).thenReturn(owners);
 
         RestApiResult result = adminResource.getOwners();
