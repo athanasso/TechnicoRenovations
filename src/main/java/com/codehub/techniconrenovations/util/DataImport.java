@@ -11,7 +11,6 @@ import com.codehub.techniconrenovations.repository.PropertyRepairRepository;
 import com.codehub.techniconrenovations.repository.PropertyRepository;
 import com.codehub.techniconrenovations.resources.DataResource;
 import static com.codehub.techniconrenovations.util.UtilFunctions.CheckDate;
-import static com.codehub.techniconrenovations.util.UtilFunctions.convertToDate;
 import jakarta.inject.Inject;
 import jakarta.persistence.RollbackException;
 import java.io.BufferedReader;
@@ -20,6 +19,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
 import org.slf4j.LoggerFactory;
+import static com.codehub.techniconrenovations.util.UtilFunctions.stringToDate;
 
 public class DataImport {
 
@@ -89,16 +89,16 @@ public class DataImport {
                         new PropertyOwner(Integer.parseInt(repairs[0])),
                         new Property(repairs[1]),
                         RepairType.valueOf(repairs[2]),
-                        convertToDate(repairs[3]),
+                        stringToDate(repairs[3]),
                         repairs[4],
-                        convertToDate(repairs[5]),
-                        convertToDate(repairs[6]),
+                        stringToDate(repairs[5]),
+                        stringToDate(repairs[6]),
                         BigDecimal.valueOf(Double.parseDouble(repairs[7])),
                         repairs[8],
                         Boolean.parseBoolean(repairs[9]),
                         Status.valueOf(repairs[10]),
-                        convertToDate(repairs[11]),
-                        convertToDate(repairs[12])
+                        stringToDate(repairs[11]),
+                        stringToDate(repairs[12])
                 );
                 if (CheckDate(propertyRepair.getActualStartDate())) {
                     propertyRepair.setActualStartDate(null);

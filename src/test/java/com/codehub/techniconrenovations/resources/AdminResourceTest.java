@@ -4,7 +4,6 @@ import com.codehub.techniconrenovations.dto.RepairDto;
 import com.codehub.techniconrenovations.dto.RestApiResult;
 import com.codehub.techniconrenovations.dto.UserDto;
 import com.codehub.techniconrenovations.model.Property;
-import com.codehub.techniconrenovations.model.PropertyOwner;
 import com.codehub.techniconrenovations.model.PropertyRepair;
 import com.codehub.techniconrenovations.services.AdminServices;
 import jakarta.ws.rs.core.Response;
@@ -36,8 +35,8 @@ public class AdminResourceTest {
         RepairDto repair = new RepairDto();
         repair.setRepairId(1);
         repair.setProposedCost(new BigDecimal(1000.0));
-        repair.setActualStartDate(new Date("01/01/2022"));
-        repair.setActualEndDate(new Date("01/10/2022"));
+        repair.setActualStartDate("01/01/2022");
+        repair.setActualEndDate("01/10/2022");
         repairs.add(repair);
         when(adminServices.getPendingRepairs()).thenReturn(repairs);
 

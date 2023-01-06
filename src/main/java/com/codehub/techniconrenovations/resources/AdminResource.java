@@ -4,7 +4,6 @@ import com.codehub.techniconrenovations.dto.RepairDto;
 import com.codehub.techniconrenovations.dto.RestApiResult;
 import com.codehub.techniconrenovations.dto.UserDto;
 import com.codehub.techniconrenovations.model.Property;
-import com.codehub.techniconrenovations.model.PropertyOwner;
 import com.codehub.techniconrenovations.model.PropertyRepair;
 import com.codehub.techniconrenovations.services.AdminServices;
 import com.codehub.techniconrenovations.util.UtilFunctions;
@@ -24,7 +23,7 @@ import org.slf4j.LoggerFactory;
 
 @Path("admin")
 public class AdminResource {
-    
+
     private static final Logger logger = LoggerFactory.getLogger(AdminResource.class);
 
     @Inject
@@ -46,14 +45,13 @@ public class AdminResource {
     public RestApiResult getPendingRepairs() {
         try {
             List<RepairDto> repairs = adminServices.getPendingRepairs();
-            if (repairs.isEmpty())
-                return new RestApiResult<>("empty",404, "UnSuccessful");
-            else{
-                System.out.println(repairs.toString());
-                return new RestApiResult<>(repairs,200, "Successful");
+            if (repairs.isEmpty()) {
+                return new RestApiResult<>("empty", 404, "UnSuccessful");
+            } else {
+                return new RestApiResult<>(repairs, 200, "Successful");
             }
         } catch (Exception e) {
-            logger.error(""+e);
+            logger.error("" + e);
             return new RestApiResult<>(e, 401, "Something went wrong!");
         }
     }
@@ -70,7 +68,7 @@ public class AdminResource {
                     .entity("Successful!")
                     .build();
         } catch (Exception e) {
-            logger.error(""+e);
+            logger.error("" + e);
             return Response.status(401)
                     .entity("Something went wrong!")
                     .build();
@@ -85,12 +83,12 @@ public class AdminResource {
             @PathParam("endDate") String endDate,
             @PathParam("repairId") int repairId) {
         try {
-            adminServices.proposeStartEndDates(UtilFunctions.convertToDate(startDate), UtilFunctions.convertToDate(endDate), repairId);
+            adminServices.proposeStartEndDates(UtilFunctions.stringToDate(startDate), UtilFunctions.stringToDate(endDate), repairId);
             return Response.status(200)
                     .entity("Successful!")
                     .build();
         } catch (Exception e) {
-            logger.error(""+e);
+            logger.error("" + e);
             return Response.status(401)
                     .entity("Something went wrong!")
                     .build();
@@ -104,12 +102,13 @@ public class AdminResource {
     public RestApiResult getAllRepairs() {
         try {
             List<PropertyRepair> repairs = adminServices.getAllRepairs();
-            if (repairs.isEmpty())
-                return new RestApiResult<>("empty",404, "UnSuccessful");
-            else
-                return new RestApiResult<>(repairs,200, "Successful");
+            if (repairs.isEmpty()) {
+                return new RestApiResult<>("empty", 404, "UnSuccessful");
+            } else {
+                return new RestApiResult<>(repairs, 200, "Successful");
+            }
         } catch (Exception e) {
-            logger.error(""+e);
+            logger.error("" + e);
             return new RestApiResult<>(e, 401, "Something went wrong!");
         }
     }
@@ -121,12 +120,13 @@ public class AdminResource {
     public RestApiResult getProperties() {
         try {
             List<Property> properties = adminServices.getProperties();
-            if (properties.isEmpty())
-                return new RestApiResult<>("empty",404, "UnSuccessful");
-            else
-                return new RestApiResult<>(properties,200, "Successful");
+            if (properties.isEmpty()) {
+                return new RestApiResult<>("empty", 404, "UnSuccessful");
+            } else {
+                return new RestApiResult<>(properties, 200, "Successful");
+            }
         } catch (Exception e) {
-            logger.error(""+e);
+            logger.error("" + e);
             return new RestApiResult<>(e, 401, "Something went wrong!");
         }
     }
@@ -138,12 +138,13 @@ public class AdminResource {
     public RestApiResult getOwners() {
         try {
             List<UserDto> users = adminServices.getOwners();
-            if (users.isEmpty())
-                return new RestApiResult<>("empty",404, "UnSuccessful");
-            else
-                return new RestApiResult<>(users,200, "Successful");
+            if (users.isEmpty()) {
+                return new RestApiResult<>("empty", 404, "UnSuccessful");
+            } else {
+                return new RestApiResult<>(users, 200, "Successful");
+            }
         } catch (Exception e) {
-            logger.error(""+e);
+            logger.error("" + e);
             return new RestApiResult<>(e, 401, "Something went wrong!");
         }
     }
@@ -155,10 +156,10 @@ public class AdminResource {
         try {
             adminServices.permanentlyDeleteProperties();
             return Response.status(200)
-                    .entity( "Successful")
+                    .entity("Successful")
                     .build();
         } catch (Exception e) {
-            logger.error(""+e);
+            logger.error("" + e);
             return Response.status(401)
                     .entity("Something went wrong!")
                     .build();
@@ -175,7 +176,7 @@ public class AdminResource {
                     .entity("Successful")
                     .build();
         } catch (Exception e) {
-            logger.error(""+e);
+            logger.error("" + e);
             return Response.status(401)
                     .entity("Something went wrong!")
                     .build();
@@ -192,7 +193,7 @@ public class AdminResource {
                     .entity("Successful")
                     .build();
         } catch (Exception e) {
-            logger.error(""+e);
+            logger.error("" + e);
             return Response.status(401)
                     .entity("Something went wrong!")
                     .build();

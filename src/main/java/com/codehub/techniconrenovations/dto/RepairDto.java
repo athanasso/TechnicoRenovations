@@ -5,48 +5,25 @@ import com.codehub.techniconrenovations.enums.Status;
 import com.codehub.techniconrenovations.model.Property;
 import com.codehub.techniconrenovations.model.PropertyOwner;
 import com.codehub.techniconrenovations.model.PropertyRepair;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.codehub.techniconrenovations.util.UtilFunctions;
 import java.math.BigDecimal;
-import java.util.Date;
 
 public class RepairDto {
 
-    @JsonIgnore
     private int repairId;
-    @JsonIgnore
     private RepairType repairType;
-    @JsonIgnore
     private PropertyOwner propertyOwner;
-    @JsonIgnore
     private Property property;
-    @JsonSerialize(using = com.codehub.techniconrenovations.serializers.DateSerializer.class)
-    @JsonDeserialize(using = com.codehub.techniconrenovations.serializers.DateDeserializer.class)
-    private Date date;
-    @JsonIgnore
+    private String date;
     private String shortDescription;
-    @JsonSerialize(using = com.codehub.techniconrenovations.serializers.DateSerializer.class)
-    @JsonDeserialize(using = com.codehub.techniconrenovations.serializers.DateDeserializer.class)
-    private Date proposedStartDate;
-    @JsonSerialize(using = com.codehub.techniconrenovations.serializers.DateSerializer.class)
-    @JsonDeserialize(using = com.codehub.techniconrenovations.serializers.DateDeserializer.class)
-    private Date proposedEndDate;
-    @JsonIgnore
+    private String proposedStartDate;
+    private String proposedEndDate;
     private BigDecimal proposedCost;
-    @JsonIgnore
     private String desciption;
-    @JsonIgnore
     private boolean accepted;
-    @JsonIgnore
     private Status status;
-    @JsonSerialize(using = com.codehub.techniconrenovations.serializers.DateSerializer.class)
-    @JsonDeserialize(using = com.codehub.techniconrenovations.serializers.DateDeserializer.class)
-    private Date actualStartDate;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm a z")
-    private Date actualEndDate;
-    @JsonIgnore
+    private String actualStartDate;
+    private String actualEndDate;
     private boolean isDeleted;
 
     public RepairDto(PropertyRepair repair) {
@@ -55,16 +32,16 @@ public class RepairDto {
             propertyOwner = repair.getPropertyOwner();
             property = repair.getProperty();
             repairType = repair.getRepairType();
-            date = repair.getDate();
+            date = UtilFunctions.dateToString(repair.getDate());
             shortDescription = repair.getShortDescription();
-            proposedStartDate = repair.getProposedStartDate();
-            proposedEndDate = repair.getProposedEndDate();
+            proposedStartDate = UtilFunctions.dateToString(repair.getProposedStartDate());
+            proposedEndDate = UtilFunctions.dateToString(repair.getProposedEndDate());
             proposedCost = repair.getProposedCost();
             desciption = repair.getDesciption();
             accepted = repair.isAccepted();
             status = repair.getStatus();
-            actualStartDate = repair.getActualStartDate();
-            actualEndDate = repair.getActualEndDate();
+            actualStartDate = UtilFunctions.dateToString(repair.getActualStartDate());
+            actualEndDate = UtilFunctions.dateToString(repair.getActualEndDate());
             isDeleted = repair.isIsDeleted();
         }
     }
@@ -75,16 +52,16 @@ public class RepairDto {
         repair.setPropertyOwner(propertyOwner);
         repair.setProperty(property);
         repair.setRepairType(repairType);
-        repair.setDate(date);
+        repair.setDate(UtilFunctions.stringToDate(date));
         repair.setShortDescription(shortDescription);
-        repair.setProposedStartDate(proposedStartDate);
-        repair.setProposedEndDate(proposedEndDate);
+        repair.setProposedStartDate(UtilFunctions.stringToDate(proposedStartDate));
+        repair.setProposedEndDate(UtilFunctions.stringToDate(proposedEndDate));
         repair.setProposedCost(proposedCost);
         repair.setDesciption(desciption);
         repair.setAccepted(accepted);
         repair.setStatus(status);
-        repair.setActualStartDate(actualStartDate);
-        repair.setActualEndDate(actualEndDate);
+        repair.setActualStartDate(UtilFunctions.stringToDate(actualStartDate));
+        repair.setActualEndDate(UtilFunctions.stringToDate(actualEndDate));
         repair.setIsDeleted(isDeleted);
         return repair;
     }
@@ -124,11 +101,11 @@ public class RepairDto {
         this.property = property;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -140,19 +117,19 @@ public class RepairDto {
         this.shortDescription = shortDescription;
     }
 
-    public Date getProposedStartDate() {
+    public String getProposedStartDate() {
         return proposedStartDate;
     }
 
-    public void setProposedStartDate(Date proposedStartDate) {
+    public void setProposedStartDate(String proposedStartDate) {
         this.proposedStartDate = proposedStartDate;
     }
 
-    public Date getProposedEndDate() {
+    public String getProposedEndDate() {
         return proposedEndDate;
     }
 
-    public void setProposedEndDate(Date proposedEndDate) {
+    public void setProposedEndDate(String proposedEndDate) {
         this.proposedEndDate = proposedEndDate;
     }
 
@@ -188,19 +165,19 @@ public class RepairDto {
         this.status = status;
     }
 
-    public Date getActualStartDate() {
+    public String getActualStartDate() {
         return actualStartDate;
     }
 
-    public void setActualStartDate(Date actualStartDate) {
+    public void setActualStartDate(String actualStartDate) {
         this.actualStartDate = actualStartDate;
     }
 
-    public Date getActualEndDate() {
+    public String getActualEndDate() {
         return actualEndDate;
     }
 
-    public void setActualEndDate(Date actualEndDate) {
+    public void setActualEndDate(String actualEndDate) {
         this.actualEndDate = actualEndDate;
     }
 
