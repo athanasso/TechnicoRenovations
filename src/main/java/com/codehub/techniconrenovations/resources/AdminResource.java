@@ -7,6 +7,7 @@ import com.codehub.techniconrenovations.model.PropertyOwner;
 import com.codehub.techniconrenovations.model.PropertyRepair;
 import com.codehub.techniconrenovations.services.AdminServices;
 import com.codehub.techniconrenovations.util.UtilFunctions;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
@@ -44,11 +45,13 @@ public class AdminResource {
     @RolesAllowed({"admin"})
     public RestApiResult getPendingRepairs() {
         try {
-            List<PropertyRepair> repairs = adminServices.getPendingRepairs();
+            List<RepairDto> repairs = adminServices.getPendingRepairs();
             if (repairs.isEmpty())
                 return new RestApiResult<>("empty",404, "UnSuccessful");
-            else
+            else{
+                System.out.println(repairs.toString());
                 return new RestApiResult<>(repairs,200, "Successful");
+            }
         } catch (Exception e) {
             logger.error(""+e);
             return new RestApiResult<>(e, 401, "Something went wrong!");

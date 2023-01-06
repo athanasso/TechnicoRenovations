@@ -1,12 +1,11 @@
 package com.codehub.techniconrenovations.services.impl;
 
+import com.codehub.techniconrenovations.dto.RepairDto;
 import com.codehub.techniconrenovations.enums.Status;
 import com.codehub.techniconrenovations.model.Property;
 import com.codehub.techniconrenovations.model.PropertyOwner;
 import com.codehub.techniconrenovations.model.PropertyRepair;
-import com.codehub.techniconrenovations.repository.PropertyOwnerRepository;
 import com.codehub.techniconrenovations.repository.PropertyRepairRepository;
-import com.codehub.techniconrenovations.repository.PropertyRepository;
 import com.codehub.techniconrenovations.services.AdminServices;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
@@ -23,19 +22,17 @@ public class AdminServicesImpl implements AdminServices {
 
     @PersistenceContext(unitName = "Persistence")
     private EntityManager entityManager;
-    @Inject
-    private PropertyRepository propertyRepository;
-    @Inject
-    private PropertyOwnerRepository propertyOwnerRepository;
+    
     @Inject
     private PropertyRepairRepository propertyRepairRepository;
 
     @Override
-    public List<PropertyRepair> getPendingRepairs() {
+    public List<RepairDto> getPendingRepairs() {
         try {
-            return entityManager.createQuery("SELECT r FROM PropertyRepair r WHERE r.status = :status")
+            List<RepairDto> repairDtoList = entityManager.createQuery("SELECT r FROM PropertyRepair r WHERE r.status = :status")
                     .setParameter("status", Status.PENDING)
                     .getResultList();
+            return repairDtoList;
         } catch (Exception e) {
             logger.error("Error while retrieving pending repairs: " + e.getMessage(), e);
             return null;

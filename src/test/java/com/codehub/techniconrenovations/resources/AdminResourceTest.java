@@ -1,5 +1,6 @@
 package com.codehub.techniconrenovations.resources;
 
+import com.codehub.techniconrenovations.dto.RepairDto;
 import com.codehub.techniconrenovations.dto.RestApiResult;
 import com.codehub.techniconrenovations.model.Property;
 import com.codehub.techniconrenovations.model.PropertyOwner;
@@ -12,7 +13,6 @@ import java.util.Date;
 import java.util.List;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -31,8 +31,8 @@ public class AdminResourceTest {
         AdminResource adminResource = new AdminResource();
         AdminServices adminServices = mock(AdminServices.class);
         adminResource.adminServices = adminServices;
-        List<PropertyRepair> repairs = new ArrayList<>();
-        PropertyRepair repair = new PropertyRepair();
+        List<RepairDto> repairs = new ArrayList<>();
+        RepairDto repair = new RepairDto();
         repair.setRepairId(1);
         repair.setProposedCost(new BigDecimal(1000.0));
         repair.setActualStartDate(new Date("01/01/2022"));
@@ -51,7 +51,7 @@ public class AdminResourceTest {
         AdminResource adminResource = new AdminResource();
         AdminServices adminServices = mock(AdminServices.class);
         adminResource.adminServices = adminServices;
-        List<PropertyRepair> repairs = new ArrayList<>();
+        List<RepairDto> repairs = new ArrayList<>();
         when(adminServices.getPendingRepairs()).thenReturn(repairs);
 
         RestApiResult result = adminResource.getPendingRepairs();

@@ -1,5 +1,6 @@
 package com.codehub.techniconrenovations.services;
 
+import com.codehub.techniconrenovations.dto.RepairDto;
 import com.codehub.techniconrenovations.model.Property;
 import com.codehub.techniconrenovations.model.PropertyOwner;
 import com.codehub.techniconrenovations.model.PropertyRepair;
@@ -11,9 +12,9 @@ public interface AdminServices {
     /**
      * Returns all the Repairs with pending status.
      *
-     * @return List<PropertyRepair>
+     * @return List<RepairDto>
      */
-    List<PropertyRepair> getPendingRepairs();
+    List<RepairDto> getPendingRepairs();
 
     /**
      * Returns all the Repairs.
