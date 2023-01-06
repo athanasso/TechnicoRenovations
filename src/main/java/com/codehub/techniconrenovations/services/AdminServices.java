@@ -1,10 +1,8 @@
 package com.codehub.techniconrenovations.services;
 
+import com.codehub.techniconrenovations.dto.PropertyDto;
 import com.codehub.techniconrenovations.dto.RepairDto;
 import com.codehub.techniconrenovations.dto.UserDto;
-import com.codehub.techniconrenovations.model.Property;
-import com.codehub.techniconrenovations.model.PropertyOwner;
-import com.codehub.techniconrenovations.model.PropertyRepair;
 import java.util.Date;
 import java.util.List;
 
@@ -20,16 +18,16 @@ public interface AdminServices {
     /**
      * Returns all the Repairs.
      *
-     * @return List<PropertyRepair>
+     * @return List<RepairDto>
      */
-    List<PropertyRepair> getAllRepairs();
+    List<RepairDto> getAllRepairs();
 
     /**
      * Returns all registered properties.
      *
-     * @return List<Property>
+     * @return List<PropertyDto>
      */
-    List<Property> getProperties();
+    List<PropertyDto> getProperties();
 
     /**
      * Returns all registered owners.

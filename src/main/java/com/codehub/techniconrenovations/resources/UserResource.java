@@ -1,8 +1,8 @@
 package com.codehub.techniconrenovations.resources;
 
+import com.codehub.techniconrenovations.dto.PropertyDto;
+import com.codehub.techniconrenovations.dto.RepairDto;
 import com.codehub.techniconrenovations.dto.RestApiResult;
-import com.codehub.techniconrenovations.model.Property;
-import com.codehub.techniconrenovations.model.PropertyRepair;
 import com.codehub.techniconrenovations.services.PropertyOwnerServices;
 import com.codehub.techniconrenovations.util.InputHandler;
 import jakarta.annotation.security.RolesAllowed;
@@ -179,7 +179,7 @@ public class UserResource {
     @RolesAllowed({"user"})
     public RestApiResult getProperties(@PathParam("vatNumber") int vatNumber) {
         try {
-            List<Property> properties = propertyOwnerServices.getProperties(vatNumber);
+            List<PropertyDto> properties = propertyOwnerServices.getProperties(vatNumber);
             if (properties.isEmpty()) {
                 return new RestApiResult<>("empty", 404, "UnSuccessful");
             } else {
@@ -223,7 +223,7 @@ public class UserResource {
     @RolesAllowed({"user"})
     public RestApiResult getRepairStatus(@PathParam("vatNumber") int vatNumber) {
         try {
-            List<PropertyRepair> repairs = propertyOwnerServices.getRepairStatus(vatNumber);
+            List<RepairDto> repairs = propertyOwnerServices.getRepairStatus(vatNumber);
             if (repairs.isEmpty()) {
                 return new RestApiResult<>("empty", 404, "UnSuccessful");
             } else {

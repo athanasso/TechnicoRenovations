@@ -11,9 +11,7 @@ import java.math.BigDecimal;
 public class RepairDto {
 
     private int repairId;
-    private RepairType repairType;
-    private PropertyOwner propertyOwner;
-    private Property property;
+    private String repairType;
     private String date;
     private String shortDescription;
     private String proposedStartDate;
@@ -21,7 +19,7 @@ public class RepairDto {
     private BigDecimal proposedCost;
     private String desciption;
     private boolean accepted;
-    private Status status;
+    private String status;
     private String actualStartDate;
     private String actualEndDate;
     private boolean isDeleted;
@@ -29,9 +27,7 @@ public class RepairDto {
     public RepairDto(PropertyRepair repair) {
         if (repair != null) {
             repairId = repair.getRepairId();
-            propertyOwner = repair.getPropertyOwner();
-            property = repair.getProperty();
-            repairType = repair.getRepairType();
+            repairType = repair.getRepairType().toString();
             date = UtilFunctions.dateToString(repair.getDate());
             shortDescription = repair.getShortDescription();
             proposedStartDate = UtilFunctions.dateToString(repair.getProposedStartDate());
@@ -39,7 +35,7 @@ public class RepairDto {
             proposedCost = repair.getProposedCost();
             desciption = repair.getDesciption();
             accepted = repair.isAccepted();
-            status = repair.getStatus();
+            status = repair.getStatus().toString();
             actualStartDate = UtilFunctions.dateToString(repair.getActualStartDate());
             actualEndDate = UtilFunctions.dateToString(repair.getActualEndDate());
             isDeleted = repair.isIsDeleted();
@@ -49,9 +45,7 @@ public class RepairDto {
     public PropertyRepair asRepair() {
         PropertyRepair repair = new PropertyRepair();
         repair.setRepairId(repairId);
-        repair.setPropertyOwner(propertyOwner);
-        repair.setProperty(property);
-        repair.setRepairType(repairType);
+        repair.setRepairType(RepairType.valueOf(repairType));
         repair.setDate(UtilFunctions.stringToDate(date));
         repair.setShortDescription(shortDescription);
         repair.setProposedStartDate(UtilFunctions.stringToDate(proposedStartDate));
@@ -59,7 +53,7 @@ public class RepairDto {
         repair.setProposedCost(proposedCost);
         repair.setDesciption(desciption);
         repair.setAccepted(accepted);
-        repair.setStatus(status);
+        repair.setStatus(Status.valueOf(status));
         repair.setActualStartDate(UtilFunctions.stringToDate(actualStartDate));
         repair.setActualEndDate(UtilFunctions.stringToDate(actualEndDate));
         repair.setIsDeleted(isDeleted);
@@ -77,28 +71,12 @@ public class RepairDto {
         this.repairId = repairId;
     }
 
-    public RepairType getRepairType() {
+    public String getRepairType() {
         return repairType;
     }
 
-    public void setRepairType(RepairType repairType) {
+    public void setRepairType(String repairType) {
         this.repairType = repairType;
-    }
-
-    public PropertyOwner getPropertyOwner() {
-        return propertyOwner;
-    }
-
-    public void setPropertyOwner(PropertyOwner propertyOwner) {
-        this.propertyOwner = propertyOwner;
-    }
-
-    public Property getProperty() {
-        return property;
-    }
-
-    public void setProperty(Property property) {
-        this.property = property;
     }
 
     public String getDate() {
@@ -157,11 +135,11 @@ public class RepairDto {
         this.accepted = accepted;
     }
 
-    public Status getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

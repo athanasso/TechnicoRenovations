@@ -1,5 +1,6 @@
 package com.codehub.techniconrenovations.services.impl;
 
+import com.codehub.techniconrenovations.dto.PropertyDto;
 import com.codehub.techniconrenovations.dto.RepairDto;
 import com.codehub.techniconrenovations.dto.UserDto;
 import com.codehub.techniconrenovations.enums.Status;
@@ -41,10 +42,11 @@ public class AdminServicesImpl implements AdminServices {
     }
 
     @Override
-    public List<PropertyRepair> getAllRepairs() {
+    public List<RepairDto> getAllRepairs() {
         try {
-            return entityManager.createQuery("SELECT r FROM PropertyRepair r")
+            List<RepairDto> repairs = entityManager.createQuery("SELECT r FROM PropertyRepair r")
                     .getResultList();
+            return repairs;
         } catch (Exception e) {
             logger.error("Error while retrieving all repairs: " + e.getMessage(), e);
             return null;
@@ -52,10 +54,11 @@ public class AdminServicesImpl implements AdminServices {
     }
 
     @Override
-    public List<Property> getProperties() {
+    public List<PropertyDto> getProperties() {
         try {
-            return entityManager.createQuery("SELECT p FROM Property p")
+            List<PropertyDto> properties = entityManager.createQuery("SELECT p FROM Property p")
                     .getResultList();
+            return properties;
         } catch (Exception e) {
             logger.error("Error while retrieving properties: " + e.getMessage(), e);
             return null;

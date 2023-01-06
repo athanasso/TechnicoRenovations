@@ -1,15 +1,13 @@
 package com.codehub.techniconrenovations.resources;
 
+import com.codehub.techniconrenovations.dto.PropertyDto;
 import com.codehub.techniconrenovations.dto.RepairDto;
 import com.codehub.techniconrenovations.dto.RestApiResult;
 import com.codehub.techniconrenovations.dto.UserDto;
-import com.codehub.techniconrenovations.model.Property;
-import com.codehub.techniconrenovations.model.PropertyRepair;
 import com.codehub.techniconrenovations.services.AdminServices;
 import jakarta.ws.rs.core.Response;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -87,12 +85,12 @@ public class AdminResourceTest {
         AdminResource adminResource = new AdminResource();
         AdminServices adminServices = mock(AdminServices.class);
         adminResource.adminServices = adminServices;
-        List<PropertyRepair> repairs = new ArrayList<>();
-        PropertyRepair repair = new PropertyRepair();
+        List<RepairDto> repairs = new ArrayList<>();
+        RepairDto repair = new RepairDto();
         repair.setRepairId(1);
         repair.setProposedCost(new BigDecimal(1000.0));
-        repair.setActualStartDate(new Date("01/01/2022"));
-        repair.setActualEndDate(new Date("01/10/2022"));
+        repair.setActualStartDate("01/01/2022");
+        repair.setActualEndDate("01/10/2022");
         repairs.add(repair);
         when(adminServices.getAllRepairs()).thenReturn(repairs);
 
@@ -107,7 +105,7 @@ public class AdminResourceTest {
         AdminResource adminResource = new AdminResource();
         AdminServices adminServices = mock(AdminServices.class);
         adminResource.adminServices = adminServices;
-        List<PropertyRepair> repairs = new ArrayList<>();
+        List<RepairDto> repairs = new ArrayList<>();
         when(adminServices.getAllRepairs()).thenReturn(repairs);
 
         RestApiResult result = adminResource.getAllRepairs();
@@ -121,8 +119,8 @@ public class AdminResourceTest {
         AdminResource adminResource = new AdminResource();
         AdminServices adminServices = mock(AdminServices.class);
         adminResource.adminServices = adminServices;
-        List<Property> properties = new ArrayList<>();
-        Property property = new Property();
+        List<PropertyDto> properties = new ArrayList<>();
+        PropertyDto property = new PropertyDto();
         property.setPropertyId("123");
         property.setPropertyAddress("123 Main St");
         properties.add(property);
@@ -138,7 +136,7 @@ public class AdminResourceTest {
         AdminResource adminResource = new AdminResource();
         AdminServices adminServices = mock(AdminServices.class);
         adminResource.adminServices = adminServices;
-        List<Property> properties = new ArrayList<>();
+        List<PropertyDto> properties = new ArrayList<>();
         when(adminServices.getProperties()).thenReturn(properties);
 
         RestApiResult result = adminResource.getProperties();

@@ -1,10 +1,10 @@
 package com.codehub.techniconrenovations.services;
 
+import com.codehub.techniconrenovations.dto.PropertyDto;
+import com.codehub.techniconrenovations.dto.RepairDto;
 import com.codehub.techniconrenovations.enums.PropertyType;
 import com.codehub.techniconrenovations.enums.RepairType;
-import com.codehub.techniconrenovations.model.Property;
 import com.codehub.techniconrenovations.model.PropertyOwner;
-import com.codehub.techniconrenovations.model.PropertyRepair;
 import java.util.List;
 
 public interface PropertyOwnerServices {
@@ -13,17 +13,17 @@ public interface PropertyOwnerServices {
      * Returns a list with the owner's Properties.
      *
      * @param vatNumber
-     * @return List<Property>
+     * @return List<PropertyDto>
      */
-    List<Property> getProperties(int vatNumber);
+    List<PropertyDto> getProperties(int vatNumber);
 
     /**
      * Returns the status of a repair.
      *
      * @param vatNumber
-     * @return List<PropertyRepair>
+     * @return List<RepairDto>
      */
-    List<PropertyRepair> getRepairStatus(int vatNumber);
+    List<RepairDto> getRepairStatus(int vatNumber);
 
     /**
      * Registers a new PropertyOwner to the database.

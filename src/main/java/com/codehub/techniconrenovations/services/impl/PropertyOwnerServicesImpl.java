@@ -1,5 +1,7 @@
 package com.codehub.techniconrenovations.services.impl;
 
+import com.codehub.techniconrenovations.dto.PropertyDto;
+import com.codehub.techniconrenovations.dto.RepairDto;
 import com.codehub.techniconrenovations.enums.PropertyType;
 import com.codehub.techniconrenovations.enums.RepairType;
 import com.codehub.techniconrenovations.enums.Status;
@@ -29,13 +31,13 @@ public class PropertyOwnerServicesImpl implements PropertyOwnerServices {
     private PropertyRepairRepository propertyRepairRepository;
 
     @Override
-    public List<Property> getProperties(int vatNumber) {
+    public List<PropertyDto> getProperties(int vatNumber) {
         try {
             List<Property> pr = propertyRepository.searchVat(vatNumber);
-            List<Property> properties = new ArrayList<>();
+            List<PropertyDto> properties = new ArrayList<>();
             pr.forEach(p -> {
                 if (!p.isIsDeleted()) {
-                    properties.add(p);
+                    properties.add(new PropertyDto(p));
                 }
             });
             if (properties.isEmpty()) {
@@ -51,15 +53,15 @@ public class PropertyOwnerServicesImpl implements PropertyOwnerServices {
     }
 
     @Override
-    public List<PropertyRepair> getRepairStatus(int vatNumber) {
+    public List<RepairDto> getRepairStatus(int vatNumber) {
         try {
             List<Property> properties = propertyRepository.searchVat(vatNumber);
-            List<PropertyRepair> repairs = new ArrayList<>();
+            List<RepairDto> repairs = new ArrayList<>();
             for (Property p : properties) {
                 List<PropertyRepair> r = propertyRepairRepository.searchByPropertyId(p.getPropertyId());
                 r.forEach(pr -> {
                     if (!pr.isIsDeleted()) {
-                        repairs.add(pr);
+                        repairs.add(new RepairDto(pr));
                     }
                 });
             }

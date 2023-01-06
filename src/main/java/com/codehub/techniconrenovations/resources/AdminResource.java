@@ -1,10 +1,9 @@
 package com.codehub.techniconrenovations.resources;
 
+import com.codehub.techniconrenovations.dto.PropertyDto;
 import com.codehub.techniconrenovations.dto.RepairDto;
 import com.codehub.techniconrenovations.dto.RestApiResult;
 import com.codehub.techniconrenovations.dto.UserDto;
-import com.codehub.techniconrenovations.model.Property;
-import com.codehub.techniconrenovations.model.PropertyRepair;
 import com.codehub.techniconrenovations.services.AdminServices;
 import com.codehub.techniconrenovations.util.UtilFunctions;
 import jakarta.annotation.security.RolesAllowed;
@@ -101,7 +100,7 @@ public class AdminResource {
     @RolesAllowed({"admin"})
     public RestApiResult getAllRepairs() {
         try {
-            List<PropertyRepair> repairs = adminServices.getAllRepairs();
+            List<RepairDto> repairs = adminServices.getAllRepairs();
             if (repairs.isEmpty()) {
                 return new RestApiResult<>("empty", 404, "UnSuccessful");
             } else {
@@ -119,7 +118,7 @@ public class AdminResource {
     @RolesAllowed({"admin"})
     public RestApiResult getProperties() {
         try {
-            List<Property> properties = adminServices.getProperties();
+            List<PropertyDto> properties = adminServices.getProperties();
             if (properties.isEmpty()) {
                 return new RestApiResult<>("empty", 404, "UnSuccessful");
             } else {

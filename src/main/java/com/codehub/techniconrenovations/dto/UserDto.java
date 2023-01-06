@@ -10,6 +10,7 @@ public class UserDto {
     private String address;
     private String phoneNumber;
     private String email;
+    private String typeOfUser;
 
     public UserDto(PropertyOwner owner) {
         if (owner != null) {
@@ -19,6 +20,7 @@ public class UserDto {
             address = owner.getAddress();
             phoneNumber = owner.getPhoneNumber();
             email = owner.getEmail();
+            typeOfUser = owner.getTypeOfUser();
         }
     }
     
@@ -30,6 +32,7 @@ public class UserDto {
         owner.setAddress(address);
         owner.setPhoneNumber(phoneNumber);
         owner.setEmail(email);
+        owner.setTypeOfUser(typeOfUser);
         return owner;
     }
 
@@ -82,5 +85,13 @@ public class UserDto {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getTypeOfUser() {
+        return typeOfUser;
+    }
+
+    public void setTypeOfUser(String typeOfUser) {
+        this.typeOfUser = typeOfUser;
     }
 }

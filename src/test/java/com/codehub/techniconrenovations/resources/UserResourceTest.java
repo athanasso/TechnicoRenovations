@@ -1,10 +1,10 @@
 package com.codehub.techniconrenovations.resources;
 
+import com.codehub.techniconrenovations.dto.PropertyDto;
+import com.codehub.techniconrenovations.dto.RepairDto;
 import com.codehub.techniconrenovations.dto.RestApiResult;
 import com.codehub.techniconrenovations.enums.PropertyType;
 import com.codehub.techniconrenovations.enums.RepairType;
-import com.codehub.techniconrenovations.model.Property;
-import com.codehub.techniconrenovations.model.PropertyRepair;
 import com.codehub.techniconrenovations.services.PropertyOwnerServices;
 import jakarta.ws.rs.core.Response;
 import java.util.ArrayList;
@@ -150,7 +150,7 @@ public class UserResourceTest {
         UserResource userResource = new UserResource();
         PropertyOwnerServices propertyOwnerServices = mock(PropertyOwnerServices.class);
         userResource.propertyOwnerServices = propertyOwnerServices;
-        List<Property> properties = Arrays.asList(new Property());
+        List<PropertyDto> properties = Arrays.asList(new PropertyDto());
         when(propertyOwnerServices.getProperties(123)).thenReturn(properties);
 
         RestApiResult result = userResource.getProperties(123);
@@ -164,7 +164,7 @@ public class UserResourceTest {
         UserResource userResource = new UserResource();
         PropertyOwnerServices propertyOwnerServices = mock(PropertyOwnerServices.class);
         userResource.propertyOwnerServices = propertyOwnerServices;
-        List<Property> properties = new ArrayList<>();
+        List<PropertyDto> properties = new ArrayList<>();
         when(propertyOwnerServices.getProperties(123)).thenReturn(properties);
 
         RestApiResult result = userResource.getProperties(123);
@@ -213,7 +213,7 @@ public class UserResourceTest {
         UserResource userResource = new UserResource();
         PropertyOwnerServices propertyOwnerServices = mock(PropertyOwnerServices.class);
         userResource.propertyOwnerServices = propertyOwnerServices;
-        List<PropertyRepair> repairs = Arrays.asList(new PropertyRepair());
+        List<RepairDto> repairs = Arrays.asList(new RepairDto());
         when(propertyOwnerServices.getRepairStatus(123)).thenReturn(repairs);
         RestApiResult result = userResource.getRepairStatus(123);
         assertEquals(200, result.getErrorCode());
