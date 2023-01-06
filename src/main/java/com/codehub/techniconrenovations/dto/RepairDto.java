@@ -2,8 +2,6 @@ package com.codehub.techniconrenovations.dto;
 
 import com.codehub.techniconrenovations.enums.RepairType;
 import com.codehub.techniconrenovations.enums.Status;
-import com.codehub.techniconrenovations.model.Property;
-import com.codehub.techniconrenovations.model.PropertyOwner;
 import com.codehub.techniconrenovations.model.PropertyRepair;
 import com.codehub.techniconrenovations.util.UtilFunctions;
 import java.math.BigDecimal;
