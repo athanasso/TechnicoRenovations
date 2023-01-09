@@ -9,6 +9,7 @@ import com.codehub.techniconrenovations.util.UtilFunctions;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
@@ -148,7 +149,7 @@ public class AdminResource {
         }
     }
 
-    @POST
+    @DELETE
     @Path("delete_properties")
     @RolesAllowed({"admin"})
     public Response permanentlyDeleteProperties() {
@@ -165,7 +166,7 @@ public class AdminResource {
         }
     }
 
-    @POST
+    @DELETE
     @Path("delete_owners")
     @RolesAllowed({"admin"})
     public Response permanentlyDeletePropertyOwner() {
@@ -182,7 +183,7 @@ public class AdminResource {
         }
     }
 
-    @POST
+    @DELETE
     @Path("delete_repairs")
     @RolesAllowed({"admin"})
     public Response permanentlyDeleteRepairs() {
