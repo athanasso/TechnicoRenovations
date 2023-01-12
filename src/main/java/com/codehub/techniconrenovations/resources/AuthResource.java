@@ -33,11 +33,6 @@ public class AuthResource {
         try {
             PropertyOwner p = propertyOwnerServices.logIn(username, password);
             if (p != null) {
-                if (p.getTypeOfUser() == "user") {
-                    //return page for user
-                } else if (p.getTypeOfUser() == "admin") {
-                    //return page for admin
-                }
                 return Response.status(200)
                         .entity("Successful")
                         .build();
