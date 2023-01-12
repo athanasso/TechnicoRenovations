@@ -28,25 +28,28 @@ public class AuthResource {
     @Path("login")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @PermitAll
-    public Response login(@FormParam("username") String username,
+    public PropertyOwner login(@FormParam("username") String username,
             @FormParam("password") String password) {
         try {
             PropertyOwner p = propertyOwnerServices.logIn(username, password);
             if (p != null) {
-                return Response.status(200)
+                Response.status(200)
                         .entity("Successful")
                         .build();
+                return p;
             } else {
                 logger.debug("wrong credentials inputed");
-                return Response.status(404)
+                Response.status(404)
                         .entity("Invalid Credentials")
                         .build();
+                return null;
             }
         } catch (Exception e) {
             logger.error("" + e);
-            return Response.status(401)
+            Response.status(401)
                     .entity("Something went wrong!")
                     .build();
+            return null;
         }
     }
 

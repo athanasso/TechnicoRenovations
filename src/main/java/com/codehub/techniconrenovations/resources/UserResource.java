@@ -146,7 +146,7 @@ public class UserResource {
     }
 
     @POST
-    @Path("property/create_property_repair")
+    @Path("repair/create_property_repair")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @RolesAllowed({"user"})
     public Response registerPropertyRepair(@FormParam("vatNumber") int vatNumber,
@@ -192,7 +192,7 @@ public class UserResource {
     }
 
     @POST
-    @Path("property/repair_status")
+    @Path("repair/repair_status")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @RolesAllowed({"user"})
     public Response acceptOrDeclineRepair(@FormParam("vatNumber") int vatNumber,
@@ -236,7 +236,7 @@ public class UserResource {
     }
 
     @POST
-    @Path("property/correct_owner_username")
+    @Path("owner/correct_owner_username")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @RolesAllowed({"user"})
     public Response correctOwnerUsername(@FormParam("vatNumber") int vatNumber,
@@ -261,7 +261,7 @@ public class UserResource {
     }
 
     @POST
-    @Path("property/correct_owner_email")
+    @Path("owner/correct_owner_email")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @RolesAllowed({"user"})
     public Response correctOwnerEmail(@FormParam("vatNumber") int vatNumber,
@@ -286,7 +286,7 @@ public class UserResource {
     }
 
     @POST
-    @Path("property/correct_owner_password")
+    @Path("owner/correct_owner_password")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @RolesAllowed({"user"})
     public Response correctOwnerPassword(@FormParam("vatNumber") int vatNumber,
@@ -336,7 +336,7 @@ public class UserResource {
     }
 
     @POST
-    @Path("property/delete_property_repair")
+    @Path("repair/delete_property_repair")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @RolesAllowed({"user"})
     public Response safelyDeletePropertyRepair(@FormParam("vatNumber") int vatNumber,
@@ -361,7 +361,7 @@ public class UserResource {
     }
 
     @POST
-    @Path("property/delete_owner")
+    @Path("owner/delete_owner")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @RolesAllowed({"user"})
     public Response safelyDeletePropertyOwner(@FormParam("vatNumber") int vatNumber) {

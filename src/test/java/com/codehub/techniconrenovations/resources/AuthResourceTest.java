@@ -18,9 +18,8 @@ public class AuthResourceTest {
         PropertyOwner expectedResult = new PropertyOwner();
         when(propertyOwnerServices.logIn("username", "password")).thenReturn(expectedResult);
 
-        Response response = authResource.login("username", "password");
-        assertEquals(200, response.getStatus());
-        assertEquals("Successful", response.getEntity());
+        PropertyOwner response = authResource.login("username", "password");
+        assertEquals(response, expectedResult);
     }
 
     @Test
@@ -30,9 +29,8 @@ public class AuthResourceTest {
         authResource.propertyOwnerServices = propertyOwnerServices;
         when(propertyOwnerServices.logIn("username", "password")).thenReturn(null);
 
-        Response response = authResource.login("username", "password");
-        assertEquals(404, response.getStatus());
-        assertEquals("Invalid Credentials", response.getEntity());
+        PropertyOwner response = authResource.login("username", "password");
+        assertEquals(null, response);
     }
 
     @Test
