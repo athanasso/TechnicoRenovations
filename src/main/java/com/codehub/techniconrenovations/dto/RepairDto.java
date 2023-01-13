@@ -2,6 +2,8 @@ package com.codehub.techniconrenovations.dto;
 
 import com.codehub.techniconrenovations.enums.RepairType;
 import com.codehub.techniconrenovations.enums.Status;
+import com.codehub.techniconrenovations.model.Property;
+import com.codehub.techniconrenovations.model.PropertyOwner;
 import com.codehub.techniconrenovations.model.PropertyRepair;
 import com.codehub.techniconrenovations.util.UtilFunctions;
 import java.math.BigDecimal;
@@ -9,12 +11,14 @@ import java.math.BigDecimal;
 public class RepairDto {
 
     private int repairId;
+    private int ownerVatNumber;
+    private String propertyId;
     private String repairType;
     private String date;
     private String shortDescription;
     private String proposedStartDate;
     private String proposedEndDate;
-    private BigDecimal proposedCost;
+    private String proposedCost;
     private String desciption;
     private boolean accepted;
     private String status;
@@ -25,12 +29,14 @@ public class RepairDto {
     public RepairDto(PropertyRepair repair) {
         if (repair != null) {
             repairId = repair.getRepairId();
+            ownerVatNumber = repair.getPropertyOwner().getVatNumber();
+            propertyId = repair.getProperty().getPropertyId();
             repairType = repair.getRepairType().toString();
             date = UtilFunctions.dateToString(repair.getDate());
             shortDescription = repair.getShortDescription();
             proposedStartDate = UtilFunctions.dateToString(repair.getProposedStartDate());
             proposedEndDate = UtilFunctions.dateToString(repair.getProposedEndDate());
-            proposedCost = repair.getProposedCost();
+            proposedCost = repair.getProposedCost().toString();
             desciption = repair.getDesciption();
             accepted = repair.isAccepted();
             status = repair.getStatus().toString();
@@ -43,12 +49,14 @@ public class RepairDto {
     public PropertyRepair asRepair() {
         PropertyRepair repair = new PropertyRepair();
         repair.setRepairId(repairId);
+        repair.setPropertyOwner(new PropertyOwner(ownerVatNumber));
+        repair.setProperty(new Property(propertyId));
         repair.setRepairType(RepairType.valueOf(repairType));
         repair.setDate(UtilFunctions.stringToDate(date));
         repair.setShortDescription(shortDescription);
         repair.setProposedStartDate(UtilFunctions.stringToDate(proposedStartDate));
         repair.setProposedEndDate(UtilFunctions.stringToDate(proposedEndDate));
-        repair.setProposedCost(proposedCost);
+        repair.setProposedCost(new BigDecimal(proposedCost));
         repair.setDesciption(desciption);
         repair.setAccepted(accepted);
         repair.setStatus(Status.valueOf(status));
@@ -67,6 +75,22 @@ public class RepairDto {
 
     public void setRepairId(int repairId) {
         this.repairId = repairId;
+    }
+
+    public int getOwnerVatNumber() {
+        return ownerVatNumber;
+    }
+
+    public void setOwnerVatNumber(int ownerVatNumber) {
+        this.ownerVatNumber = ownerVatNumber;
+    }
+
+    public String getPropertyId() {
+        return propertyId;
+    }
+
+    public void setPropertyId(String propertyId) {
+        this.propertyId = propertyId;
     }
 
     public String getRepairType() {
@@ -109,11 +133,11 @@ public class RepairDto {
         this.proposedEndDate = proposedEndDate;
     }
 
-    public BigDecimal getProposedCost() {
+    public String getProposedCost() {
         return proposedCost;
     }
 
-    public void setProposedCost(BigDecimal proposedCost) {
+    public void setProposedCost(String proposedCost) {
         this.proposedCost = proposedCost;
     }
 

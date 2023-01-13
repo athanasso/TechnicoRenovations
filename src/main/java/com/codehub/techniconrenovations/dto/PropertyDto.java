@@ -2,6 +2,7 @@ package com.codehub.techniconrenovations.dto;
 
 import com.codehub.techniconrenovations.enums.PropertyType;
 import com.codehub.techniconrenovations.model.Property;
+import com.codehub.techniconrenovations.model.PropertyOwner;
 
 public class PropertyDto {
     
@@ -9,6 +10,7 @@ public class PropertyDto {
     private String propertyAddress;
     private int yearOfConstruction;
     private String propertyType;
+    private int ownerVatNumber;
 
     public PropertyDto(Property property) {
         if (property != null) {
@@ -16,6 +18,7 @@ public class PropertyDto {
             propertyAddress = property.getPropertyAddress();
             yearOfConstruction = property.getYearOfConstruction();
             propertyType = property.getPropertyType().toString();
+            ownerVatNumber = property.getPropertyOwner().getVatNumber();
         }
     }
 
@@ -25,6 +28,7 @@ public class PropertyDto {
         property.setPropertyAddress(propertyAddress);
         property.setYearOfConstruction(yearOfConstruction);
         property.setPropertyType(PropertyType.valueOf(propertyType));
+        property.setPropertyOwner(new PropertyOwner(ownerVatNumber));
         return property;
     }
 
@@ -61,5 +65,13 @@ public class PropertyDto {
 
     public void setPropertyType(String propertyType) {
         this.propertyType = propertyType;
+    }
+
+    public int getOwnerVatNumber() {
+        return ownerVatNumber;
+    }
+
+    public void setOwnerVatNumber(int ownerVatNumber) {
+        this.ownerVatNumber = ownerVatNumber;
     }
 }

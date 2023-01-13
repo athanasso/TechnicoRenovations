@@ -10,6 +10,8 @@ public class UserDto {
     private String address;
     private String phoneNumber;
     private String email;
+    private String username;
+    private String password;
     private String typeOfUser;
 
     public UserDto(PropertyOwner owner) {
@@ -20,6 +22,8 @@ public class UserDto {
             address = owner.getAddress();
             phoneNumber = owner.getPhoneNumber();
             email = owner.getEmail();
+            username = owner.getUsername();
+            password = owner.getPassword();
             typeOfUser = owner.getTypeOfUser();
         }
     }
@@ -32,6 +36,8 @@ public class UserDto {
         owner.setAddress(address);
         owner.setPhoneNumber(phoneNumber);
         owner.setEmail(email);
+        owner.setUsername(username);
+        owner.setPassword(password);
         owner.setTypeOfUser(typeOfUser);
         return owner;
     }
@@ -85,6 +91,22 @@ public class UserDto {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getTypeOfUser() {
