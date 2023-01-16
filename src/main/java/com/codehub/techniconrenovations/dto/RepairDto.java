@@ -19,7 +19,7 @@ public class RepairDto {
     private String proposedStartDate;
     private String proposedEndDate;
     private String proposedCost;
-    private String desciption;
+    private String description;
     private boolean accepted;
     private String status;
     private String actualStartDate;
@@ -37,7 +37,7 @@ public class RepairDto {
             proposedStartDate = UtilFunctions.dateToString(repair.getProposedStartDate());
             proposedEndDate = UtilFunctions.dateToString(repair.getProposedEndDate());
             proposedCost = repair.getProposedCost().toString();
-            desciption = repair.getDesciption();
+            description = repair.getDesciption();
             accepted = repair.isAccepted();
             status = repair.getStatus().toString();
             actualStartDate = UtilFunctions.dateToString(repair.getActualStartDate());
@@ -57,7 +57,7 @@ public class RepairDto {
         repair.setProposedStartDate(UtilFunctions.stringToDate(proposedStartDate));
         repair.setProposedEndDate(UtilFunctions.stringToDate(proposedEndDate));
         repair.setProposedCost(new BigDecimal(proposedCost));
-        repair.setDesciption(desciption);
+        repair.setDesciption(description);
         repair.setAccepted(accepted);
         repair.setStatus(Status.valueOf(status));
         repair.setActualStartDate(UtilFunctions.stringToDate(actualStartDate));
@@ -141,12 +141,12 @@ public class RepairDto {
         this.proposedCost = proposedCost;
     }
 
-    public String getDesciption() {
-        return desciption;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDesciption(String desciption) {
-        this.desciption = desciption;
+    public void setDescription(String desciption) {
+        this.description = desciption;
     }
 
     public boolean isAccepted() {
