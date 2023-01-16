@@ -13,9 +13,7 @@ import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.util.List;
 import org.slf4j.Logger;
@@ -58,12 +56,11 @@ public class AdminResource {
 
     @POST
     @Path("propose_cost")
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Consumes("application/json")
     @RolesAllowed({"admin"})
-    public Response proposeCost(@PathParam("cost") double cost,
-            @PathParam("repairId") int repairId) {
+    public Response proposeCost(RepairDto dto) {
         try {
-            adminServices.proposeCost(cost, repairId);
+            adminServices.proposeCost(Double.parseDouble(dto.getProposedCost()), dto.getRepairId());
             return Response.status(200)
                     .entity("Successful!")
                     .build();
@@ -77,13 +74,11 @@ public class AdminResource {
 
     @POST
     @Path("propose_dates")
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Consumes("application/json")
     @RolesAllowed({"admin"})
-    public Response proposeStartEndDates(@PathParam("startDate") String startDate,
-            @PathParam("endDate") String endDate,
-            @PathParam("repairId") int repairId) {
+    public Response proposeStartEndDates(RepairDto dto) {
         try {
-            adminServices.proposeStartEndDates(UtilFunctions.stringToDate(startDate), UtilFunctions.stringToDate(endDate), repairId);
+            adminServices.proposeStartEndDates(UtilFunctions.stringToDate(dto.getProposedStartDate()), UtilFunctions.stringToDate(dto.getActualEndDate()), dto.getRepairId());
             return Response.status(200)
                     .entity("Successful!")
                     .build();
@@ -94,7 +89,7 @@ public class AdminResource {
                     .build();
         }
     }
-
+    
     @GET
     @Path("get_property_repairs")
     @Produces("application/json")
@@ -148,7 +143,7 @@ public class AdminResource {
             return new RestApiResult<>(e, 401, "Something went wrong!");
         }
     }
-
+    
     @DELETE
     @Path("delete_properties")
     @RolesAllowed({"admin"})

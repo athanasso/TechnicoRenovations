@@ -3,8 +3,10 @@ package com.codehub.techniconrenovations.resources;
 import com.codehub.techniconrenovations.dto.PropertyDto;
 import com.codehub.techniconrenovations.dto.RepairDto;
 import com.codehub.techniconrenovations.dto.RestApiResult;
+import com.codehub.techniconrenovations.dto.UserDto;
 import com.codehub.techniconrenovations.services.PropertyOwnerServices;
 import com.codehub.techniconrenovations.util.InputHandler;
+import jakarta.annotation.security.PermitAll;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
@@ -32,7 +34,7 @@ public class UserResource {
 
     @GET
     @Path("ping")
-    @RolesAllowed({"user"})
+    @RolesAllowed({"admin","user"})
     public Response ping() {
         return Response
                 .ok("pang")
@@ -41,21 +43,17 @@ public class UserResource {
 
     @POST
     @Path("property/create_property")
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    @RolesAllowed({"user"})
-    public Response registerProperty(@FormParam("vatNumber") int vatNumber,
-            @FormParam("e9") String e9,
-            @FormParam("address") String address,
-            @FormParam("constructionYear") int constructionYear,
-            @FormParam("propertyType") String propertyType) {
+    @Consumes("application/json")
+    @RolesAllowed({"admin","user"})
+    public Response registerProperty(PropertyDto dto) {
         try {
-            if (!propertyOwnerServices.registerProperty(vatNumber, e9, address, constructionYear, inputHandler.selectPropertyType(propertyType))) {
-                logger.error("user with" + vatNumber + "has wrong data");
+            if (!propertyOwnerServices.registerProperty(dto.getOwnerVatNumber(), dto.getPropertyId(), dto.getPropertyAddress(), dto.getYearOfConstruction(), inputHandler.selectPropertyType(dto.getPropertyType()))) {
+                logger.error("user with" + dto.getOwnerVatNumber() + "has wrong data");
                 return Response.status(404)
                         .entity("Doesn't exist")
                         .build();
             }
-            logger.debug("user with" + vatNumber + "succesful query");
+            logger.debug("user with" + dto.getOwnerVatNumber() + "succesful query");
             return Response.status(200)
                     .entity("Successful")
                     .build();
@@ -69,19 +67,17 @@ public class UserResource {
 
     @POST
     @Path("property/correct_property_address")
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    @RolesAllowed({"user"})
-    public Response correctPropertyAddress(@FormParam("vatNumber") int vatNumber,
-            @FormParam("propertyId") String propertyId,
-            @FormParam("address") String address) {
+    @Consumes("application/json")
+    @RolesAllowed({"admin","user"})
+    public Response correctPropertyAddress(PropertyDto dto) {
         try {
-            if (!propertyOwnerServices.correctPropertyAddress(vatNumber, propertyId, address)) {
-                logger.error("user with" + vatNumber + "has wrong data");
+            if (!propertyOwnerServices.correctPropertyAddress(dto.getOwnerVatNumber(), dto.getPropertyId(), dto.getPropertyAddress())) {
+                logger.error("user with" + dto.getOwnerVatNumber() + "has wrong data");
                 return Response.status(404)
                         .entity("Doesn't exist")
                         .build();
             }
-            logger.debug("user with" + vatNumber + "succesful query");
+            logger.debug("user with" + dto.getOwnerVatNumber() + "succesful query");
             return Response.status(200)
                     .entity("Successful")
                     .build();
@@ -95,19 +91,17 @@ public class UserResource {
 
     @POST
     @Path("property/correct_property_type")
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    @RolesAllowed({"user"})
-    public Response correctPropertyType(@FormParam("vatNumber") int vatNumber,
-            @FormParam("propertyId") String propertyId,
-            @FormParam("propertyType") String propertyType) {
+    @Consumes("application/json")
+    @RolesAllowed({"admin","user"})
+    public Response correctPropertyType(PropertyDto dto) {
         try {
-            if (!propertyOwnerServices.correctPropertyType(vatNumber, propertyId, inputHandler.selectPropertyType(propertyType))) {
-                logger.error("user with" + vatNumber + "has wrong data");
+            if (!propertyOwnerServices.correctPropertyType(dto.getOwnerVatNumber(), dto.getPropertyId(), inputHandler.selectPropertyType(dto.getPropertyType()))) {
+                logger.error("user with" + dto.getOwnerVatNumber() + "has wrong data");
                 return Response.status(404)
                         .entity("Doesn't exist")
                         .build();
             }
-            logger.debug("user with" + vatNumber + "succesful query");
+            logger.debug("user with" + dto.getOwnerVatNumber() + "succesful query");
             return Response.status(200)
                     .entity("Successful")
                     .build();
@@ -121,19 +115,17 @@ public class UserResource {
 
     @POST
     @Path("property/correct_property_year")
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    @RolesAllowed({"user"})
-    public Response correctPropertyconstructionYear(@FormParam("vatNumber") int vatNumber,
-            @FormParam("propertyId") String propertyId,
-            @FormParam("constructionYear") int year) {
+    @Consumes("application/json")
+    @RolesAllowed({"admin","user"})
+    public Response correctPropertyconstructionYear(PropertyDto dto) {
         try {
-            if (!propertyOwnerServices.correctPropertyconstructionYear(vatNumber, propertyId, year)) {
-                logger.error("user with" + vatNumber + "has wrong data");
+            if (!propertyOwnerServices.correctPropertyconstructionYear(dto.getOwnerVatNumber(), dto.getPropertyId(), dto.getYearOfConstruction())) {
+                logger.error("user with" + dto.getOwnerVatNumber() + "has wrong data");
                 return Response.status(404)
                         .entity("Doesn't exist")
                         .build();
             }
-            logger.debug("user with" + vatNumber + "succesful query");
+            logger.debug("user with" + dto.getOwnerVatNumber() + "succesful query");
             return Response.status(200)
                     .entity("Successful")
                     .build();
@@ -147,21 +139,17 @@ public class UserResource {
 
     @POST
     @Path("repair/create_property_repair")
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    @RolesAllowed({"user"})
-    public Response registerPropertyRepair(@FormParam("vatNumber") int vatNumber,
-            @FormParam("e9") String e9,
-            @FormParam("description") String description,
-            @FormParam("shortDescription") String shortDescription,
-            @FormParam("propertyType") String repairType) {
+    @Consumes("application/json")
+    @RolesAllowed({"admin","user"})
+    public Response registerPropertyRepair(RepairDto dto) {
         try {
-            if (!propertyOwnerServices.registerPropertyRepair(vatNumber, e9, description, shortDescription, inputHandler.selectRepairType(repairType))) {
-                logger.error("user with" + vatNumber + "has wrong data");
+            if (!propertyOwnerServices.registerPropertyRepair(dto.getOwnerVatNumber(), dto.getPropertyId(), dto.getDescription(), dto.getShortDescription(), inputHandler.selectRepairType(dto.getRepairType()))) {
+                logger.error("user with" + dto.getOwnerVatNumber() + "has wrong data");
                 return Response.status(404)
                         .entity("Doesn't exist")
                         .build();
             }
-            logger.debug("user with" + vatNumber + "succesful query");
+            logger.debug("user with" + dto.getOwnerVatNumber() + "succesful query");
             return Response.status(200)
                     .entity("Successful")
                     .build();
@@ -176,7 +164,7 @@ public class UserResource {
     @GET
     @Path("get_properties/{vatNumber}")
     @Produces("application/json")
-    @RolesAllowed({"user"})
+    @RolesAllowed({"admin","user"})
     public RestApiResult getProperties(@PathParam("vatNumber") int vatNumber) {
         try {
             List<PropertyDto> properties = propertyOwnerServices.getProperties(vatNumber);
@@ -193,19 +181,17 @@ public class UserResource {
 
     @POST
     @Path("repair/repair_status")
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    @RolesAllowed({"user"})
-    public Response acceptOrDeclineRepair(@FormParam("vatNumber") int vatNumber,
-            @FormParam("repairId") int repairId,
-            @FormParam("status") boolean status) {
+    @Consumes("application/json")
+    @RolesAllowed({"admin","user"})
+    public Response acceptOrDeclineRepair(RepairDto dto) {
         try {
-            if (!propertyOwnerServices.acceptOrDeclineRepair(vatNumber, repairId, status)) {
-                logger.error("user with" + vatNumber + "has wrong data");
+            if (!propertyOwnerServices.acceptOrDeclineRepair(dto.getOwnerVatNumber(), dto.getRepairId(), Boolean.parseBoolean(dto.getStatus()))) {
+                logger.error("user with" + dto.getOwnerVatNumber() + "has wrong data");
                 return Response.status(404)
                         .entity("Doesn't exist")
                         .build();
             }
-            logger.debug("user with" + vatNumber + "succesful query");
+            logger.debug("user with" + dto.getOwnerVatNumber() + "succesful query");
             return Response.status(200)
                     .entity("Successful")
                     .build();
@@ -220,7 +206,7 @@ public class UserResource {
     @GET
     @Path("get_repair_status/{vatNumber}")
     @Produces("application/json")
-    @RolesAllowed({"user"})
+    @RolesAllowed({"admin","user"})
     public RestApiResult getRepairStatus(@PathParam("vatNumber") int vatNumber) {
         try {
             List<RepairDto> repairs = propertyOwnerServices.getRepairStatus(vatNumber);
@@ -237,18 +223,17 @@ public class UserResource {
 
     @POST
     @Path("owner/correct_owner_username")
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    @RolesAllowed({"user"})
-    public Response correctOwnerUsername(@FormParam("vatNumber") int vatNumber,
-            @FormParam("username") String username) {
+    @Consumes("application/json")
+    @RolesAllowed({"admin","user"})
+    public Response correctOwnerUsername(UserDto dto) {
         try {
-            if (!propertyOwnerServices.correctOwnerUsername(vatNumber, username)) {
-                logger.error("user with" + vatNumber + "has wrong data");
+            if (!propertyOwnerServices.correctOwnerUsername(dto.getVatNumber(), dto.getUsername())) {
+                logger.error("user with" + dto.getVatNumber() + "has wrong data");
                 return Response.status(404)
                         .entity("Doesn't exist")
                         .build();
             }
-            logger.debug("user with" + vatNumber + "succesful query");
+            logger.debug("user with" + dto.getVatNumber() + "succesful query");
             return Response.status(200)
                     .entity("Successful")
                     .build();
@@ -262,18 +247,17 @@ public class UserResource {
 
     @POST
     @Path("owner/correct_owner_email")
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    @RolesAllowed({"user"})
-    public Response correctOwnerEmail(@FormParam("vatNumber") int vatNumber,
-            @FormParam("email") String email) {
+    @Consumes("application/json")
+    @RolesAllowed({"admin","user"})
+    public Response correctOwnerEmail(UserDto dto) {
         try {
-            if (!propertyOwnerServices.correctOwnerEmail(vatNumber, inputHandler.email(email))) {
-                logger.error("user with" + vatNumber + "has wrong data");
+            if (!propertyOwnerServices.correctOwnerEmail(dto.getVatNumber(), inputHandler.email(dto.getEmail()))) {
+                logger.error("user with" + dto.getVatNumber() + "has wrong data");
                 return Response.status(404)
                         .entity("Doesn't exist")
                         .build();
             }
-            logger.debug("user with" + vatNumber + "succesful query");
+            logger.debug("user with" + dto.getVatNumber() + "succesful query");
             return Response.status(200)
                     .entity("Successful")
                     .build();
@@ -287,18 +271,17 @@ public class UserResource {
 
     @POST
     @Path("owner/correct_owner_password")
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    @RolesAllowed({"user"})
-    public Response correctOwnerPassword(@FormParam("vatNumber") int vatNumber,
-            @FormParam("password") String password) {
+    @Consumes("application/json")
+    @RolesAllowed({"admin","user"})
+    public Response correctOwnerPassword(UserDto dto) {
         try {
-            if (!propertyOwnerServices.correctOwnerPassword(vatNumber, password)) {
-                logger.error("user with" + vatNumber + "has wrong data");
+            if (!propertyOwnerServices.correctOwnerPassword(dto.getVatNumber(), dto.getPassword())) {
+                logger.error("user with" + dto.getVatNumber() + "has wrong data");
                 return Response.status(404)
                         .entity("Doesn't exist")
                         .build();
             }
-            logger.debug("user with" + vatNumber + "succesful query");
+            logger.debug("user with" + dto.getVatNumber() + "succesful query");
             return Response.status(200)
                     .entity("Successful")
                     .build();
@@ -312,18 +295,17 @@ public class UserResource {
 
     @POST
     @Path("property/delete_property")
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    @RolesAllowed({"user"})
-    public Response safelyDeleteProperty(@FormParam("vatNumber") int vatNumber,
-            @FormParam("e9") String e9) {
+    @Consumes("application/json")
+    @RolesAllowed({"admin","user"})
+    public Response safelyDeleteProperty(PropertyDto dto) {
         try {
-            if (!propertyOwnerServices.safelyDeleteProperty(vatNumber, e9)) {
-                logger.error("user with" + vatNumber + "has wrong data");
+            if (!propertyOwnerServices.safelyDeleteProperty(dto.getOwnerVatNumber(), dto.getPropertyId())) {
+                logger.error("user with" + dto.getOwnerVatNumber() + "has wrong data");
                 return Response.status(404)
                         .entity("Doesn't exist")
                         .build();
             }
-            logger.debug("user with" + vatNumber + "succesful query");
+            logger.debug("user with" + dto.getOwnerVatNumber() + "succesful query");
             return Response.status(200)
                     .entity("Successful")
                     .build();
@@ -337,18 +319,17 @@ public class UserResource {
 
     @POST
     @Path("repair/delete_property_repair")
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    @RolesAllowed({"user"})
-    public Response safelyDeletePropertyRepair(@FormParam("vatNumber") int vatNumber,
-            @FormParam("repairId") int repairId) {
+    @Consumes("application/json")
+    @RolesAllowed({"admin","user"})
+    public Response safelyDeletePropertyRepair(RepairDto dto) {
         try {
-            if (!propertyOwnerServices.safelyDeletePropertyRepair(vatNumber, repairId)) {
-                logger.error("user with" + vatNumber + "has wrong data");
+            if (!propertyOwnerServices.safelyDeletePropertyRepair(dto.getOwnerVatNumber(), dto.getRepairId())) {
+                logger.error("user with" + dto.getOwnerVatNumber() + "has wrong data");
                 return Response.status(404)
                         .entity("Doesn't exist")
                         .build();
             }
-            logger.debug("user with" + vatNumber + "succesful query");
+            logger.debug("user with" + dto.getOwnerVatNumber() + "succesful query");
             return Response.status(200)
                     .entity("Successful")
                     .build();
@@ -362,17 +343,17 @@ public class UserResource {
 
     @POST
     @Path("owner/delete_owner")
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    @RolesAllowed({"user"})
-    public Response safelyDeletePropertyOwner(@FormParam("vatNumber") int vatNumber) {
+    @Consumes("application/json")
+    @RolesAllowed({"admin","user"})
+    public Response safelyDeletePropertyOwner(UserDto dto) {
         try {
-            if (!propertyOwnerServices.safelyDeletePropertyOwner(vatNumber)) {
-                logger.error("user with" + vatNumber + "has wrong data");
+            if (!propertyOwnerServices.safelyDeletePropertyOwner(dto.getVatNumber())) {
+                logger.error("user with" + dto.getVatNumber() + "has wrong data");
                 return Response.status(404)
                         .entity("Doesn't exist")
                         .build();
             }
-            logger.debug("user with" + vatNumber + "succesful query");
+            logger.debug("user with" + dto.getVatNumber() + "succesful query");
             return Response.status(200)
                     .entity("Successful")
                     .build();
