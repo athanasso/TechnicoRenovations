@@ -36,7 +36,12 @@ public class RepairDto {
             shortDescription = repair.getShortDescription();
             proposedStartDate = UtilFunctions.dateToString(repair.getProposedStartDate());
             proposedEndDate = UtilFunctions.dateToString(repair.getProposedEndDate());
-            proposedCost = repair.getProposedCost().toString();
+            if (proposedCost != null){
+                proposedCost = repair.getProposedCost().toString();
+            }
+            else {
+                proposedCost = "0.0";
+            }
             description = repair.getDesciption();
             accepted = repair.isAccepted();
             status = repair.getStatus().toString();
@@ -134,6 +139,10 @@ public class RepairDto {
     }
 
     public String getProposedCost() {
+        if (proposedCost == null)
+        {
+            return "0.0";
+        }
         return proposedCost;
     }
 

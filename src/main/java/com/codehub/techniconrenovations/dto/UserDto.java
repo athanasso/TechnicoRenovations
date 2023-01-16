@@ -13,6 +13,7 @@ public class UserDto {
     private String username;
     private String password;
     private String typeOfUser;
+    private boolean isDeleted;
 
     public UserDto(PropertyOwner owner) {
         if (owner != null) {
@@ -25,6 +26,7 @@ public class UserDto {
             username = owner.getUsername();
             password = owner.getPassword();
             typeOfUser = owner.getTypeOfUser();
+            isDeleted = owner.isIsDeleted();
         }
     }
     
@@ -39,6 +41,7 @@ public class UserDto {
         owner.setUsername(username);
         owner.setPassword(password);
         owner.setTypeOfUser(typeOfUser);
+        owner.setIsDeleted(isDeleted);
         return owner;
     }
 
@@ -115,5 +118,13 @@ public class UserDto {
 
     public void setTypeOfUser(String typeOfUser) {
         this.typeOfUser = typeOfUser;
+    }
+
+    public boolean isIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
 }

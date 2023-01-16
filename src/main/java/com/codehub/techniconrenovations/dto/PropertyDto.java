@@ -11,6 +11,7 @@ public class PropertyDto {
     private int yearOfConstruction;
     private String propertyType;
     private int ownerVatNumber;
+    private boolean isDeleted;
 
     public PropertyDto(Property property) {
         if (property != null) {
@@ -19,6 +20,7 @@ public class PropertyDto {
             yearOfConstruction = property.getYearOfConstruction();
             propertyType = property.getPropertyType().toString();
             ownerVatNumber = property.getPropertyOwner().getVatNumber();
+            isDeleted = property.isIsDeleted();
         }
     }
 
@@ -29,6 +31,7 @@ public class PropertyDto {
         property.setYearOfConstruction(yearOfConstruction);
         property.setPropertyType(PropertyType.valueOf(propertyType));
         property.setPropertyOwner(new PropertyOwner(ownerVatNumber));
+        property.setIsDeleted(isDeleted);
         return property;
     }
 
@@ -73,5 +76,13 @@ public class PropertyDto {
 
     public void setOwnerVatNumber(int ownerVatNumber) {
         this.ownerVatNumber = ownerVatNumber;
+    }
+
+    public boolean isIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
 }

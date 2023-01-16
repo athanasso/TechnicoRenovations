@@ -33,7 +33,7 @@ public class UtilFunctions {
     }
     
     public static String dateToString(Date date) {
-        if (date==null) return "null";
+        if (date==null) return "00/00/0000";
         return date.toString();
     }
 
