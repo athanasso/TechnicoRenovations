@@ -199,6 +199,30 @@ public class UserResource {
                     .build();
         }
     }
+    
+    @POST
+    @Path("repair/description")
+    @Consumes("application/json")
+    @RolesAllowed({"admin","user"})
+    public Response correctDescription(RepairDto dto) {
+        try {
+            if (!propertyOwnerServices.changeDescription(dto.getOwnerVatNumber(), dto.getRepairId(), dto.getDescription())) {
+                logger.error("user with" + dto.getOwnerVatNumber() + "has wrong data");
+                return Response.status(404)
+                        .entity("Doesn't exist")
+                        .build();
+            }
+            logger.debug("user with" + dto.getOwnerVatNumber() + "succesful query");
+            return Response.status(200)
+                    .entity("Successful")
+                    .build();
+        } catch (Exception e) {
+            logger.error("" + e);
+            return Response.status(401)
+                    .entity("Something went wrong!")
+                    .build();
+        }
+    }
 
     @GET
     @Path("get_repair_status/{vatNumber}")

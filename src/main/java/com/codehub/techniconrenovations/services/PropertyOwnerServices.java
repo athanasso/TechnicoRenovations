@@ -71,6 +71,15 @@ public interface PropertyOwnerServices {
      * @return 
      */
     boolean acceptOrDeclineRepair(int vatNumber, int repairId, boolean acceptStatus);
+    
+    /**
+     *
+     * @param vatNumber
+     * @param repairId
+     * @param description
+     * @return
+     */
+    boolean changeDescription(int vatNumber, int repairId, String description);
 
     /**
      * Returns true if the credentials are correct.

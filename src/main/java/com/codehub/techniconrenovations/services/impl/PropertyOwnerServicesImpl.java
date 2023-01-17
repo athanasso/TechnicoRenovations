@@ -172,6 +172,23 @@ public class PropertyOwnerServicesImpl implements PropertyOwnerServices {
             return false;
         }
     }
+    
+    @Override
+    public boolean changeDescription(int vatNumber, int repairId, String description) {
+        try {
+            if (!checkRepair(repairId, vatNumber)) {
+                logger.error("not found");
+                return false;
+            }
+
+            propertyRepairRepository.updateDescription(description, repairId);
+            logger.debug("changeDescription was succeful!");
+            return true;
+        } catch (Exception e) {
+            logger.error("Error updating description: " + e.getMessage());
+            return false;
+        }
+    }
 
     @Override
     public PropertyOwner logIn(String username, String password) {
