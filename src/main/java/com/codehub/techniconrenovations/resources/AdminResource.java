@@ -15,6 +15,7 @@ import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.Response;
+import java.math.BigDecimal;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,7 +61,7 @@ public class AdminResource {
     @RolesAllowed({"admin"})
     public Response proposeCost(RepairDto dto) {
         try {
-            adminServices.proposeCost(Double.parseDouble(dto.getProposedCost()), dto.getRepairId());
+            adminServices.proposeCost(new BigDecimal(dto.getProposedCost()), dto.getRepairId());
             return Response.status(200)
                     .entity("Successful!")
                     .build();
@@ -78,7 +79,7 @@ public class AdminResource {
     @RolesAllowed({"admin"})
     public Response proposeStartEndDates(RepairDto dto) {
         try {
-            adminServices.proposeStartEndDates(UtilFunctions.stringToDate(dto.getProposedStartDate()), UtilFunctions.stringToDate(dto.getActualEndDate()), dto.getRepairId());
+            adminServices.proposeStartEndDates(UtilFunctions.stringToDate(dto.getProposedStartDate()), UtilFunctions.stringToDate(dto.getProposedEndDate()), dto.getRepairId());
             return Response.status(200)
                     .entity("Successful!")
                     .build();

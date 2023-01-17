@@ -9,6 +9,7 @@ import com.codehub.techniconrenovations.repository.PropertyRepairRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import org.slf4j.Logger;
@@ -127,7 +128,7 @@ public class PropertyRepairRepositoryImpl implements PropertyRepairRepository {
 
     @Override
     @Transactional
-    public void updateProposedCost(Double proposedCost, int repairId) {
+    public void updateProposedCost(BigDecimal proposedCost, int repairId) {
         try {
             String updateQuery = "UPDATE PropertyRepair set proposedCost = : proposedCost WHERE repairId =: id";
             entityManager.createQuery(updateQuery).setParameter("proposedCost", proposedCost)

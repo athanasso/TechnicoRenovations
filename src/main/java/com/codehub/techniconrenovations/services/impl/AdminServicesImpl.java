@@ -13,6 +13,7 @@ import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import org.slf4j.Logger;
@@ -78,7 +79,7 @@ public class AdminServicesImpl implements AdminServices {
     }
 
     @Override
-    public boolean proposeCost(double cost, int repairId) {
+    public boolean proposeCost(BigDecimal cost, int repairId) {
         try {
             PropertyRepair p = propertyRepairRepository.searchById(repairId);
             if (p == null) {

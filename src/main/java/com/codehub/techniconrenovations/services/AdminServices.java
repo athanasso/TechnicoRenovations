@@ -3,6 +3,7 @@ package com.codehub.techniconrenovations.services;
 import com.codehub.techniconrenovations.dto.PropertyDto;
 import com.codehub.techniconrenovations.dto.RepairDto;
 import com.codehub.techniconrenovations.dto.UserDto;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -43,7 +44,7 @@ public interface AdminServices {
      * @param repairId
      * @return boolean
      */
-    boolean proposeCost(double cost, int repairId);
+    boolean proposeCost(BigDecimal cost, int repairId);
 
     /**
      * Proposes the starting and ending dates for a Property Repair.

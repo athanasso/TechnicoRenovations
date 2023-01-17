@@ -3,6 +3,7 @@ package com.codehub.techniconrenovations.repository;
 import com.codehub.techniconrenovations.enums.RepairType;
 import com.codehub.techniconrenovations.enums.Status;
 import com.codehub.techniconrenovations.model.PropertyRepair;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -77,7 +78,7 @@ public interface PropertyRepairRepository {
      * @param proposedCost
      * @param repairId
      */
-    void updateProposedCost(Double proposedCost, int repairId);
+    void updateProposedCost(BigDecimal proposedCost, int repairId);
 
     /**
      * Updates if the repair is accepted by the owner.
