@@ -39,7 +39,7 @@ public class PropertyRepair extends Object {
     @Temporal(TemporalType.DATE)
     private Date proposedEndDate;
     private BigDecimal proposedCost;
-    private String desciption;
+    private String description;
     private boolean accepted;
     @Enumerated(EnumType.STRING)
     private Status status;
@@ -49,7 +49,7 @@ public class PropertyRepair extends Object {
     private Date actualEndDate;
     private boolean isDeleted = false;
 
-    public PropertyRepair(PropertyOwner propertyOwner, Property property, RepairType repairType, Date date, String shortDescription, Date proposedStartDate, Date proposedEndDate, BigDecimal proposedCost, String desciption, boolean accepted, Status status, Date actualStartDate, Date actualEndDate) {
+    public PropertyRepair(PropertyOwner propertyOwner, Property property, RepairType repairType, Date date, String shortDescription, Date proposedStartDate, Date proposedEndDate, BigDecimal proposedCost, String description, boolean accepted, Status status, Date actualStartDate, Date actualEndDate) {
         this.propertyOwner = propertyOwner;
         this.property = property;
         this.repairType = repairType;
@@ -58,7 +58,7 @@ public class PropertyRepair extends Object {
         this.proposedStartDate = proposedStartDate;
         this.proposedEndDate = proposedEndDate;
         this.proposedCost = proposedCost;
-        this.desciption = desciption;
+        this.description = description;
         this.accepted = accepted;
         this.status = status;
         this.actualStartDate = actualStartDate;
@@ -72,7 +72,7 @@ public class PropertyRepair extends Object {
         this.repairType = repairType;
         this.date = date;
         this.shortDescription = shortDescription;
-        this.desciption = desciption;
+        this.description = desciption;
         this.status = status;
     }
 
@@ -84,8 +84,8 @@ public class PropertyRepair extends Object {
         this.shortDescription = shortDescription;
     }
 
-    public void setDesciption(String desciption) {
-        this.desciption = desciption;
+    public void setDesciption(String description) {
+        this.description = description;
     }
 
     public void setStatus(Status status) {
@@ -194,7 +194,7 @@ public class PropertyRepair extends Object {
     }
 
     public String getDesciption() {
-        return desciption;
+        return description;
     }
 
     public Status getStatus() {
