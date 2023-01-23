@@ -20,7 +20,7 @@ public class PropertyOwnerRepositoryImpl implements PropertyOwnerRepository {
     public boolean createPropertyOwner(PropertyOwner propertyOwner) throws jakarta.persistence.RollbackException {
         try {
             if (searchVat(propertyOwner.getVatNumber()) != null) {
-                logger.error("something went wrong");
+                logger.error("Duplicate entry");
                 return false;
             }
             entityManager.persist(propertyOwner);

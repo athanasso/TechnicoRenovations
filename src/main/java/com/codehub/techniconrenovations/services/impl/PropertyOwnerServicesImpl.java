@@ -93,7 +93,7 @@ public class PropertyOwnerServicesImpl implements PropertyOwnerServices {
             logger.debug("owner register was succesfull");
             return propertyOwnerRepository.createPropertyOwner(propertyOwner);
         } catch (jakarta.persistence.RollbackException ex) {
-            logger.error("An error occurred while registering a property owner: ", ex);
+            logger.error("An error occurred while registering a property owner: duplicate entry ");
             return false;
         } catch (Exception e) {
             logger.error("An error occurred while registering a property owner: ", e);
