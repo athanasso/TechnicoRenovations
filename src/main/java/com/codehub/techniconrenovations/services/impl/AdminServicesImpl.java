@@ -37,7 +37,7 @@ public class AdminServicesImpl implements AdminServices {
                     .getResultList();
             return repairDtoList;
         } catch (Exception e) {
-            logger.error("Error while retrieving pending repairs: " + e.getMessage(), e);
+            logger.error("Error while retrieving pending repairs: " + e.getMessage());
             return null;
         }
     }
@@ -49,7 +49,7 @@ public class AdminServicesImpl implements AdminServices {
                     .getResultList();
             return repairs;
         } catch (Exception e) {
-            logger.error("Error while retrieving all repairs: " + e.getMessage(), e);
+            logger.error("Error while retrieving all repairs: " + e.getMessage());
             return null;
         }
     }
@@ -61,7 +61,7 @@ public class AdminServicesImpl implements AdminServices {
                     .getResultList();
             return properties;
         } catch (Exception e) {
-            logger.error("Error while retrieving properties: " + e.getMessage(), e);
+            logger.error("Error while retrieving properties: " + e.getMessage());
             return null;
         }
     }
@@ -73,7 +73,7 @@ public class AdminServicesImpl implements AdminServices {
                     .getResultList();
             return userList;
         } catch (Exception e) {
-            logger.error("Error while retrieving owners: " + e.getMessage(), e);
+            logger.error("Error while retrieving owners: " + e.getMessage());
             return null;
         }
     }
@@ -90,7 +90,7 @@ public class AdminServicesImpl implements AdminServices {
             logger.debug("proposeCost was updated succefully");
             return true;
         } catch (Exception e) {
-            logger.error("Error while proposing cost for repair: " + e.getMessage(), e);
+            logger.error("Error while proposing cost for repair: " + e.getMessage());
             return false;
         }
     }
@@ -108,7 +108,7 @@ public class AdminServicesImpl implements AdminServices {
             logger.debug("proposeStartEndDates was updated succefully");
             return true;
         } catch (Exception e) {
-            logger.error("Error while proposing start and end dates for repair: " + e.getMessage(), e);
+            logger.error("Error while proposing start and end dates for repair: " + e.getMessage());
             return false;
         }
     }
@@ -125,7 +125,7 @@ public class AdminServicesImpl implements AdminServices {
             logger.debug("permanentlyDeleteProperties was succefully");
             return true;
         } catch (Exception e) {
-            logger.error("Error while deleting properties: " + e.getMessage(), e);
+            logger.error("Error while deleting properties: " + e.getMessage());
             return false;
         }
     }
@@ -145,7 +145,7 @@ public class AdminServicesImpl implements AdminServices {
             entityManager.getTransaction().commit();
             logger.debug("permanentlyDeleteRepairsList was succefully");
         } catch (Exception e) {
-            logger.error("Error while deleting repairs list for property: " + e.getMessage(), e);
+            logger.error("Error while deleting repairs list for property: " + e.getMessage());
         }
     }
 
@@ -158,7 +158,7 @@ public class AdminServicesImpl implements AdminServices {
             logger.debug("permanentlyDeletePropertyRepairs was succefully");
             return true;
         } catch (Exception e) {
-            logger.error("Error while deleting property repairs: " + e.getMessage(), e);
+            logger.error("Error while deleting property repairs: " + e.getMessage());
             return false;
         }
     }
@@ -178,7 +178,7 @@ public class AdminServicesImpl implements AdminServices {
             entityManager.getTransaction().commit();
             logger.debug("permanentlyDeleteRepairs was succefully");
         } catch (Exception e) {
-            logger.error("Error while deleting repairs for owner: " + e.getMessage(), e);
+            logger.error("Error while deleting repairs for owner: " + e.getMessage());
         }
     }
 
@@ -197,7 +197,7 @@ public class AdminServicesImpl implements AdminServices {
             entityManager.getTransaction().commit();
             logger.debug("permanentlyDeleteProperties was succefully");
         } catch (Exception e) {
-            logger.error("Error while deleting properties for owner: " + e.getMessage(), e);
+            logger.error("Error while deleting properties for owner: " + e.getMessage());
         }
     }
 
@@ -217,7 +217,7 @@ public class AdminServicesImpl implements AdminServices {
             logger.debug("permanentlyDeletePropertyOwner was succefully");
             return true;
         } catch (Exception e) {
-            logger.error("Error while deleting property owner: " + e.getMessage(), e);
+            logger.error("Error while deleting property owner: " + e.getMessage());
             return false;
         }
     }
@@ -233,7 +233,7 @@ public class AdminServicesImpl implements AdminServices {
             logger.debug("permanentlyDeleteRepairs was succefully");
             return true;
         } catch (Exception e) {
-            logger.error("Error while deleting property repairs: " + e.getMessage(), e);
+            logger.error("Error while deleting property repairs: " + e.getMessage());
             return false;
         }
     }

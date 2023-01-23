@@ -50,8 +50,8 @@ public class AdminResource {
                 return new RestApiResult<>(repairs, 200, "Successful");
             }
         } catch (Exception e) {
-            logger.error("" + e);
-            return new RestApiResult<>(e, 401, "Something went wrong!");
+            logger.error(e.getMessage());
+            return new RestApiResult<>(e.getMessage(), 401, "Something went wrong!");
         }
     }
 
@@ -66,7 +66,7 @@ public class AdminResource {
                     .entity("Successful!")
                     .build();
         } catch (Exception e) {
-            logger.error("" + e);
+            logger.error(e.getMessage());
             return Response.status(401)
                     .entity("Something went wrong!")
                     .build();
@@ -84,7 +84,7 @@ public class AdminResource {
                     .entity("Successful!")
                     .build();
         } catch (Exception e) {
-            logger.error("" + e);
+            logger.error(e.getMessage());
             return Response.status(401)
                     .entity("Something went wrong!")
                     .build();
@@ -104,8 +104,8 @@ public class AdminResource {
                 return new RestApiResult<>(repairs, 200, "Successful");
             }
         } catch (Exception e) {
-            logger.error("" + e);
-            return new RestApiResult<>(e, 401, "Something went wrong!");
+            logger.error(e.getMessage());
+            return new RestApiResult<>(e.getMessage(), 401, "Something went wrong!");
         }
     }
 
@@ -122,8 +122,8 @@ public class AdminResource {
                 return new RestApiResult<>(properties, 200, "Successful");
             }
         } catch (Exception e) {
-            logger.error("" + e);
-            return new RestApiResult<>(e, 401, "Something went wrong!");
+            logger.error(e.getMessage());
+            return new RestApiResult<>(e.getMessage(), 401, "Something went wrong!");
         }
     }
 
@@ -140,8 +140,8 @@ public class AdminResource {
                 return new RestApiResult<>(users, 200, "Successful");
             }
         } catch (Exception e) {
-            logger.error("" + e);
-            return new RestApiResult<>(e, 401, "Something went wrong!");
+            logger.error(e.getMessage());
+            return new RestApiResult<>(e.getMessage(), 401, "Something went wrong!");
         }
     }
     
@@ -155,7 +155,7 @@ public class AdminResource {
                     .entity("Successful")
                     .build();
         } catch (Exception e) {
-            logger.error("" + e);
+            logger.error(e.getMessage());
             return Response.status(401)
                     .entity("Something went wrong!")
                     .build();
@@ -172,7 +172,7 @@ public class AdminResource {
                     .entity("Successful")
                     .build();
         } catch (Exception e) {
-            logger.error("" + e);
+            logger.error(e.getMessage());
             return Response.status(401)
                     .entity("Something went wrong!")
                     .build();
@@ -189,7 +189,7 @@ public class AdminResource {
                     .entity("Successful")
                     .build();
         } catch (Exception e) {
-            logger.error("" + e);
+            logger.error(e.getMessage());
             return Response.status(401)
                     .entity("Something went wrong!")
                     .build();

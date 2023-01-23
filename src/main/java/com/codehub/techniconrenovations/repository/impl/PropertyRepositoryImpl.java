@@ -28,7 +28,7 @@ public class PropertyRepositoryImpl implements PropertyRepository {
             logger.debug("createProperty was succesful");
             return true;
         } catch (Exception e) {
-            logger.error("An error occurred while creating a property: ", e);
+            logger.error("An error occurred while creating a property: ", e.getMessage());
             return false;
         }
     }
@@ -39,7 +39,7 @@ public class PropertyRepositoryImpl implements PropertyRepository {
         try {
             return entityManager.find(Property.class, propertyId);
         } catch (Exception e) {
-            logger.error("An error occurred while searching for a property by ID: ", e);
+            logger.error("An error occurred while searching for a property by ID: ", e.getMessage());
             return null;
         }
     }
@@ -51,7 +51,7 @@ public class PropertyRepositoryImpl implements PropertyRepository {
             return entityManager.createQuery("SELECT p FROM Property p INNER JOIN PropertyOwner o ON  p.propertyOwner = o.vatNumber WHERE o.isDeleted = FALSE AND o.vatNumber =" + ownerVat)
                     .getResultList();
         } catch (Exception e) {
-            logger.error("An error occurred while searching for properties by VAT number: ", e);
+            logger.error("An error occurred while searching for properties by VAT number: ", e.getMessage());
             return null;
         }
     }
@@ -66,7 +66,7 @@ public class PropertyRepositoryImpl implements PropertyRepository {
             logger.debug("updatePropertyId was succesful");
             return true;
         } catch (Exception e) {
-            logger.error("An error occurred while updating the property ID: ", e);
+            logger.error("An error occurred while updating the property ID: ", e.getMessage());
             return false;
         }
     }
@@ -81,7 +81,7 @@ public class PropertyRepositoryImpl implements PropertyRepository {
             logger.debug("updatePropertyAddress was succesful");
             return true;
         } catch (Exception e) {
-            logger.error("An error occurred while updating the property address: ", e);
+            logger.error("An error occurred while updating the property address: ", e.getMessage());
             return false;
         }
     }
@@ -96,7 +96,7 @@ public class PropertyRepositoryImpl implements PropertyRepository {
             logger.debug("updateYearOfConstruction was succesful");
             return true;
         } catch (Exception e) {
-            logger.error("An error occurred while updating the year of construction: ", e);
+            logger.error("An error occurred while updating the year of construction: ", e.getMessage());
             return false;
         }
     }
@@ -111,7 +111,7 @@ public class PropertyRepositoryImpl implements PropertyRepository {
             logger.debug("updatePropertyType was succesful");
             return true;
         } catch (Exception e) {
-            logger.error("An error occurred while updating the property type: ", e);
+            logger.error("An error occurred while updating the property type: ", e.getMessage());
             return false;
         }
     }
@@ -126,7 +126,7 @@ public class PropertyRepositoryImpl implements PropertyRepository {
             logger.debug("updateOwnerVat was succesful");
             return true;
         } catch (Exception e) {
-            logger.error("An error occurred while updating the owner VAT number: ", e);
+            logger.error("An error occurred while updating the owner VAT number: ", e.getMessage());
             return false;
         }
     }
@@ -142,7 +142,7 @@ public class PropertyRepositoryImpl implements PropertyRepository {
             logger.debug("safelyDelete was succesful");
             return true;
         } catch (Exception e) {
-            logger.error("An error occurred while safely deleting a property: ", e);
+            logger.error("An error occurred while safely deleting a property: ", e.getMessage());
             return false;
         }
     }
@@ -155,7 +155,7 @@ public class PropertyRepositoryImpl implements PropertyRepository {
             logger.debug("permanentlyDelete was succesful");
             return true;
         } catch (Exception e) {
-            logger.error("An error occurred while permanently deleting a property: ", e);
+            logger.error("An error occurred while permanently deleting a property: ", e.getMessage());
             return false;
         }
     }

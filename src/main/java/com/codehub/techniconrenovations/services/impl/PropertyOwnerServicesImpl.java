@@ -47,7 +47,7 @@ public class PropertyOwnerServicesImpl implements PropertyOwnerServices {
             logger.debug("return properties was succesfull");
             return properties;
         } catch (Exception e) {
-            logger.error("An error occurred while getting properties error 500: ", e);
+            logger.error("An error occurred while getting properties error 500: ", e.getMessage());
             return null;
         }
     }
@@ -72,7 +72,7 @@ public class PropertyOwnerServicesImpl implements PropertyOwnerServices {
             logger.debug("return repair statuses was succesfull");
             return repairs;
         } catch (Exception e) {
-            logger.error("An error occurred while getting properties error 500: ", e);
+            logger.error("An error occurred while getting properties error 500: ", e.getMessage());
             return null;
         }
     }
@@ -96,7 +96,7 @@ public class PropertyOwnerServicesImpl implements PropertyOwnerServices {
             logger.error("An error occurred while registering a property owner: duplicate entry ");
             return false;
         } catch (Exception e) {
-            logger.error("An error occurred while registering a property owner: ", e);
+            logger.error("An error occurred while registering a property owner: ", e.getMessage());
             return false;
         }
     }
@@ -105,12 +105,11 @@ public class PropertyOwnerServicesImpl implements PropertyOwnerServices {
     public boolean registerProperty(int vatNumber, String e9, String address, int constructionYear, PropertyType propertyType) {
         try {
             Property property = new Property();
-            String propertyId = e9;
-            if (propertyRepository.searchPropertyId(propertyId) != null) {
+            if (propertyRepository.searchPropertyId(e9) != null) {
                 logger.error("property is already registered");
                 return false;
             }
-            property.setPropertyId(propertyId);
+            property.setPropertyId(e9);
             property.setPropertyAddress(address);
             property.setYearOfConstruction(constructionYear);
             property.setPropertyOwner(new PropertyOwner(vatNumber));
@@ -292,7 +291,7 @@ public class PropertyOwnerServicesImpl implements PropertyOwnerServices {
             logger.debug("getUserVat was succeful");
             return propertyOwner.getVatNumber();
         } catch (Exception e) {
-            logger.error("Error getting user VAT number", e);
+            logger.error("Error getting user VAT number", e.getMessage());
             return -1;
         }
     }
@@ -311,7 +310,7 @@ public class PropertyOwnerServicesImpl implements PropertyOwnerServices {
             logger.debug("checkProperty was succeful");
             return true;
         } catch (Exception e) {
-            logger.error("Error checking property", e);
+            logger.error("Error checking property", e.getMessage());
             return false;
         }
     }
@@ -330,7 +329,7 @@ public class PropertyOwnerServicesImpl implements PropertyOwnerServices {
             logger.debug("checkRepair was succeful");
             return true;
         } catch (Exception e) {
-            logger.error("Error checking repair", e);
+            logger.error("Error checking repair", e.getMessage());
             return false;
         }
     }
@@ -346,7 +345,7 @@ public class PropertyOwnerServicesImpl implements PropertyOwnerServices {
                 return false;
             }
         } catch (Exception e) {
-            logger.error("Error safely deleting property", e);
+            logger.error("Error safely deleting property", e.getMessage());
             return false;
         }
     }
@@ -362,7 +361,7 @@ public class PropertyOwnerServicesImpl implements PropertyOwnerServices {
                 return false;
             }
         } catch (Exception e) {
-            logger.error("Error safely deleting property repair", e);
+            logger.error("Error safely deleting property repair", e.getMessage());
             return false;
         }
     }
@@ -377,7 +376,7 @@ public class PropertyOwnerServicesImpl implements PropertyOwnerServices {
             logger.error("User delete failed");
             return false;
         } catch (Exception e) {
-            logger.error("Error safely deleting property owner", e);
+            logger.error("Error safely deleting property owner", e.getMessage());
             return false;
         }
     }

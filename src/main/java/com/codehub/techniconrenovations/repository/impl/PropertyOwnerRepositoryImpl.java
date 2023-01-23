@@ -27,7 +27,7 @@ public class PropertyOwnerRepositoryImpl implements PropertyOwnerRepository {
             logger.debug("createPropertyOwner was succeful");
             return true;
         } catch (Exception e) {
-            logger.error("Error creating property owner: " + e.getMessage(), e);
+            logger.error("Error creating property owner: " + e.getMessage());
             return false;
         }
     }
@@ -38,7 +38,7 @@ public class PropertyOwnerRepositoryImpl implements PropertyOwnerRepository {
         try {
             return entityManager.find(PropertyOwner.class, vatNumber);
         } catch (Exception e) {
-            logger.error("Error searching for property owner by VAT number: " + e.getMessage(), e);
+            logger.error("Error searching for property owner by VAT number: " + e.getMessage());
             return null;
         }
     }
@@ -50,7 +50,7 @@ public class PropertyOwnerRepositoryImpl implements PropertyOwnerRepository {
             return entityManager.createQuery("SELECT o FROM PropertyOwner o WHERE o.email = :ownerEmail", PropertyOwner.class)
                     .setParameter("ownerEmail", email).getSingleResult();
         } catch (Exception e) {
-            logger.error("Error searching for property owner by email: " + e.getMessage(), e);
+            logger.error("Error searching for property owner by email: " + e.getMessage());
             return null;
         }
     }
@@ -67,7 +67,7 @@ public class PropertyOwnerRepositoryImpl implements PropertyOwnerRepository {
             }
             return null;
         } catch (jakarta.persistence.NoResultException e) {
-            logger.error("Error searching for property owner by username and password: " + e.getMessage(), e);
+            logger.error("Error searching for property owner by username and password: " + e.getMessage());
             return null;
         }
     }
@@ -83,7 +83,7 @@ public class PropertyOwnerRepositoryImpl implements PropertyOwnerRepository {
             logger.debug("updateAddress was succesful");
             return true;
         } catch (Exception e) {
-            logger.error("Error updating property owner address: " + e.getMessage(), e);
+            logger.error("Error updating property owner address: " + e.getMessage());
             return false;
         }
     }
@@ -99,7 +99,7 @@ public class PropertyOwnerRepositoryImpl implements PropertyOwnerRepository {
             logger.debug("updateEmail was succesful");
             return true;
         } catch (Exception e) {
-            logger.error("Error updating property owner email: " + e.getMessage(), e);
+            logger.error("Error updating property owner email: " + e.getMessage());
             return false;
         }
     }
@@ -115,7 +115,7 @@ public class PropertyOwnerRepositoryImpl implements PropertyOwnerRepository {
             logger.debug("updatePassword was succesful");
             return true;
         } catch (Exception e) {
-            logger.error("Error updating property owner password: " + e.getMessage(), e);
+            logger.error("Error updating property owner password: " + e.getMessage());
             return false;
         }
     }
@@ -131,7 +131,7 @@ public class PropertyOwnerRepositoryImpl implements PropertyOwnerRepository {
             logger.debug("updateUsername was succesful");
             return true;
         } catch (Exception e) {
-            logger.error("Error updating property owner username: " + e.getMessage(), e);
+            logger.error("Error updating property owner username: " + e.getMessage());
             return false;
         }
     }
@@ -147,7 +147,7 @@ public class PropertyOwnerRepositoryImpl implements PropertyOwnerRepository {
             logger.debug("safelyDelete was succesful");
             return true;
         } catch (Exception e) {
-            logger.error("Error safely deleting property owner: " + e.getMessage(), e);
+            logger.error("Error safely deleting property owner: " + e.getMessage());
             return false;
         }
     }
@@ -161,7 +161,7 @@ public class PropertyOwnerRepositoryImpl implements PropertyOwnerRepository {
             logger.debug("permanentlyDelete was succesful");
             return true;
         } catch (Exception e) {
-            logger.error("Error permamently deleting property owner: " + e.getMessage(), e);
+            logger.error("Error permamently deleting property owner: " + e.getMessage());
             return false;
         }
     }
@@ -176,7 +176,7 @@ public class PropertyOwnerRepositoryImpl implements PropertyOwnerRepository {
                     .getSingleResult()
                     .toString();
         } catch (Exception e) {
-            logger.error("Error checking user's role " + e.getMessage(), e);
+            logger.error("Error checking user's role " + e.getMessage());
             return "";
         }
     }

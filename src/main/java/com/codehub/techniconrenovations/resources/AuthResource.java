@@ -45,7 +45,7 @@ public class AuthResource {
                 return null;
             }
         } catch (Exception e) {
-            logger.error("" + e);
+            logger.error(e.getMessage());
             Response.status(401)
                     .entity("Something went wrong!")
                     .build();
@@ -70,7 +70,7 @@ public class AuthResource {
                         .build();
             }
         } catch (Exception e) {
-            logger.error("" + e);
+            logger.error(e.getMessage());
             return Response.status(401)
                     .entity("There was a problem with your registration. Username or email already taken")
                     .build();

@@ -30,7 +30,7 @@ public class PropertyRepairRepositoryImpl implements PropertyRepairRepository {
             logger.debug("createPropertyRepair was succesful");
             return true;
         } catch (Exception e) {
-            logger.error("Error occurred while creating property repair: {}", e.getMessage(), e);
+            logger.error("Error occurred while creating property repair: {}", e.getMessage());
             return false;
         }
     }
@@ -44,7 +44,7 @@ public class PropertyRepairRepositoryImpl implements PropertyRepairRepository {
             createPropertyRepair(p);
             logger.debug("updateOwnerId was succesful");
         } catch (Exception e) {
-            logger.error("Error occurred while updating owner id: {}", e.getMessage(), e);
+            logger.error("Error occurred while updating owner id: {}", e.getMessage());
         }
     }
 
@@ -57,7 +57,7 @@ public class PropertyRepairRepositoryImpl implements PropertyRepairRepository {
             createPropertyRepair(p);
             logger.debug("updatePropertyId was succesful");
         } catch (Exception e) {
-            logger.error("Error occurred while updating property id: {}", e.getMessage(), e);
+            logger.error("Error occurred while updating property id: {}", e.getMessage());
         }
     }
 
@@ -70,7 +70,7 @@ public class PropertyRepairRepositoryImpl implements PropertyRepairRepository {
                     .setParameter("id", repairId).executeUpdate();
             logger.debug("updateRepairType was succesful");
         } catch (Exception e) {
-            logger.error("Error occurred while updating repair type: {}", e.getMessage(), e);
+            logger.error("Error occurred while updating repair type: {}", e.getMessage());
         }
     }
 
@@ -83,7 +83,7 @@ public class PropertyRepairRepositoryImpl implements PropertyRepairRepository {
                     .setParameter("id", repairId).executeUpdate();
             logger.debug("updateShortDescription was succesful");
         } catch (Exception e) {
-            logger.error("Error occurred while updating short description: {}", e.getMessage(), e);
+            logger.error("Error occurred while updating short description: {}", e.getMessage());
         }
     }
 
@@ -96,7 +96,7 @@ public class PropertyRepairRepositoryImpl implements PropertyRepairRepository {
                     .setParameter("id", repairId).executeUpdate();
             logger.debug("updateDescription was succesful");
         } catch (Exception e) {
-            logger.error("Error occurred while updating description: {}", e.getMessage(), e);
+            logger.error("Error occurred while updating description: {}", e.getMessage());
         }
     }
 
@@ -109,7 +109,7 @@ public class PropertyRepairRepositoryImpl implements PropertyRepairRepository {
                     .setParameter("id", repairId).executeUpdate();
             logger.debug("updateProposedStartDate was succesful");
         } catch (Exception e) {
-            logger.error("Error occurred while updating proposed start date: {}", e.getMessage(), e);
+            logger.error("Error occurred while updating proposed start date: {}", e.getMessage());
         }
     }
 
@@ -122,7 +122,7 @@ public class PropertyRepairRepositoryImpl implements PropertyRepairRepository {
                     .setParameter("id", repairId).executeUpdate();
             logger.debug("updateProposedEndDate was succesful");
         } catch (Exception e) {
-            logger.error("Error occurred while updating proposed end date: {}", e.getMessage(), e);
+            logger.error("Error occurred while updating proposed end date: {}", e.getMessage());
         }
     }
 
@@ -135,7 +135,7 @@ public class PropertyRepairRepositoryImpl implements PropertyRepairRepository {
                     .setParameter("id", repairId).executeUpdate();
             logger.debug("updateProposedCost was succesful");
         } catch (Exception e) {
-            logger.error("Error occurred while updating proposed cost: {}", e.getMessage(), e);
+            logger.error("Error occurred while updating proposed cost: {}", e.getMessage());
         }
     }
 
@@ -148,7 +148,7 @@ public class PropertyRepairRepositoryImpl implements PropertyRepairRepository {
                     .setParameter("id", repairId).executeUpdate();
             logger.debug("updateAccepted was succesful");
         } catch (Exception e) {
-            logger.error("Error occurred while updating the accepted: {}", e.getMessage(), e);
+            logger.error("Error occurred while updating the accepted: {}", e.getMessage());
         }
     }
 
@@ -161,7 +161,7 @@ public class PropertyRepairRepositoryImpl implements PropertyRepairRepository {
                     .setParameter("id", repairId).executeUpdate();
             logger.debug("updateStatus was succesful");
         } catch (Exception e) {
-            logger.error("Error occurred while updating status: {}", e.getMessage(), e);
+            logger.error("Error occurred while updating status: {}", e.getMessage());
         }
     }
 
@@ -173,7 +173,7 @@ public class PropertyRepairRepositoryImpl implements PropertyRepairRepository {
             entityManager.createQuery(updateQuery).setParameter("id", repairId).executeUpdate();
             logger.debug("updateActualStartDate was succesful");
         } catch (Exception e) {
-            logger.error("Error occurred while updating actual start date: {}", e.getMessage(), e);
+            logger.error("Error occurred while updating actual start date: {}", e.getMessage());
         }
     }
 
@@ -185,7 +185,7 @@ public class PropertyRepairRepositoryImpl implements PropertyRepairRepository {
             entityManager.createQuery(updateQuery).setParameter("id", repairId).executeUpdate();
             logger.debug("updateActualEndDate was succesful");
         } catch (Exception e) {
-            logger.error("Error occurred while updating actual end date: {}", e.getMessage(), e);
+            logger.error("Error occurred while updating actual end date: {}", e.getMessage());
         }
     }
 
@@ -198,7 +198,7 @@ public class PropertyRepairRepositoryImpl implements PropertyRepairRepository {
                     .setParameter("id", repairId).executeUpdate();
             logger.debug("updateIsDeleted was succesful");
         } catch (Exception e) {
-            logger.error("Error occurred while updating isDeleted: {}", e.getMessage(), e);
+            logger.error("Error occurred while updating isDeleted: {}", e.getMessage());
         }
     }
 
@@ -209,7 +209,7 @@ public class PropertyRepairRepositoryImpl implements PropertyRepairRepository {
             return entityManager.createQuery("SELECT o FROM PropertyRepair o WHERE o.actualStartDate = :date OR o.actualEndDate= :date OR o.date= :date", PropertyRepair.class)
                     .setParameter("date", date).getResultList();
         } catch (Exception e) {
-            logger.error("Error searching for property owner by Date: " + e.getMessage(), e);
+            logger.error("Error searching for property owner by Date: " + e.getMessage());
             return null;
         }
     }
@@ -223,7 +223,7 @@ public class PropertyRepairRepositoryImpl implements PropertyRepairRepository {
                     .setParameter("rangeEndDate", rangeEndDate)
                     .getResultList();
         } catch (Exception e) {
-            logger.error("Error searching for property owner by by range of dates: " + e.getMessage(), e);
+            logger.error("Error searching for property owner by by range of dates: " + e.getMessage());
             return null;
         }
     }
@@ -235,7 +235,7 @@ public class PropertyRepairRepositoryImpl implements PropertyRepairRepository {
             return entityManager.createQuery("SELECT o FROM PropertyRepair o INNER JOIN PropertyOwner p ON o.propertyOwner = p.vatNumber WHERE o.isDeleted = false AND p.vatNumber = " + vatNumber)
                     .getResultList();
         } catch (Exception e) {
-            logger.error("Error searching for property owner by VAT number: " + e.getMessage(), e);
+            logger.error("Error searching for property owner by VAT number: " + e.getMessage());
             return null;
         }
     }
@@ -246,7 +246,7 @@ public class PropertyRepairRepositoryImpl implements PropertyRepairRepository {
         try {
             return entityManager.find(PropertyRepair.class, repairId);
         } catch (Exception e) {
-            logger.error("Error searching for property owner by repair id: " + e.getMessage(), e);
+            logger.error("Error searching for property owner by repair id: " + e.getMessage());
             return null;
         }
     }
@@ -258,7 +258,7 @@ public class PropertyRepairRepositoryImpl implements PropertyRepairRepository {
             return entityManager.createQuery("SELECT p FROM PropertyRepair p INNER JOIN Property o ON p.property = o.propertyId WHERE o.isDeleted = FAlSE AND  o.propertyId =:propertyId")
                     .setParameter("propertyId", propertyId).getResultList();
         } catch (Exception e) {
-            logger.error("Error searching for property owner by property id: " + e.getMessage(), e);
+            logger.error("Error searching for property owner by property id: " + e.getMessage());
             return null;
         }
     }
@@ -271,7 +271,7 @@ public class PropertyRepairRepositoryImpl implements PropertyRepairRepository {
             logger.debug("safelyDelete was succesful");
             return true;
         } catch (Exception e) {
-            logger.error("Error occurred while safely deleting: {}", e.getMessage(), e);
+            logger.error("Error occurred while safely deleting: {}", e.getMessage());
             return false;
         }
     }
@@ -285,7 +285,7 @@ public class PropertyRepairRepositoryImpl implements PropertyRepairRepository {
             logger.debug("permanentlyDelete was succesful");
             return true;
         } catch (Exception e) {
-            logger.error("Error occurred while permamently deleting: {}", e.getMessage(), e);
+            logger.error("Error occurred while permamently deleting: {}", e.getMessage());
             return false;
         }
     }

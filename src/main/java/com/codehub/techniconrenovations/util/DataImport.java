@@ -49,7 +49,7 @@ public class DataImport {
                 propertyRepository.createProperty(property);
             }
         } catch (IOException | NumberFormatException ex) {
-            logger.error("" + ex);
+            logger.error(ex.getMessage());
         }
     }
 
@@ -74,7 +74,7 @@ public class DataImport {
                 propertyOwnerRepository.createPropertyOwner(propertyOwner);
             }
         } catch (RollbackException | IOException | NumberFormatException ex) {
-            logger.error("" + ex);
+            logger.error(ex.getMessage());
         }
     }
 
@@ -109,7 +109,7 @@ public class DataImport {
                 propertyRepairRepository.createPropertyRepair(propertyRepair);
             }
         } catch (IOException | NumberFormatException ex) {
-            logger.error("" + ex);
+            logger.error(ex.getMessage());
         }
     }
 

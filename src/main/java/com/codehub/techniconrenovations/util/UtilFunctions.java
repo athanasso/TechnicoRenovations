@@ -27,7 +27,7 @@ public class UtilFunctions {
             }
             return new SimpleDateFormat("dd/MM/yyyy").parse(date);
         } catch (ParseException ex) {
-            logger.error(" " + ex);
+            logger.error(ex.getMessage());
             return null;
         }
     }
@@ -59,7 +59,7 @@ public class UtilFunctions {
             }
             generatedPassword = sb.toString();
         } catch (NoSuchAlgorithmException e) {
-            logger.error("" + e);
+            logger.error(e.getMessage());
         }
         return generatedPassword;
     }

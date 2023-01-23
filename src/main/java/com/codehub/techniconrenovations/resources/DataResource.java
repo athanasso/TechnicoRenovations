@@ -29,7 +29,7 @@ public class DataResource {
                     .entity("Successful")
                     .build();
         } catch (Exception e) {
-            logger.error("Something went wrong " + e);
+            logger.error("Something went wrong " + e.getMessage());
             return Response.status(401)
                     .entity("Something went wrong!")
                     .build();

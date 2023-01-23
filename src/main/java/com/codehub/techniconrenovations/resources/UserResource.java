@@ -47,7 +47,7 @@ public class UserResource {
             if (!propertyOwnerServices.registerProperty(dto.getOwnerVatNumber(), dto.getPropertyId(), dto.getPropertyAddress(), dto.getYearOfConstruction(), inputHandler.selectPropertyType(dto.getPropertyType()))) {
                 logger.error("user with" + dto.getOwnerVatNumber() + "has wrong data");
                 return Response.status(404)
-                        .entity("Doesn't exist")
+                        .entity("Duplicate entry")
                         .build();
             }
             logger.debug("user with" + dto.getOwnerVatNumber() + "succesful query");
@@ -55,7 +55,7 @@ public class UserResource {
                     .entity("Successful")
                     .build();
         } catch (Exception e) {
-            logger.error("" + e);
+            logger.error(e.getMessage());
             return Response.status(401)
                     .entity("Something went wrong!")
                     .build();
@@ -79,7 +79,7 @@ public class UserResource {
                     .entity("Successful")
                     .build();
         } catch (Exception e) {
-            logger.error("" + e);
+            logger.error(e.getMessage());
             return Response.status(401)
                     .entity("Something went wrong!")
                     .build();
@@ -103,7 +103,7 @@ public class UserResource {
                     .entity("Successful")
                     .build();
         } catch (Exception e) {
-            logger.error("" + e);
+            logger.error(e.getMessage());
             return Response.status(401)
                     .entity("Something went wrong!")
                     .build();
@@ -127,7 +127,7 @@ public class UserResource {
                     .entity("Successful")
                     .build();
         } catch (Exception e) {
-            logger.error("" + e);
+            logger.error(e.getMessage());
             return Response.status(401)
                     .entity("Something went wrong!")
                     .build();
@@ -151,7 +151,7 @@ public class UserResource {
                     .entity("Successful")
                     .build();
         } catch (Exception e) {
-            logger.error("" + e);
+            logger.error(e.getMessage());
             return Response.status(401)
                     .entity("Something went wrong!")
                     .build();
@@ -171,8 +171,8 @@ public class UserResource {
                 return new RestApiResult<>(properties, 200, "Successful");
             }
         } catch (Exception e) {
-            logger.error("" + e);
-            return new RestApiResult<>(e, 401, "Something went wrong!");
+            logger.error(e.getMessage());
+            return new RestApiResult<>(e.getMessage(), 401, "Something went wrong!");
         }
     }
 
@@ -193,7 +193,7 @@ public class UserResource {
                     .entity("Successful")
                     .build();
         } catch (Exception e) {
-            logger.error("" + e);
+            logger.error(e.getMessage());
             return Response.status(401)
                     .entity("Something went wrong!")
                     .build();
@@ -217,7 +217,7 @@ public class UserResource {
                     .entity("Successful")
                     .build();
         } catch (Exception e) {
-            logger.error("" + e);
+            logger.error(e.getMessage());
             return Response.status(401)
                     .entity("Something went wrong!")
                     .build();
@@ -237,8 +237,8 @@ public class UserResource {
                 return new RestApiResult<>(repairs, 200, "Successful");
             }
         } catch (Exception e) {
-            logger.error("" + e);
-            return new RestApiResult<>(e, 401, "Something went wrong!");
+            logger.error(e.getMessage());
+            return new RestApiResult<>(e.getMessage(), 401, "Something went wrong!");
         }
     }
 
@@ -259,7 +259,7 @@ public class UserResource {
                     .entity("Successful")
                     .build();
         } catch (Exception e) {
-            logger.error("" + e);
+            logger.error(e.getMessage());
             return Response.status(401)
                     .entity("Something went wrong!")
                     .build();
@@ -283,7 +283,7 @@ public class UserResource {
                     .entity("Successful")
                     .build();
         } catch (Exception e) {
-            logger.error("" + e);
+            logger.error(e.getMessage());
             return Response.status(401)
                     .entity("Something went wrong!")
                     .build();
@@ -307,7 +307,7 @@ public class UserResource {
                     .entity("Successful")
                     .build();
         } catch (Exception e) {
-            logger.error("" + e);
+            logger.error(e.getMessage());
             return Response.status(401)
                     .entity("Something went wrong!")
                     .build();
@@ -331,7 +331,7 @@ public class UserResource {
                     .entity("Successful")
                     .build();
         } catch (Exception e) {
-            logger.error("" + e);
+            logger.error(e.getMessage());
             return Response.status(401)
                     .entity("Something went wrong!")
                     .build();
@@ -355,7 +355,7 @@ public class UserResource {
                     .entity("Successful")
                     .build();
         } catch (Exception e) {
-            logger.error("" + e);
+            logger.error(e.getMessage());
             return Response.status(401)
                     .entity("Something went wrong!")
                     .build();
@@ -379,7 +379,7 @@ public class UserResource {
                     .entity("Successful")
                     .build();
         } catch (Exception e) {
-            logger.error("" + e);
+            logger.error(e.getMessage());
             return Response.status(401)
                     .entity("Something went wrong!")
                     .build();
