@@ -66,8 +66,8 @@ public class PropertyOwnerServicesImpl implements PropertyOwnerServices {
                 });
             }
             if (repairs.isEmpty()) {
-                logger.error("properties are empty error 401");
-                return null;
+                logger.error("repairs are empty error 401");
+                return new ArrayList<RepairDto>();
             }
             logger.debug("return repair statuses was successful");
             return repairs;
