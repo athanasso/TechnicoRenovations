@@ -27,7 +27,7 @@ Functionalities:
     * Searching Owner with Email
     * Updating Owner fields
     * Updating Owner fields & Property
-    * Deleting Owner (safely and permamently)
+    * Deleting Owner (safely and permanently)
 
 * Property Endpoints
     * Creating Property

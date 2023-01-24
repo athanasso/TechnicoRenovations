@@ -24,7 +24,7 @@ public class DataResource {
         try {
             logger.debug("Importing data to database...");
             dataImport.run();
-            logger.debug("Data imported succesfully");
+            logger.debug("Data imported successfully");
             return Response.status(200)
                     .entity("Successful")
                     .build();

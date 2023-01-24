@@ -44,7 +44,7 @@ public class PropertyOwnerServicesImpl implements PropertyOwnerServices {
                 logger.error("properties are empty error 401");
                 return null;
             }
-            logger.debug("return properties was succesfull");
+            logger.debug("return properties was successful");
             return properties;
         } catch (Exception e) {
             logger.error("An error occurred while getting properties error 500: ", e.getMessage());
@@ -69,7 +69,7 @@ public class PropertyOwnerServicesImpl implements PropertyOwnerServices {
                 logger.error("properties are empty error 401");
                 return null;
             }
-            logger.debug("return repair statuses was succesfull");
+            logger.debug("return repair statuses was successful");
             return repairs;
         } catch (Exception e) {
             logger.error("An error occurred while getting properties error 500: ", e.getMessage());
@@ -217,7 +217,7 @@ public class PropertyOwnerServicesImpl implements PropertyOwnerServices {
     }
 
     @Override
-    public boolean correctPropertyconstructionYear(int vatNumber, String propertyId, int constructionYear) {
+    public boolean correctPropertyConstructionYear(int vatNumber, String propertyId, int constructionYear) {
         try {
             if (!checkProperty(propertyId, vatNumber)) {
                 logger.error("not found");

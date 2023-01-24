@@ -87,7 +87,7 @@ public class AdminServicesImpl implements AdminServices {
                 return false;
             }
             propertyRepairRepository.updateProposedCost(cost, repairId);
-            logger.debug("proposeCost was updated succefully");
+            logger.debug("proposeCost was updated successfully");
             return true;
         } catch (Exception e) {
             logger.error("Error while proposing cost for repair: " + e.getMessage());
@@ -105,7 +105,7 @@ public class AdminServicesImpl implements AdminServices {
             }
             propertyRepairRepository.updateProposedStartDate(startDate, repairId);
             propertyRepairRepository.updateProposedEndDate(endDate, repairId);
-            logger.debug("proposeStartEndDates was updated succefully");
+            logger.debug("proposeStartEndDates was updated successfully");
             return true;
         } catch (Exception e) {
             logger.error("Error while proposing start and end dates for repair: " + e.getMessage());
@@ -122,7 +122,7 @@ public class AdminServicesImpl implements AdminServices {
                     .setParameter("isDeleted", true);
             query.executeUpdate();
             entityManager.getTransaction().commit();
-            logger.debug("permanentlyDeleteProperties was succefully");
+            logger.debug("permanentlyDeleteProperties was successfully");
             return true;
         } catch (Exception e) {
             logger.error("Error while deleting properties: " + e.getMessage());
@@ -133,7 +133,6 @@ public class AdminServicesImpl implements AdminServices {
     /**
      * Removes all properties for a specific owner from the database.
      *
-     * @param vatNumber
      */
     private void permanentlyDeleteRepairsList(String propertyId) {
         try {
@@ -143,7 +142,7 @@ public class AdminServicesImpl implements AdminServices {
                     .setParameter("property", property);
             query.executeUpdate();
             entityManager.getTransaction().commit();
-            logger.debug("permanentlyDeleteRepairsList was succefully");
+            logger.debug("permanentlyDeleteRepairsList was successfully");
         } catch (Exception e) {
             logger.error("Error while deleting repairs list for property: " + e.getMessage());
         }
@@ -155,7 +154,7 @@ public class AdminServicesImpl implements AdminServices {
             List<Property> properties = entityManager.createQuery("SELECT o FROM Property o WHERE isDeleted = :isDeleted")
                     .setParameter("isDeleted", true).getResultList();
             properties.forEach(p -> permanentlyDeleteRepairsList(p.getPropertyId()));
-            logger.debug("permanentlyDeletePropertyRepairs was succefully");
+            logger.debug("permanentlyDeletePropertyRepairs was successfully");
             return true;
         } catch (Exception e) {
             logger.error("Error while deleting property repairs: " + e.getMessage());
@@ -176,7 +175,7 @@ public class AdminServicesImpl implements AdminServices {
                     .setParameter("propertyOwner", propertyOwner);
             query.executeUpdate();
             entityManager.getTransaction().commit();
-            logger.debug("permanentlyDeleteRepairs was succefully");
+            logger.debug("permanentlyDeleteRepairs was successfully");
         } catch (Exception e) {
             logger.error("Error while deleting repairs for owner: " + e.getMessage());
         }
@@ -195,7 +194,7 @@ public class AdminServicesImpl implements AdminServices {
                     .setParameter("propertyOwner", propertyOwner);
             query.executeUpdate();
             entityManager.getTransaction().commit();
-            logger.debug("permanentlyDeleteProperties was succefully");
+            logger.debug("permanentlyDeleteProperties was successfully");
         } catch (Exception e) {
             logger.error("Error while deleting properties for owner: " + e.getMessage());
         }
@@ -214,7 +213,7 @@ public class AdminServicesImpl implements AdminServices {
             Query query = entityManager.createQuery("DELETE PropertyOwner WHERE isDeleted = :isDeleted").setParameter("isDeleted", true);
             query.executeUpdate();
             entityManager.getTransaction().commit();
-            logger.debug("permanentlyDeletePropertyOwner was succefully");
+            logger.debug("permanentlyDeletePropertyOwner was successfully");
             return true;
         } catch (Exception e) {
             logger.error("Error while deleting property owner: " + e.getMessage());
@@ -230,7 +229,7 @@ public class AdminServicesImpl implements AdminServices {
                     .setParameter("isDeleted", true);
             query.executeUpdate();
             entityManager.getTransaction().commit();
-            logger.debug("permanentlyDeleteRepairs was succefully");
+            logger.debug("permanentlyDeleteRepairs was successfully");
             return true;
         } catch (Exception e) {
             logger.error("Error while deleting property repairs: " + e.getMessage());

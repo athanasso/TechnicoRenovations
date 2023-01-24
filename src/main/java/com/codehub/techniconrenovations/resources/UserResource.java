@@ -50,7 +50,7 @@ public class UserResource {
                         .entity("Duplicate entry")
                         .build();
             }
-            logger.debug("user with" + dto.getOwnerVatNumber() + "succesful query");
+            logger.debug("user with" + dto.getOwnerVatNumber() + "successful query");
             return Response.status(200)
                     .entity("Successful")
                     .build();
@@ -116,7 +116,7 @@ public class UserResource {
     @RolesAllowed({"admin","user"})
     public Response correctPropertyconstructionYear(PropertyDto dto) {
         try {
-            if (!propertyOwnerServices.correctPropertyconstructionYear(dto.getOwnerVatNumber(), dto.getPropertyId(), dto.getYearOfConstruction())) {
+            if (!propertyOwnerServices.correctPropertyConstructionYear(dto.getOwnerVatNumber(), dto.getPropertyId(), dto.getYearOfConstruction())) {
                 logger.error("user with" + dto.getOwnerVatNumber() + "has wrong data");
                 return Response.status(404)
                         .entity("Doesn't exist")

@@ -25,7 +25,7 @@ public class PropertyRepositoryImpl implements PropertyRepository {
                 return false;
             }
             entityManager.persist(property);
-            logger.debug("createProperty was succesful");
+            logger.debug("createProperty was successful");
             return true;
         } catch (Exception e) {
             logger.error("An error occurred while creating a property: ", e.getMessage());
@@ -63,7 +63,7 @@ public class PropertyRepositoryImpl implements PropertyRepository {
             String updateQuery = "UPDATE Property set propertyId= :propertyId WHERE propertyId =: id";
             entityManager.createQuery(updateQuery).setParameter("propertyId", propertyId)
                     .setParameter("id", propertyId).executeUpdate();
-            logger.debug("updatePropertyId was succesful");
+            logger.debug("updatePropertyId was successful");
             return true;
         } catch (Exception e) {
             logger.error("An error occurred while updating the property ID: ", e.getMessage());

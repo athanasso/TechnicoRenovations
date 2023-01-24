@@ -27,7 +27,7 @@ public class PropertyRepairRepositoryImpl implements PropertyRepairRepository {
     public boolean createPropertyRepair(PropertyRepair propertyRepair) {
         try {
             entityManager.persist(propertyRepair);
-            logger.debug("createPropertyRepair was succesful");
+            logger.debug("createPropertyRepair was successful");
             return true;
         } catch (Exception e) {
             logger.error("Error occurred while creating property repair: {}", e.getMessage());
@@ -42,7 +42,7 @@ public class PropertyRepairRepositoryImpl implements PropertyRepairRepository {
             PropertyRepair p = entityManager.find(PropertyRepair.class, repairId);
             p.setPropertyOwner(new PropertyOwner(vatNumber));
             createPropertyRepair(p);
-            logger.debug("updateOwnerId was succesful");
+            logger.debug("updateOwnerId was successful");
         } catch (Exception e) {
             logger.error("Error occurred while updating owner id: {}", e.getMessage());
         }

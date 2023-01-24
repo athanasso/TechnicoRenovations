@@ -4,8 +4,6 @@ import com.codehub.techniconrenovations.dto.PropertyDto;
 import com.codehub.techniconrenovations.dto.RepairDto;
 import com.codehub.techniconrenovations.dto.RestApiResult;
 import com.codehub.techniconrenovations.dto.UserDto;
-import com.codehub.techniconrenovations.enums.PropertyType;
-import com.codehub.techniconrenovations.enums.RepairType;
 import com.codehub.techniconrenovations.services.PropertyOwnerServices;
 import jakarta.ws.rs.core.Response;
 import java.util.ArrayList;
@@ -45,7 +43,7 @@ public class UserResourceTest {
         PropertyOwnerServices propertyOwnerServices = mock(PropertyOwnerServices.class);
         PropertyDto dto = new PropertyDto();
         userResource.propertyOwnerServices = propertyOwnerServices;
-        when(propertyOwnerServices.correctPropertyconstructionYear(12345, "abc123", 2021)).thenReturn(false);
+        when(propertyOwnerServices.correctPropertyConstructionYear(12345, "abc123", 2021)).thenReturn(false);
 
         Response response = userResource.correctPropertyconstructionYear(dto);
         assertEquals(404, response.getStatus());

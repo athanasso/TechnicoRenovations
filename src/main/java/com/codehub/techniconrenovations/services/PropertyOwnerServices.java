@@ -106,7 +106,7 @@ public interface PropertyOwnerServices {
      * @param constructionYear
      * @return 
      */
-    boolean correctPropertyconstructionYear(int vatNumber, String propertyId, int constructionYear);
+    boolean correctPropertyConstructionYear(int vatNumber, String propertyId, int constructionYear);
     
     /**
      *

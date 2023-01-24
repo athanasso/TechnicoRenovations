@@ -24,7 +24,7 @@ public class PropertyOwnerRepositoryImpl implements PropertyOwnerRepository {
                 return false;
             }
             entityManager.persist(propertyOwner);
-            logger.debug("createPropertyOwner was succeful");
+            logger.debug("createPropertyOwner was successful");
             return true;
         } catch (Exception e) {
             logger.error("Error creating property owner: " + e.getMessage());
@@ -62,7 +62,7 @@ public class PropertyOwnerRepositoryImpl implements PropertyOwnerRepository {
             PropertyOwner propertyOwner = entityManager.createQuery("SELECT o FROM PropertyOwner o WHERE o.username = :username AND o.password = :password AND isDeleted = :isDeleted", PropertyOwner.class)
                     .setParameter("username", username).setParameter("password", password).setParameter("isDeleted", false).getSingleResult();
             if (propertyOwner.getUsername().equals(username) && propertyOwner.getPassword().equals(password)) {
-                logger.debug("searchByUsernameAndPassword was succesful");
+                logger.debug("searchByUsernameAndPassword was successful");
                 return propertyOwner;
             }
             return null;
@@ -80,7 +80,7 @@ public class PropertyOwnerRepositoryImpl implements PropertyOwnerRepository {
             entityManager.createQuery(updateQuery)
                     .setParameter("address", address)
                     .setParameter("vatNumber", vatNumber).executeUpdate();
-            logger.debug("updateAddress was succesful");
+            logger.debug("updateAddress was successful");
             return true;
         } catch (Exception e) {
             logger.error("Error updating property owner address: " + e.getMessage());
@@ -96,7 +96,7 @@ public class PropertyOwnerRepositoryImpl implements PropertyOwnerRepository {
             entityManager.createQuery(updateQuery)
                     .setParameter("email", email)
                     .setParameter("vatNumber", vatNumber).executeUpdate();
-            logger.debug("updateEmail was succesful");
+            logger.debug("updateEmail was successful");
             return true;
         } catch (Exception e) {
             logger.error("Error updating property owner email: " + e.getMessage());
@@ -112,7 +112,7 @@ public class PropertyOwnerRepositoryImpl implements PropertyOwnerRepository {
             entityManager.createQuery(updateQuery)
                     .setParameter("password", password)
                     .setParameter("vatNumber", vatNumber).executeUpdate();
-            logger.debug("updatePassword was succesful");
+            logger.debug("updatePassword was successful");
             return true;
         } catch (Exception e) {
             logger.error("Error updating property owner password: " + e.getMessage());
@@ -128,7 +128,7 @@ public class PropertyOwnerRepositoryImpl implements PropertyOwnerRepository {
             entityManager.createQuery(updateQuery)
                     .setParameter("username", username)
                     .setParameter("vatNumber", vatNumber).executeUpdate();
-            logger.debug("updateUsername was succesful");
+            logger.debug("updateUsername was successful");
             return true;
         } catch (Exception e) {
             logger.error("Error updating property owner username: " + e.getMessage());
@@ -144,7 +144,7 @@ public class PropertyOwnerRepositoryImpl implements PropertyOwnerRepository {
             entityManager.createQuery(updateQuery)
                     .setParameter("isDeleted", true)
                     .setParameter("vatNumber", vatNumber).executeUpdate();
-            logger.debug("safelyDelete was succesful");
+            logger.debug("safelyDelete was successful");
             return true;
         } catch (Exception e) {
             logger.error("Error safely deleting property owner: " + e.getMessage());
@@ -158,10 +158,10 @@ public class PropertyOwnerRepositoryImpl implements PropertyOwnerRepository {
         try {
             entityManager.createQuery("DELETE PropertyOwner WHERE vatNumber = :vatNumber")
                     .setParameter("vatNumber", vatNumber).executeUpdate();
-            logger.debug("permanentlyDelete was succesful");
+            logger.debug("permanentlyDelete was successful");
             return true;
         } catch (Exception e) {
-            logger.error("Error permamently deleting property owner: " + e.getMessage());
+            logger.error("Error permanently deleting property owner: " + e.getMessage());
             return false;
         }
     }
