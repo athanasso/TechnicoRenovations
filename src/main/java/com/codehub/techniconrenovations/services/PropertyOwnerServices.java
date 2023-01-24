@@ -142,14 +142,6 @@ public interface PropertyOwnerServices {
     boolean correctOwnerPassword(int vatNumber, String password);
     
     /**
-     * Returns the vat Number of a user.
-     * @param username
-     * @param password
-     * @return vatNumber
-     */
-    int getUserVat(String username, String password);
-    
-    /**
      *
      * @param vatNumber
      * @param e9

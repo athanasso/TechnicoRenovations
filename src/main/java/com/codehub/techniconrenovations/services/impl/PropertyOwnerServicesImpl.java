@@ -284,8 +284,7 @@ public class PropertyOwnerServicesImpl implements PropertyOwnerServices {
         }
     }
 
-    @Override
-    public int getUserVat(String username, String password) {
+    private int getUserVat(String username, String password) {
         try {
             PropertyOwner propertyOwner = propertyOwnerRepository.searchByUsernameAndPassword(username, password);
             logger.debug("getUserVat was succeful");
