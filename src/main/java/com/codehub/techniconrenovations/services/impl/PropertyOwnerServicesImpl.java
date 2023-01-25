@@ -164,7 +164,7 @@ public class PropertyOwnerServicesImpl implements PropertyOwnerServices {
                 propertyRepairRepository.updateActualStartDate(repairId);
                 propertyRepairRepository.updateActualEndDate(repairId);
             }
-            logger.debug("acceptOrDeclineRepair was succeful!");
+            logger.debug("acceptOrDeclineRepair was successful!");
             return true;
         } catch (Exception e) {
             logger.error("Error accepting or declining repair: " + e.getMessage());
@@ -181,7 +181,7 @@ public class PropertyOwnerServicesImpl implements PropertyOwnerServices {
             }
 
             propertyRepairRepository.updateDescription(description, repairId);
-            logger.debug("changeDescription was succeful!");
+            logger.debug("changeDescription was successful!");
             return true;
         } catch (Exception e) {
             logger.error("Error updating description: " + e.getMessage());
@@ -192,7 +192,7 @@ public class PropertyOwnerServicesImpl implements PropertyOwnerServices {
     @Override
     public PropertyOwner logIn(String username, String password) {
         try {
-            logger.debug("user login was succeful");
+            logger.debug("user login was successful");
             return propertyOwnerRepository.searchByUsernameAndPassword(username, password);
         } catch (Exception e) {
             logger.error("Error logging in: " + e.getMessage());
@@ -208,7 +208,7 @@ public class PropertyOwnerServicesImpl implements PropertyOwnerServices {
                 return false;
             }
             propertyRepository.updatePropertyAddress(address, propertyId);
-            logger.debug("correctPropertyAddress was succeful");
+            logger.debug("correctPropertyAddress was successful");
             return true;
         } catch (Exception e) {
             logger.error("Error correcting property address: " + e.getMessage());
@@ -224,7 +224,7 @@ public class PropertyOwnerServicesImpl implements PropertyOwnerServices {
                 return false;
             }
             propertyRepository.updateYearOfConstruction(constructionYear, propertyId);
-            logger.debug("correctPropertyconstructionYear was succeful");
+            logger.debug("correctPropertyconstructionYear was successful");
             return true;
         } catch (Exception e) {
             logger.error("Error correcting property construction year: " + e.getMessage());
@@ -240,7 +240,7 @@ public class PropertyOwnerServicesImpl implements PropertyOwnerServices {
                 return false;
             }
             propertyRepository.updatePropertyType(propertyType, propertyId);
-            logger.debug("correctPropertyType was succeful");
+            logger.debug("correctPropertyType was successful");
             return true;
         } catch (Exception e) {
             logger.error("Error correcting property type: " + e.getMessage());
@@ -252,7 +252,7 @@ public class PropertyOwnerServicesImpl implements PropertyOwnerServices {
     public boolean correctOwnerUsername(int vatNumber, String username) {
         try {
             propertyOwnerRepository.updateUsername(username, vatNumber);
-            logger.debug("correctOwnerUsername was succeful");
+            logger.debug("correctOwnerUsername was successful");
             return true;
         } catch (Exception e) {
             logger.error("Error correcting owner username: " + e.getMessage());
@@ -264,7 +264,7 @@ public class PropertyOwnerServicesImpl implements PropertyOwnerServices {
     public boolean correctOwnerEmail(int vatNumber, String email) {
         try {
             propertyOwnerRepository.updateEmail(email, vatNumber);
-            logger.debug("correctOwnerEmail was succeful");
+            logger.debug("correctOwnerEmail was successful");
             return true;
         } catch (Exception e) {
             logger.error("Error correcting owner email: " + e.getMessage());
@@ -276,7 +276,7 @@ public class PropertyOwnerServicesImpl implements PropertyOwnerServices {
     public boolean correctOwnerPassword(int vatNumber, String password) {
         try {
             propertyOwnerRepository.updatePassword(password, vatNumber);
-            logger.debug("correctOwnerPassword was succeful");
+            logger.debug("correctOwnerPassword was successful");
             return true;
         } catch (Exception e) {
             logger.error("Error correcting owner password: " + e.getMessage());
@@ -284,14 +284,15 @@ public class PropertyOwnerServicesImpl implements PropertyOwnerServices {
         }
     }
 
-    private int getUserVat(String username, String password) {
+    @Override
+    public PropertyOwner getUser(int vatNumber) {
         try {
-            PropertyOwner propertyOwner = propertyOwnerRepository.searchByUsernameAndPassword(username, password);
-            logger.debug("getUserVat was succeful");
-            return propertyOwner.getVatNumber();
+            PropertyOwner propertyOwner = propertyOwnerRepository.searchVat(vatNumber);
+            logger.debug("getUserVat was successful");
+            return propertyOwner;
         } catch (Exception e) {
-            logger.error("Error getting user VAT number", e.getMessage());
-            return -1;
+            logger.error("Error getting user", e.getMessage());
+            return null;
         }
     }
 
@@ -306,7 +307,7 @@ public class PropertyOwnerServicesImpl implements PropertyOwnerServices {
                 logger.error("Property is not owned by user with VAT number " + vatNumber);
                 return false;
             }
-            logger.debug("checkProperty was succeful");
+            logger.debug("checkProperty was successful");
             return true;
         } catch (Exception e) {
             logger.error("Error checking property", e.getMessage());
@@ -325,7 +326,7 @@ public class PropertyOwnerServicesImpl implements PropertyOwnerServices {
                 logger.error("Repair is not owned by user with VAT number " + vatNumber);
                 return false;
             }
-            logger.debug("checkRepair was succeful");
+            logger.debug("checkRepair was successful");
             return true;
         } catch (Exception e) {
             logger.error("Error checking repair", e.getMessage());
@@ -337,7 +338,7 @@ public class PropertyOwnerServicesImpl implements PropertyOwnerServices {
     public boolean safelyDeleteProperty(int vatNumber, String e9) {
         try {
             if (checkProperty(e9, vatNumber)) {
-                logger.debug("safelyDeleteProperty was succeful");
+                logger.debug("safelyDeleteProperty was successful");
                 return propertyRepository.safelyDelete(e9);
             } else {
                 logger.debug("property does not exist");
@@ -353,7 +354,7 @@ public class PropertyOwnerServicesImpl implements PropertyOwnerServices {
     public boolean safelyDeletePropertyRepair(int vatNumber, int repairId) {
         try {
             if (checkRepair(repairId, vatNumber)) {
-                logger.debug("safelyDeleteProperty was succeful");
+                logger.debug("safelyDeleteProperty was successful");
                 return propertyRepairRepository.safelyDelete(repairId);
             } else {
                 logger.error("property repair does not exist");

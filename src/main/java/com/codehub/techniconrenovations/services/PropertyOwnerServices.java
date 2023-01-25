@@ -163,4 +163,11 @@ public interface PropertyOwnerServices {
      * @return
      */
     boolean safelyDeletePropertyOwner(int myVatNumber);
+    
+    /**
+     *
+     * @param vatNumber
+     * @return
+     */
+    PropertyOwner getUser(int vatNumber);
 }

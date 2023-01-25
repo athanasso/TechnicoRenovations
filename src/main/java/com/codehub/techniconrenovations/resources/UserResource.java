@@ -175,6 +175,20 @@ public class UserResource {
             return new RestApiResult<>(e.getMessage(), 401, "Something went wrong!");
         }
     }
+    
+    @GET
+    @Path("get_user/{vatNumber}")
+    @Produces("application/json")
+    @RolesAllowed({"admin","user"})
+    public RestApiResult getUserInfo(@PathParam("vatNumber") int vatNumber) {
+        try {
+            UserDto dto = new UserDto(propertyOwnerServices.getUser(vatNumber));
+            return new RestApiResult<>(dto, 200, "Successful");
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            return new RestApiResult<>(e.getMessage(), 401, "Something went wrong!");
+        }
+    }
 
     @POST
     @Path("repair/repair_status")
