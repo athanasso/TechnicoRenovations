@@ -180,10 +180,13 @@ public class UserResource {
     @Path("get_user/{vatNumber}")
     @Produces("application/json")
     @RolesAllowed({"admin","user"})
-    public RestApiResult getUserInfo(@PathParam("vatNumber") int vatNumber) {
+    public RestApiResult getUser(@PathParam("vatNumber") int vatNumber) {
         try {
             UserDto dto = new UserDto(propertyOwnerServices.getUser(vatNumber));
-            return new RestApiResult<>(dto, 200, "Successful");
+            if (dto != null){
+                return new RestApiResult<>(dto, 200, "Successful");
+            }
+            else return new RestApiResult<>(dto, 404, "UnSuccessful");
         } catch (Exception e) {
             logger.error(e.getMessage());
             return new RestApiResult<>(e.getMessage(), 401, "Something went wrong!");
