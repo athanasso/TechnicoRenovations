@@ -14,10 +14,12 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class AdminResourceTest {
+    
+    AdminResource adminResource = new AdminResource();
+    AdminServices adminServices = mock(AdminServices.class);
 
     @Test
     public void testPing() {
-        AdminResource adminResource = new AdminResource();
         Response response = adminResource.ping();
         assertEquals(200, response.getStatus());
         assertEquals("pang", response.getEntity());
@@ -25,8 +27,6 @@ public class AdminResourceTest {
 
     @Test
     public void testGetPendingRepairs() {
-        AdminResource adminResource = new AdminResource();
-        AdminServices adminServices = mock(AdminServices.class);
         adminResource.adminServices = adminServices;
         List<RepairDto> repairs = new ArrayList<>();
         RepairDto repair = new RepairDto();
@@ -45,8 +45,6 @@ public class AdminResourceTest {
 
     @Test
     public void testGetPendingRepairsWithNoResults() {
-        AdminResource adminResource = new AdminResource();
-        AdminServices adminServices = mock(AdminServices.class);
         adminResource.adminServices = adminServices;
         List<RepairDto> repairs = new ArrayList<>();
         when(adminServices.getPendingRepairs()).thenReturn(repairs);
@@ -59,8 +57,6 @@ public class AdminResourceTest {
 
     @Test
     public void testProposeCost() {
-        AdminResource adminResource = new AdminResource();
-        AdminServices adminServices = mock(AdminServices.class);
         adminResource.adminServices = adminServices;
         RepairDto dto = new RepairDto();
 
@@ -71,8 +67,6 @@ public class AdminResourceTest {
 
     @Test
     public void testProposeStartEndDates() {
-        AdminResource adminResource = new AdminResource();
-        AdminServices adminServices = mock(AdminServices.class);
         adminResource.adminServices = adminServices;
         RepairDto dto = new RepairDto();
 
@@ -83,8 +77,6 @@ public class AdminResourceTest {
 
     @Test
     public void testGetAllRepairs() {
-        AdminResource adminResource = new AdminResource();
-        AdminServices adminServices = mock(AdminServices.class);
         adminResource.adminServices = adminServices;
         List<RepairDto> repairs = new ArrayList<>();
         RepairDto repair = new RepairDto();
@@ -103,8 +95,6 @@ public class AdminResourceTest {
 
     @Test
     public void testGetAllRepairsWithNoResults() {
-        AdminResource adminResource = new AdminResource();
-        AdminServices adminServices = mock(AdminServices.class);
         adminResource.adminServices = adminServices;
         List<RepairDto> repairs = new ArrayList<>();
         when(adminServices.getAllRepairs()).thenReturn(repairs);
@@ -117,8 +107,6 @@ public class AdminResourceTest {
 
     @Test
     public void testGetProperties() {
-        AdminResource adminResource = new AdminResource();
-        AdminServices adminServices = mock(AdminServices.class);
         adminResource.adminServices = adminServices;
         List<PropertyDto> properties = new ArrayList<>();
         PropertyDto property = new PropertyDto();
@@ -134,8 +122,6 @@ public class AdminResourceTest {
 
     @Test
     public void testGetPropertiesWithNoResults() {
-        AdminResource adminResource = new AdminResource();
-        AdminServices adminServices = mock(AdminServices.class);
         adminResource.adminServices = adminServices;
         List<PropertyDto> properties = new ArrayList<>();
         when(adminServices.getProperties()).thenReturn(properties);
@@ -148,8 +134,6 @@ public class AdminResourceTest {
 
     @Test
     public void testGetOwners() {
-        AdminResource adminResource = new AdminResource();
-        AdminServices adminServices = mock(AdminServices.class);
         adminResource.adminServices = adminServices;
         List<UserDto> owners = new ArrayList<>();
         UserDto owner = new UserDto(); 
@@ -167,8 +151,6 @@ public class AdminResourceTest {
 
     @Test
     public void testGetOwnersWithNoResults() {
-        AdminResource adminResource = new AdminResource();
-        AdminServices adminServices = mock(AdminServices.class);
         adminResource.adminServices = adminServices;
         List<UserDto> owners = new ArrayList<>();
         when(adminServices.getOwners()).thenReturn(owners);
@@ -181,8 +163,6 @@ public class AdminResourceTest {
 
     @Test
     public void testPermanentlyDeletePropertyOwner() {
-        AdminResource adminResource = new AdminResource();
-        AdminServices adminServices = mock(AdminServices.class);
         adminResource.adminServices = adminServices;
         Response result = adminResource.permanentlyDeletePropertyOwner();
         assertEquals(200, result.getStatus());
@@ -191,11 +171,18 @@ public class AdminResourceTest {
 
     @Test
     public void testPermanentlyDeleteRepairs() {
-        AdminResource adminResource = new AdminResource();
-        AdminServices adminServices = mock(AdminServices.class);
         adminResource.adminServices = adminServices;
 
         Response result = adminResource.permanentlyDeleteRepairs();
+        assertEquals(200, result.getStatus());
+        assertEquals("Successful", result.getEntity());
+    }
+    
+    @Test
+    public void testPermanentlyDeleteProperties() {
+        adminResource.adminServices = adminServices;
+        
+        Response result = adminResource.permanentlyDeleteProperties();
         assertEquals(200, result.getStatus());
         assertEquals("Successful", result.getEntity());
     }
