@@ -10,13 +10,33 @@ import java.util.ArrayList;
 import java.util.List;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Before;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class AdminResourceTest {
     
-    AdminResource adminResource = new AdminResource();
-    AdminServices adminServices = mock(AdminServices.class);
+    AdminResource adminResource;
+    AdminServices adminServices;
+    List<RepairDto> repairs;
+    RepairDto repair;
+    List<PropertyDto> properties;
+    PropertyDto property;
+    List<UserDto> owners;
+    UserDto owner; 
+    
+    @Before
+    public void setUp() {
+        adminResource = new AdminResource();
+        adminServices = mock(AdminServices.class);
+        adminResource.adminServices = adminServices;
+        repairs = new ArrayList<>();
+        repair = new RepairDto();
+        properties = new ArrayList<>();
+        property = new PropertyDto();
+        owners = new ArrayList<>();
+        owner = new UserDto(); 
+    }
 
     @Test
     public void testPing() {
@@ -27,16 +47,12 @@ public class AdminResourceTest {
 
     @Test
     public void testGetPendingRepairs() {
-        adminResource.adminServices = adminServices;
-        List<RepairDto> repairs = new ArrayList<>();
-        RepairDto repair = new RepairDto();
         repair.setRepairId(1);
         repair.setProposedCost("1000.0");
         repair.setActualStartDate("01/01/2022");
         repair.setActualEndDate("01/10/2022");
         repairs.add(repair);
         when(adminServices.getPendingRepairs()).thenReturn(repairs);
-
         RestApiResult result = adminResource.getPendingRepairs();
         assertEquals(200, result.getErrorCode());
         assertEquals("Successful", result.getDescription());
@@ -45,10 +61,7 @@ public class AdminResourceTest {
 
     @Test
     public void testGetPendingRepairsWithNoResults() {
-        adminResource.adminServices = adminServices;
-        List<RepairDto> repairs = new ArrayList<>();
         when(adminServices.getPendingRepairs()).thenReturn(repairs);
-
         RestApiResult result = adminResource.getPendingRepairs();
         assertEquals(404, result.getErrorCode());
         assertEquals("UnSuccessful", result.getDescription());
@@ -57,29 +70,20 @@ public class AdminResourceTest {
 
     @Test
     public void testProposeCost() {
-        adminResource.adminServices = adminServices;
-        RepairDto dto = new RepairDto();
-
-        Response response = adminResource.proposeCost(dto);
+        Response response = adminResource.proposeCost(repair);
         assertEquals(200, response.getStatus());
         assertEquals("Successful!", response.getEntity());
     }
 
     @Test
     public void testProposeStartEndDates() {
-        adminResource.adminServices = adminServices;
-        RepairDto dto = new RepairDto();
-
-        Response response = adminResource.proposeStartEndDates(dto);
+        Response response = adminResource.proposeStartEndDates(repair);
         assertEquals(200, response.getStatus());
         assertEquals("Successful!", response.getEntity());
     }
 
     @Test
     public void testGetAllRepairs() {
-        adminResource.adminServices = adminServices;
-        List<RepairDto> repairs = new ArrayList<>();
-        RepairDto repair = new RepairDto();
         repair.setRepairId(1);
         repair.setProposedCost("1000.0");
         repair.setActualStartDate("01/01/2022");
@@ -95,10 +99,7 @@ public class AdminResourceTest {
 
     @Test
     public void testGetAllRepairsWithNoResults() {
-        adminResource.adminServices = adminServices;
-        List<RepairDto> repairs = new ArrayList<>();
         when(adminServices.getAllRepairs()).thenReturn(repairs);
-
         RestApiResult result = adminResource.getAllRepairs();
         assertEquals(404, result.getErrorCode());
         assertEquals("UnSuccessful", result.getDescription());
@@ -107,9 +108,6 @@ public class AdminResourceTest {
 
     @Test
     public void testGetProperties() {
-        adminResource.adminServices = adminServices;
-        List<PropertyDto> properties = new ArrayList<>();
-        PropertyDto property = new PropertyDto();
         property.setPropertyId("123");
         property.setPropertyAddress("123 Main St");
         properties.add(property);
@@ -122,10 +120,7 @@ public class AdminResourceTest {
 
     @Test
     public void testGetPropertiesWithNoResults() {
-        adminResource.adminServices = adminServices;
-        List<PropertyDto> properties = new ArrayList<>();
         when(adminServices.getProperties()).thenReturn(properties);
-
         RestApiResult result = adminResource.getProperties();
         assertEquals(404, result.getErrorCode());
         assertEquals("UnSuccessful", result.getDescription());
@@ -134,9 +129,6 @@ public class AdminResourceTest {
 
     @Test
     public void testGetOwners() {
-        adminResource.adminServices = adminServices;
-        List<UserDto> owners = new ArrayList<>();
-        UserDto owner = new UserDto(); 
         owner.setVatNumber(1);
         owner.setName("John");
         owner.setSurname("Doe");
@@ -151,10 +143,7 @@ public class AdminResourceTest {
 
     @Test
     public void testGetOwnersWithNoResults() {
-        adminResource.adminServices = adminServices;
-        List<UserDto> owners = new ArrayList<>();
         when(adminServices.getOwners()).thenReturn(owners);
-
         RestApiResult result = adminResource.getOwners();
         assertEquals(404, result.getErrorCode());
         assertEquals("UnSuccessful", result.getDescription());
@@ -163,7 +152,6 @@ public class AdminResourceTest {
 
     @Test
     public void testPermanentlyDeletePropertyOwner() {
-        adminResource.adminServices = adminServices;
         Response result = adminResource.permanentlyDeletePropertyOwner();
         assertEquals(200, result.getStatus());
         assertEquals("Successful", result.getEntity());
@@ -171,17 +159,13 @@ public class AdminResourceTest {
 
     @Test
     public void testPermanentlyDeleteRepairs() {
-        adminResource.adminServices = adminServices;
-
         Response result = adminResource.permanentlyDeleteRepairs();
         assertEquals(200, result.getStatus());
         assertEquals("Successful", result.getEntity());
     }
     
     @Test
-    public void testPermanentlyDeleteProperties() {
-        adminResource.adminServices = adminServices;
-        
+    public void testPermanentlyDeleteProperties() {        
         Response result = adminResource.permanentlyDeleteProperties();
         assertEquals(200, result.getStatus());
         assertEquals("Successful", result.getEntity());
