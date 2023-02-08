@@ -1,6 +1,8 @@
 package com.codehub.techniconrenovations.repository;
 
+import com.codehub.techniconrenovations.dto.UserDto;
 import com.codehub.techniconrenovations.model.PropertyOwner;
+import java.util.List;
 
 public interface PropertyOwnerRepository {
 
@@ -95,4 +97,10 @@ public interface PropertyOwnerRepository {
      * @return
      */
     String checkRole(String username, String password);
+    
+    /**
+     *
+     * @return
+     */
+    List<UserDto> getOwners();
 }

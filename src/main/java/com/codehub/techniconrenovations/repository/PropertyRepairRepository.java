@@ -1,5 +1,6 @@
 package com.codehub.techniconrenovations.repository;
 
+import com.codehub.techniconrenovations.dto.RepairDto;
 import com.codehub.techniconrenovations.enums.RepairType;
 import com.codehub.techniconrenovations.enums.Status;
 import com.codehub.techniconrenovations.model.PropertyRepair;
@@ -173,4 +174,16 @@ public interface PropertyRepairRepository {
      * @return bool
      */
     boolean permanentlyDelete(int repairId);
+    
+    /**
+     *
+     * @return
+     */
+    List<RepairDto> getPendingRepairs();
+    
+    /**
+     *
+     * @return
+     */
+    List<RepairDto> getAllRepairs();
 }

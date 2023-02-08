@@ -1,5 +1,6 @@
 package com.codehub.techniconrenovations.repository;
 
+import com.codehub.techniconrenovations.dto.PropertyDto;
 import com.codehub.techniconrenovations.enums.PropertyType;
 import com.codehub.techniconrenovations.model.Property;
 import java.util.List;
@@ -80,4 +81,10 @@ public interface PropertyRepository {
      * @return
      */
     boolean permanentlyDelete(String propertyId);
+    
+    /**
+     *
+     * @return
+     */
+    List<PropertyDto> getProperties();
 }

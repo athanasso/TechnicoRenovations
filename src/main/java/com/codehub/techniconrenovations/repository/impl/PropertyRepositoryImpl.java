@@ -1,5 +1,6 @@
 package com.codehub.techniconrenovations.repository.impl;
 
+import com.codehub.techniconrenovations.dto.PropertyDto;
 import com.codehub.techniconrenovations.enums.PropertyType;
 import com.codehub.techniconrenovations.model.Property;
 import com.codehub.techniconrenovations.repository.PropertyRepository;
@@ -157,6 +158,18 @@ public class PropertyRepositoryImpl implements PropertyRepository {
         } catch (Exception e) {
             logger.error("An error occurred while permanently deleting a property: ", e.getMessage());
             return false;
+        }
+    }
+    
+    @Override
+    public List<PropertyDto> getProperties() {
+        try {
+            List<PropertyDto> properties = entityManager.createQuery("SELECT p FROM Property p")
+                    .getResultList();
+            return properties;
+        } catch (Exception e) {
+            logger.error("Error while retrieving properties: " + e.getMessage());
+            return null;
         }
     }
 }

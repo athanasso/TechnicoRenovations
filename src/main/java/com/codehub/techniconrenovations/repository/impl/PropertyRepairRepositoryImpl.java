@@ -1,5 +1,6 @@
 package com.codehub.techniconrenovations.repository.impl;
 
+import com.codehub.techniconrenovations.dto.RepairDto;
 import com.codehub.techniconrenovations.enums.RepairType;
 import com.codehub.techniconrenovations.enums.Status;
 import com.codehub.techniconrenovations.model.Property;
@@ -287,6 +288,31 @@ public class PropertyRepairRepositoryImpl implements PropertyRepairRepository {
         } catch (Exception e) {
             logger.error("Error occurred while permamently deleting: {}", e.getMessage());
             return false;
+        }
+    }
+    
+    @Override
+    public List<RepairDto> getPendingRepairs() {
+        try {
+            List<RepairDto> repairDtoList = entityManager.createQuery("SELECT r FROM PropertyRepair r WHERE r.status = :status")
+                    .setParameter("status", Status.PENDING)
+                    .getResultList();
+            return repairDtoList;
+        } catch (Exception e) {
+            logger.error("Error while retrieving pending repairs: " + e.getMessage());
+            return null;
+        }
+    }
+    
+    @Override
+    public List<RepairDto> getAllRepairs() {
+        try {
+            List<RepairDto> repairs = entityManager.createQuery("SELECT r FROM PropertyRepair r")
+                    .getResultList();
+            return repairs;
+        } catch (Exception e) {
+            logger.error("Error while retrieving all repairs: " + e.getMessage());
+            return null;
         }
     }
 }

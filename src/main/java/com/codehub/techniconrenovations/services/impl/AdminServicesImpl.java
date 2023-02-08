@@ -3,11 +3,12 @@ package com.codehub.techniconrenovations.services.impl;
 import com.codehub.techniconrenovations.dto.PropertyDto;
 import com.codehub.techniconrenovations.dto.RepairDto;
 import com.codehub.techniconrenovations.dto.UserDto;
-import com.codehub.techniconrenovations.enums.Status;
 import com.codehub.techniconrenovations.model.Property;
 import com.codehub.techniconrenovations.model.PropertyOwner;
 import com.codehub.techniconrenovations.model.PropertyRepair;
+import com.codehub.techniconrenovations.repository.PropertyOwnerRepository;
 import com.codehub.techniconrenovations.repository.PropertyRepairRepository;
+import com.codehub.techniconrenovations.repository.PropertyRepository;
 import com.codehub.techniconrenovations.services.AdminServices;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
@@ -22,20 +23,21 @@ import org.slf4j.LoggerFactory;
 public class AdminServicesImpl implements AdminServices {
 
     private static final Logger logger = LoggerFactory.getLogger(AdminServicesImpl.class);
-
+    
     @PersistenceContext(unitName = "Persistence")
     private EntityManager entityManager;
     
+    @Inject
+    private PropertyRepository propertyRepository;
+    @Inject
+    private PropertyOwnerRepository propertyOwnerRepository ;
     @Inject
     private PropertyRepairRepository propertyRepairRepository;
 
     @Override
     public List<RepairDto> getPendingRepairs() {
         try {
-            List<RepairDto> repairDtoList = entityManager.createQuery("SELECT r FROM PropertyRepair r WHERE r.status = :status")
-                    .setParameter("status", Status.PENDING)
-                    .getResultList();
-            return repairDtoList;
+            return propertyRepairRepository.getPendingRepairs();
         } catch (Exception e) {
             logger.error("Error while retrieving pending repairs: " + e.getMessage());
             return null;
@@ -45,9 +47,7 @@ public class AdminServicesImpl implements AdminServices {
     @Override
     public List<RepairDto> getAllRepairs() {
         try {
-            List<RepairDto> repairs = entityManager.createQuery("SELECT r FROM PropertyRepair r")
-                    .getResultList();
-            return repairs;
+            return propertyRepairRepository.getAllRepairs();
         } catch (Exception e) {
             logger.error("Error while retrieving all repairs: " + e.getMessage());
             return null;
@@ -57,9 +57,7 @@ public class AdminServicesImpl implements AdminServices {
     @Override
     public List<PropertyDto> getProperties() {
         try {
-            List<PropertyDto> properties = entityManager.createQuery("SELECT p FROM Property p")
-                    .getResultList();
-            return properties;
+            return propertyRepository.getProperties();
         } catch (Exception e) {
             logger.error("Error while retrieving properties: " + e.getMessage());
             return null;
@@ -69,9 +67,7 @@ public class AdminServicesImpl implements AdminServices {
     @Override
     public List<UserDto> getOwners() {
         try {
-            List <UserDto> userList = entityManager.createQuery("SELECT o FROM PropertyOwner o")
-                    .getResultList();
-            return userList;
+            return propertyOwnerRepository.getOwners();
         } catch (Exception e) {
             logger.error("Error while retrieving owners: " + e.getMessage());
             return null;

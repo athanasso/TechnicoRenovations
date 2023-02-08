@@ -1,10 +1,12 @@
 package com.codehub.techniconrenovations.repository.impl;
 
+import com.codehub.techniconrenovations.dto.UserDto;
 import com.codehub.techniconrenovations.model.PropertyOwner;
 import com.codehub.techniconrenovations.repository.PropertyOwnerRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -178,6 +180,18 @@ public class PropertyOwnerRepositoryImpl implements PropertyOwnerRepository {
         } catch (Exception e) {
             logger.error("Error checking user's role " + e.getMessage());
             return "";
+        }
+    }
+    
+    @Override
+    public List<UserDto> getOwners() {
+        try {
+            List <UserDto> userList = entityManager.createQuery("SELECT o FROM PropertyOwner o")
+                    .getResultList();
+            return userList;
+        } catch (Exception e) {
+            logger.error("Error while retrieving owners: " + e.getMessage());
+            return null;
         }
     }
 }
