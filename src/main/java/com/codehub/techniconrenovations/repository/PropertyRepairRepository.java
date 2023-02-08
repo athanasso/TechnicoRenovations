@@ -187,13 +187,7 @@ public interface PropertyRepairRepository {
      * @return
      */
     List<RepairDto> getAllRepairs();
-    
-    /**
-     *
-     * @return
-     */
-    boolean permanentlyDeletePropertyRepairs();
-    
+
     /**
      *
      * @param vatNumber

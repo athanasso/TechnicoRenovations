@@ -318,38 +318,6 @@ public class PropertyRepairRepositoryImpl implements PropertyRepairRepository {
     }
     
     @Override
-    public boolean permanentlyDeletePropertyRepairs() {
-        try {
-            List<Property> properties = entityManager.createQuery("SELECT o FROM Property o WHERE isDeleted = :isDeleted")
-                    .setParameter("isDeleted", true).getResultList();
-            properties.forEach(p -> permanentlyDeleteRepairsList(p.getPropertyId()));
-            logger.debug("permanentlyDeletePropertyRepairs was successfully");
-            return true;
-        } catch (Exception e) {
-            logger.error("Error while deleting property repairs: " + e.getMessage());
-            return false;
-        }
-    }
-    
-    /**
-     * Removes all properties for a specific owner from the database.
-     *
-     */
-    private void permanentlyDeleteRepairsList(String propertyId) {
-        try {
-            Property property = new Property(propertyId);
-            entityManager.getTransaction().begin();
-            Query query = entityManager.createQuery("DELETE PropertyRepair WHERE property = :property")
-                    .setParameter("property", property);
-            query.executeUpdate();
-            entityManager.getTransaction().commit();
-            logger.debug("permanentlyDeleteRepairsList was successfully");
-        } catch (Exception e) {
-            logger.error("Error while deleting repairs list for property: " + e.getMessage());
-        }
-    }
-    
-    @Override
     public void permanentlyDeleteRepairs(int vatNumber) {
         try {
             PropertyOwner propertyOwner = new PropertyOwner(vatNumber);

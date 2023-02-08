@@ -183,7 +183,7 @@ public class PropertyRepositoryImpl implements PropertyRepository {
     @Override
     public boolean permanentlyDeleteProperties() {
         try {
-            propertyRepairRepository.permanentlyDeletePropertyRepairs();
+            propertyRepairRepository.permanentlyDeleteRepairs();
             entityManager.getTransaction().begin();
             Query query = entityManager.createQuery("DELETE Property WHERE isDeleted = :isDeleted")
                     .setParameter("isDeleted", true);

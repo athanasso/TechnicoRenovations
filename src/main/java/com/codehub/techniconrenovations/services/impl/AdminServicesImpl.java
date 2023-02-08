@@ -112,24 +112,12 @@ public class AdminServicesImpl implements AdminServices {
     @Override
     public boolean permanentlyDeleteProperties() {
         try {
-            propertyRepairRepository.permanentlyDeletePropertyRepairs();
+            propertyRepairRepository.permanentlyDeleteRepairs();
             propertyRepository.permanentlyDeleteProperties();
             logger.debug("permanentlyDeleteProperties was successfully");
             return true;
         } catch (Exception e) {
             logger.error("Error while deleting properties: " + e.getMessage());
-            return false;
-        }
-    }
-
-    @Override
-    public boolean permanentlyDeletePropertyRepairs() {
-        try {
-            propertyRepairRepository.permanentlyDeletePropertyRepairs();
-            logger.debug("permanentlyDeletePropertyRepairs was successfully");
-            return true;
-        } catch (Exception e) {
-            logger.error("Error while deleting property repairs: " + e.getMessage());
             return false;
         }
     }

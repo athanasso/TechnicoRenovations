@@ -72,12 +72,6 @@ public interface AdminServices {
      * Removes deleted repairs from the database.
      * @return 
      */
-    boolean permanentlyDeletePropertyRepairs();
-    
-    /**
-     * Removes deleted repairs from the database.
-     * @return 
-     */
     boolean permanentlyDeleteRepairs();
 
 }
