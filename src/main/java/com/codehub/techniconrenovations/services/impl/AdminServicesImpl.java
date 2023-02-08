@@ -37,7 +37,9 @@ public class AdminServicesImpl implements AdminServices {
     @Override
     public List<RepairDto> getPendingRepairs() {
         try {
-            return propertyRepairRepository.getPendingRepairs();
+            List<RepairDto> repairs = propertyRepairRepository.getPendingRepairs();
+            logger.debug("Get pending repairs was succesfull");
+            return repairs;
         } catch (Exception e) {
             logger.error("Error while retrieving pending repairs: " + e.getMessage());
             return null;
@@ -47,7 +49,9 @@ public class AdminServicesImpl implements AdminServices {
     @Override
     public List<RepairDto> getAllRepairs() {
         try {
-            return propertyRepairRepository.getAllRepairs();
+            List<RepairDto> repairs = propertyRepairRepository.getAllRepairs();
+            logger.debug("Get repairs was succesfull");
+            return repairs;
         } catch (Exception e) {
             logger.error("Error while retrieving all repairs: " + e.getMessage());
             return null;
@@ -57,7 +61,9 @@ public class AdminServicesImpl implements AdminServices {
     @Override
     public List<PropertyDto> getProperties() {
         try {
-            return propertyRepository.getProperties();
+            List<PropertyDto> properties = propertyRepository.getProperties();
+            logger.debug("Get properties was succesfull");
+            return properties;
         } catch (Exception e) {
             logger.error("Error while retrieving properties: " + e.getMessage());
             return null;
@@ -67,7 +73,9 @@ public class AdminServicesImpl implements AdminServices {
     @Override
     public List<UserDto> getOwners() {
         try {
-            return propertyOwnerRepository.getOwners();
+            List<UserDto> owners = propertyOwnerRepository.getOwners();
+            logger.debug("Get owners was succesfull");
+            return owners;
         } catch (Exception e) {
             logger.error("Error while retrieving owners: " + e.getMessage());
             return null;
