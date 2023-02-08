@@ -3,9 +3,13 @@ package com.codehub.techniconrenovations.repository.impl;
 import com.codehub.techniconrenovations.dto.PropertyDto;
 import com.codehub.techniconrenovations.enums.PropertyType;
 import com.codehub.techniconrenovations.model.Property;
+import com.codehub.techniconrenovations.model.PropertyOwner;
+import com.codehub.techniconrenovations.repository.PropertyRepairRepository;
 import com.codehub.techniconrenovations.repository.PropertyRepository;
+import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
 import java.util.List;
 import org.slf4j.Logger;
@@ -14,6 +18,9 @@ import org.slf4j.LoggerFactory;
 public class PropertyRepositoryImpl implements PropertyRepository {
 
     private static final Logger logger = LoggerFactory.getLogger(PropertyRepositoryImpl.class);
+    
+    @Inject
+    private PropertyRepairRepository propertyRepairRepository;
 
     @PersistenceContext(unitName = "Persistence")
     private EntityManager entityManager;
@@ -170,6 +177,38 @@ public class PropertyRepositoryImpl implements PropertyRepository {
         } catch (Exception e) {
             logger.error("Error while retrieving properties: " + e.getMessage());
             return null;
+        }
+    }
+    
+    @Override
+    public boolean permanentlyDeleteProperties() {
+        try {
+            propertyRepairRepository.permanentlyDeletePropertyRepairs();
+            entityManager.getTransaction().begin();
+            Query query = entityManager.createQuery("DELETE Property WHERE isDeleted = :isDeleted")
+                    .setParameter("isDeleted", true);
+            query.executeUpdate();
+            entityManager.getTransaction().commit();
+            logger.debug("permanentlyDeleteProperties was successfully");
+            return true;
+        } catch (Exception e) {
+            logger.error("Error while deleting properties: " + e.getMessage());
+            return false;
+        }
+    }
+    
+    @Override
+    public void permanentlyDeleteProperties(int vatNumber) {
+        try {
+            PropertyOwner propertyOwner = new PropertyOwner(vatNumber);
+            entityManager.getTransaction().begin();
+            Query query = entityManager.createQuery("DELETE Property WHERE propertyOwner = :propertyOwner")
+                    .setParameter("propertyOwner", propertyOwner);
+            query.executeUpdate();
+            entityManager.getTransaction().commit();
+            logger.debug("permanentlyDeleteProperties was successfully");
+        } catch (Exception e) {
+            logger.error("Error while deleting properties for owner: " + e.getMessage());
         }
     }
 }

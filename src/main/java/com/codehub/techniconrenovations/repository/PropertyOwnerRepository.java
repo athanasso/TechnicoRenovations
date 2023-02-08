@@ -103,4 +103,10 @@ public interface PropertyOwnerRepository {
      * @return
      */
     List<UserDto> getOwners();
+    
+    /**
+     *
+     * @return
+     */
+    boolean permanentlyDeletePropertyOwner();
 }

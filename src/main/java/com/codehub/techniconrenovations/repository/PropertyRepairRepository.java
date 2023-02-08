@@ -38,6 +38,7 @@ public interface PropertyRepairRepository {
      * Updates the repairType.
      *
      * @param repairType
+     * @param repairId
      */
     void updateRepairType(RepairType repairType, int repairId);
 
@@ -186,4 +187,22 @@ public interface PropertyRepairRepository {
      * @return
      */
     List<RepairDto> getAllRepairs();
+    
+    /**
+     *
+     * @return
+     */
+    boolean permanentlyDeletePropertyRepairs();
+    
+    /**
+     *
+     * @param vatNumber
+     */
+    void permanentlyDeleteRepairs(int vatNumber);
+    
+    /**
+     *
+     * @return
+     */
+    boolean permanentlyDeleteRepairs();
 }

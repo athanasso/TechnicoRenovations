@@ -87,4 +87,16 @@ public interface PropertyRepository {
      * @return
      */
     List<PropertyDto> getProperties();
+    
+    /**
+     *
+     * @return
+     */
+    boolean permanentlyDeleteProperties();
+    
+    /**
+     *
+     * @param vatNumber
+     */
+    void permanentlyDeleteProperties(int vatNumber);
 }
